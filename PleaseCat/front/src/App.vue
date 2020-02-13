@@ -24,6 +24,7 @@ export default {
     this.getCatList();
     // this.$store.dispatch('storeCat/getCatList');
     this.getUserList();
+    this.getPostList();
   },
   components: {
     // HelloWorld
@@ -36,6 +37,9 @@ export default {
       ]),
       ...mapActions('storeUser',[
           'getUserList',
+      ]),
+      ...mapActions('storePost',[
+          'getPostList',
       ]),
   },
 }

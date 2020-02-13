@@ -7,16 +7,21 @@ import NewsFeed from '../components/newsfeed/NewsFeed.vue'
 import PageCatList from '../components/catList/PageCatList.vue'
 import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
 import SelectPhoto from '../components/post/addPost/PageSelectPhoto'
-import PageCatMap from '../components/catMap/PageMap.vue'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
-import CatPostMap from '@/components/catMap/catPostMap.vue'
 import PageAddCat from '../components/post/addCat/PageAddCat'
 import Comment from '../components/comment/Comment'
 import PageDetailPost from '@/components/post/detailPost/PageDetailPost'
+import PageNearMap from '@/components/catMap/PageNearMap'
+import PageMyProfile from '@/components/userProfile/PageMyProfile'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
+  },
   {
     path: '/',
     name: 'NewsFeed',
@@ -38,19 +43,19 @@ const routes = [
     component: Login
   },
   {
-    path: '/test',
-    name: 'Test',
-    component: Test
+    path: '/signUp',
+    name: 'SignUp',
+    component: SignUp
+  },
+  {
+    path: '/nearMap',
+    name: 'PageNearMap',
+    component: PageNearMap
   },
   {
     path: '/catList',
     name: 'PageCatList',
     component: PageCatList
-  },
-  {
-    path: '/signUp',
-    name: 'SignUp',
-    component: SignUp
   },
   {
     path: '/catProfile/:cat_no',
@@ -68,19 +73,14 @@ const routes = [
     component: PageCatDetail
   },
   {
-    path: '/catPostMap',
-    name: 'CatPostMap',
-    component: CatPostMap
-  },
-  {
-    path: '/catMap',
-    name: 'PageCatMap',
-    component: PageCatMap
-  },
-  {
     path: '/addPost',
     name: 'PageAddCat',
     component: PageAddCat
+  },
+  {
+    path: '/myProfile',
+    name: 'PageMyProfile',
+    component: PageMyProfile
   },
   // {
   //   path: '/about',
