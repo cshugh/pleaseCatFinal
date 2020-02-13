@@ -14,6 +14,7 @@ import NavigationBar from '@/components/nav/NavigationBar'
 import TabBar from '@/components/tabbar/TabBar'
 import { mapActions, mapMutations, mapGetters } from "vuex";
 
+
 export default {
   name: 'App',
   data: () => ({

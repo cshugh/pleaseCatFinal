@@ -4,18 +4,22 @@ import axios from 'axios'
 import moduleCat from './modules/moduleCat'
 import moduleUser from './modules/moduleUser'
 import modulePost from './modules/modulePost'
+import moduleNewsFeed from './modules/moduleNewsFeed'
 import router from '@/router/index'
+import moduleDetailPost from './modules/moduleDetailPost'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
+        storeNewsFeed: moduleNewsFeed,
         storeCat: moduleCat,
         storeUser: moduleUser,
         storePost: modulePost,
+        storeDetailPost: moduleDetailPost,
     },
     state: {
-        server: 'http://192.168.219.100:8080',
+        server: 'http://localhost:8080',
         token: '',
         loginId: '',
     },

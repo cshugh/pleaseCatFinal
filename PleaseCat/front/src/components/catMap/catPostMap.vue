@@ -234,7 +234,7 @@
                     ".customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}" +
                     '</style>' +
                     `<div class="customoverlay">` +
-                    `  <a href="http://70.12.246.77:3000/catList" target="_blank">` +
+                    `  <a href="http://localhost:8080/catList" target="_blank">` +
                     `       <span class="title">${cat_name}</span>` +
                     '  </a>' +
                     '</div>'

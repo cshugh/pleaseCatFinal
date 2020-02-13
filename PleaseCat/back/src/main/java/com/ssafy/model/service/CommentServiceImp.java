@@ -49,8 +49,7 @@ public class CommentServiceImp implements CommentService {
 	@Override
 	public List<comment> searchCommentPost(int no) {
 		try { 
-			List<comment> finds = searchCommentPost(no);
-			return finds;
+			return dao.searchCommentPost(no);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PleaseCatException();

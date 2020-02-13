@@ -26,11 +26,6 @@ export default {
             'catList',
         ]),
     },
-    methods: {
-        ...mapActions('storeCat',[
-            'getCatList',
-        ]),
-    }
 }
 </script>
 

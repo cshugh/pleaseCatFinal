@@ -15,6 +15,7 @@
    	<typeAlias type ="com.ssafy.model.dto.user" 		alias ="user"/>
    	<typeAlias type ="com.ssafy.model.dto.newsFeed" 		alias ="newsFeed"/>
    	<typeAlias type ="com.ssafy.model.dto.catMap" 		alias ="catMap"/>
+   	<typeAlias type ="com.ssafy.model.dto.commentPage" 		alias ="commentPage"/>
    	<!-- <typeAlias type ="com.ssafy.model.dto.FoodPageBean" alias ="pagebean"/> -->
 
   </typeAliases>
@@ -33,6 +34,7 @@
      <mapper resource = "static/user_query.xml"/>
      <mapper resource = "static/newsFeed_query.xml"/>
      <mapper resource = "static/catMap_query.xml"/>
+     <mapper resource = "static/commentPage_query.xml"/>
   </mappers>
    <!-- query 설정 끝 -->
 </configuration>
