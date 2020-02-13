@@ -21,6 +21,7 @@ export default {
     //
   }),
   created() {
+    this.findUserLoc();
     this.getCatList();
     // this.$store.dispatch('storeCat/getCatList');
     this.getUserList();
@@ -32,6 +33,9 @@ export default {
     TabBar
   },
   methods: {
+      ...mapActions([
+          'findUserLoc',
+      ]),
       ...mapActions('storeCat',[
           'getCatList',
       ]),

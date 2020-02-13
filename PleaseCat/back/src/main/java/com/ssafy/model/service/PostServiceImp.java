@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,9 @@ public class PostServiceImp implements PostService {
 	
 	@Autowired
 	private PostDao dao;
+	
+	@Value("${custom.path.upload-images}") 
+	String dir;
 
 	//게시물 번호로 게시물 1개 검색
 	@Override
@@ -82,7 +86,7 @@ public class PostServiceImp implements PostService {
 		}
 	}
 	
-
+	
 	//게시글 등록
 	@Override
 	public void insertPost(MultipartFile postImg, post Post) {
@@ -97,10 +101,10 @@ public class PostServiceImp implements PostService {
 			String ext =  oName.substring(oName.lastIndexOf('.')+1);
 
 			//db에 저장될 post의 images에 값을 만들어줌 (파일 불러올 루트)
-			Post.setPost_image("images/"+Post.getCat_no()+"."+ext);
+			Post.setPost_image("post/"+dao.findNextPostNo()+"."+ext);
 
 			//저장루트 설정 (드라이브 위치부터 하나하나 잡아줘야함)
-			String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
+			//String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
 
 			//저정루트뒤에 불러오는 루트를 붙여줘서 저장함
 			File dest = new File(dir+"\\"+Post.getPost_image());
@@ -171,6 +175,17 @@ public class PostServiceImp implements PostService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PleaseCatException();
+		}
+	}
+	
+	//새로 저장 할 게시글의 post_no를 구함
+	@Override
+	public int findNextPostNo() {
+		try { 
+			return dao.findNextPostNo();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException("새로 저장 할 게시글의 post_no를 찾아오는데 실패했습니다.");
 		}
 	}
 }

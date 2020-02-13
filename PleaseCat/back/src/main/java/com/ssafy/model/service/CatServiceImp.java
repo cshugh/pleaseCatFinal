@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,9 @@ public class CatServiceImp implements CatService {
 	
 	@Autowired
 	private CatDao dao;
+	
+	@Value("${custom.path.upload-images}") 
+	String dir;
 
 	//고양이 찾기
 	public cat searchCat(int no) {
@@ -49,10 +53,10 @@ public class CatServiceImp implements CatService {
 				String ext =  oName.substring(oName.lastIndexOf('.')+1);
 
 				//db에 저장될 cat의 images에 값을 만들어줌 (파일 불러올 루트)
-				Cat.setCat_image("images/"+Cat.getCat_no()+"."+ext);
+				Cat.setCat_image("cat/"+dao.findNextCatNo()+"."+ext);
 
 				//저장루트 설정 (드라이브 위치부터 하나하나 잡아줘야함)
-				String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
+				//String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
 
 				//저정루트뒤에 불러오는 루트를 붙여줘서 저장함
 				File dest = new File(dir+"\\"+Cat.getCat_image());
@@ -105,6 +109,17 @@ public class CatServiceImp implements CatService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PleaseCatException("고양이 전체 목록을 불러오는데 실패했습니다.");
+		}
+	}
+	
+	//새로 저장 할 고양이의 cat_no를 구함
+	@Override
+	public int findNextCatNo() {
+		try { 
+			return dao.findNextCatNo();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException("새로 저장 할 고양이의 cat_no를 찾아오는데 실패했습니다.");
 		}
 	}
 
