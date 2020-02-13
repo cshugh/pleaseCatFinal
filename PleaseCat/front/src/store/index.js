@@ -94,10 +94,12 @@ export default new Vuex.Store({
                     if(response.data.state === 'ok'){
                         commit('changeLoginId', obj);
                         dispatch('storePost/getUserPosts', state.loginInfo)
+                        dispatch('storeNewsFeed/getNewsFeedList')
+                        dispatch('storeNewsFeed/getIsLike')
                     } else {
                         dispatch('logout');
                     }
-                    console.log(obj);
+                    // console.log(obj);
                 })
                 .catch(error => {
                     console.error(error);

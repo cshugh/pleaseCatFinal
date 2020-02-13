@@ -18,18 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.model.dto.comment;
-import com.ssafy.model.service.CommentPageService;
+import com.ssafy.model.service.DetailPostPageService;
 import com.ssafy.model.service.CommentService;
 
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
-@RequestMapping("/api/commentPage")
+@RequestMapping("/api/detailPostPage")
 @RestController
-public class CommentPageRestController {
+public class DetailPostPageRestController {
 	
 	@Autowired
-	private CommentPageService commentPageService;
+	private DetailPostPageService DetailPostPageService;
 	
 	@ExceptionHandler
 	public ResponseEntity<Map<String, Object>> handle(Exception e){
@@ -51,8 +51,8 @@ public class CommentPageRestController {
 	}
 	
 	@ApiOperation("게시글 관리번호로 댓글 정보를 찾는다.")
-	@GetMapping("/searchCommentPagePost/{Post_no}")
-	public ResponseEntity<Map<String, Object>> searchCommentPagePost(@RequestParam int Post_no) throws Exception{
-		return handleSuccess(commentPageService.searchCommentPagePost(Post_no));
+	@GetMapping("/searchDetailPostPage/{Post_no}")
+	public ResponseEntity<Map<String, Object>> searchDetailPostPage(@RequestParam int Post_no) throws Exception{
+		return handleSuccess(DetailPostPageService.searchDetailPostPage(Post_no));
 	}
 }

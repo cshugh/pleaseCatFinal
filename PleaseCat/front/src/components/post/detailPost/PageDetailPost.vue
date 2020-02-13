@@ -6,13 +6,13 @@
 <template>
   <div>
     <div id="content">
-      <img :src="require(`../../../assets/images/cat/${post_image}`)" id="img" />
+      <img :src="require(`../../../assets/images/cat/1.jpg`)" id="img" />
     </div>
     <div>
       <div class="content" id="post_content">{{post_content}}</div>
     </div>
     <div
-      v-infinite-scroll="getDetailPostList(this.post_no)"
+      v-infinite-scroll="getDetailPostList2"
       infinite-scroll-disabled="busy"
       infinite-scroll-distance="limit"
     >
@@ -29,7 +29,10 @@
           <div>{{list.comment_time}} 신고</div>
         </div>
       </div>
+      <hr />
+      <br />
     </div>
+    <!-- <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading> -->
   </div>
 </template>
 <script>
@@ -40,7 +43,7 @@ export default {
   created() {
     this.getSetDetailPost();
     this.post_no = this.$route.params.post_no;
-    this.getDetailPostList(this.post_no);
+    this.getDetailPostList({post_no: this.post_no});
     this.getDetailPostInfo(this.post_no);
   },
   data() {
@@ -58,7 +61,12 @@ export default {
     ])
   },
   methods: {
-    ...mapActions("storeDetailPost", ["getDetailPostList", "getDetailPostInfo", "getSetDetailPost"])
+    ...mapActions("storeDetailPost", [
+      "getDetailPostList",
+      "getDetailPostList2",
+      "getDetailPostInfo",
+      "getSetDetailPost"
+    ])
   }
 };
 </script>
@@ -151,7 +159,6 @@ button {
 }
 #repeat {
   background-color: white;
-  height: 100%;
   color: black;
   width: 100%;
   justify-content: space-between;

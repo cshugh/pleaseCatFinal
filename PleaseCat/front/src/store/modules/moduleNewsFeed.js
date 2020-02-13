@@ -27,7 +27,13 @@ export default {
         },
         page: state => {
             return state.page;
-        }
+        },
+        likes: state => {
+            return state.likes;
+        },
+        unlikes: state => {
+            return state.unlikes;
+        },
     },
     // mutations : 동기 처리 logic
     mutations: { // (state, rootState?)
@@ -48,13 +54,14 @@ export default {
             state.newsFeedList[payload.page].newsFeedIndex = state.page;
         },
         setNewsFeedLike(state, payload, rootState) {
-            for (var i = 0; i < state.isLike.length; i++) {
-                if (state.newsFeedList[payload.page].post_no == state.isLike[i].post_no) {
+            // console.log(state.likes)
+            for (var i = 0; i < state.likes.length; i++) {
+                if (state.newsFeedList[payload.page].post_no == state.likes[i].post_no) {
                     state.newsFeedList[payload.page].like = true;
                 }
             }
-            for (var j = 0; j < state.unLike.length; j++) {
-                if (state.newsFeedList[payload.page].post_no == state.unLike[j].post_no) {
+            for (var j = 0; j < state.unlikes.length; j++) {
+                if (state.newsFeedList[payload.page].post_no == state.unlikes[j].post_no) {
                     state.newsFeedList[payload.page].unlike = true;
                 }
             }
@@ -91,43 +98,41 @@ export default {
             DB에서 모든 고양이 정보를 읽어옴 -> storeCat/changeCatList 호출
             호출 위치 : App.vue
         */
-        getUpdateLikes({ state, dispatch, commit, getters, rootGetters }, postLike, postNo) {
+        getUpdateLikes({ state, dispatch, commit, getters, rootGetters }, {postLike, postNo}) {
             axios.put(`${rootGetters.getServer}/api/post/updateLikes`, {
                 post_like: postLike,
                 post_no: postNo
             });
-        }, getUpdateUnLikes({ state, dispatch, commit, getters, rootGetters }, postLike, postNo) {
+        }, getUpdateUnLikes({ state, dispatch, commit, getters, rootGetters }, {postLike, postNo}) {
             axios.put(`${rootGetters.getServer}/api/post/updateUnLikes`, {
-                post_like: postLike,
+                post_unlike: postLike,
                 post_no: postNo
             });
         },
         getLikeActivation({ state, dispatch, commit, getters, rootGetters }, post_no) {
-            axios.post(`${rootGetters.getServer}/api/Likes/insert?post_no=` + post_no + "&user_no=1");
+            axios.post(`${rootGetters.getServer}/api/Likes/insert?post_no=` + post_no + `&user_no=${rootGetters.getLoginInfo.user_no}`);
         },
         getLikeDisabled({ state, dispatch, commit, getters, rootGetters }, post_no) {
-            axios.delete(`${rootGetters.getServer}/api/Likes/delete?post_no=` + post_no + "&user_no=1");
+            axios.delete(`${rootGetters.getServer}/api/Likes/delete?post_no=` + post_no + `&user_no=${rootGetters.getLoginInfo.user_no}`);
         },
         getUnLikeActivation({ state, dispatch, commit, getters, rootGetters }, post_no) {
-            axios.post(`${rootGetters.getServer}/api/Unlikes/insert?post_no=` + post_no + "&user_no=1");
+            axios.post(`${rootGetters.getServer}/api/Unlikes/insert?post_no=` + post_no + `&user_no=${rootGetters.getLoginInfo.user_no}`);
         },
         getUnLikeDisabled({ state, dispatch, commit, getters, rootGetters }, post_no) {
-            axios.delete(`${rootGetters.getServer}/api/Unlikes/delete?post_no=` + post_no + "&user_no=1");
+            axios.delete(`${rootGetters.getServer}/api/Unlikes/delete?post_no=` + post_no + `&user_no=${rootGetters.getLoginInfo.user_no}`);
         },
         getIsLike({ state, dispatch, commit, getters, rootGetters }) {
-            axios.get(`${rootGetters.getServer}/api/Likes/searchAllLikes?user_no=1`).then(({ data }) => {
-                state.isLike = data.data;
+            axios.get(`${rootGetters.getServer}`+"/api/Likes/searchAllLikesOfUser?user_no="+`${rootGetters.getLoginInfo.user_no}`).then(({ data }) => {
+                state.likes = data.data;
             }),
-                axios.get(`${rootGetters.getServer}/api/Unlikes/searchAllUnLikes?user_no=1`).then(({ data }) => {
-                    state.unLike = data.data;
+                axios.get(`${rootGetters.getServer}`+"/api/Unlikes/searchAllUnLikes?user_no="+`${rootGetters.getLoginInfo.user_no}`).then(({ data }) => {
+                    state.unlikes = data.data;
                 });
         },
         getNewsFeedList({ state, dispatch, commit, getters, rootGetters }) {
-            // commit('changeBusy', {value: true});
-            // console.log("getNewsFeedList");
             state.busy = true;
             axios
-                .get(`${rootGetters.getServer}/api/NewsFeed/searchAll/{follower_no}?follower_no=1`)
+                .get(`${rootGetters.getServer}/api/NewsFeed/searchAll/{follower_no}?follower_no=${rootGetters.getLoginInfo.user_no}`)
                 .then(res => {
                     // handle success
                     let all = res.data.data;

@@ -1,15 +1,15 @@
 package com.ssafy.model.dto;
 
-public class commentPage {
+public class detailPostPage {
 	private String user_id;
 	private String user_image;
 	private String comment_content;
 	private String comment_time;
 	private int comment_no;
 	
-	public commentPage() {}
+	public detailPostPage() {}
 
-	public commentPage(String user_id, String user_image, String comment_content, String comment_time, int comment_no) {
+	public detailPostPage(String user_id, String user_image, String comment_content, String comment_time, int comment_no) {
 		super();
 		this.user_id = user_id;
 		this.user_image = user_image;

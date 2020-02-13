@@ -4,7 +4,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <template>
-  <div>
+  <div> 
+    <div class="emptySpace"></div>
     <div
       v-infinite-scroll="getNewsFeedList"
       infinite-scroll-disabled="busy"
@@ -95,11 +96,12 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   created() {
-    this.getIsLike();
-    this.getNewsFeedList();
+    // this.getIsLike();
+    // this.getNewsFeedList();
   },
   computed: {
-    ...mapGetters("storeNewsFeed", ["newsFeedList", "busy", "limit"])
+    ...mapGetters("storeNewsFeed", ["newsFeedList", "busy"]),
+    ...mapGetters(["getLoginInfo"]),
   },
   methods: {
     ...mapActions("storeNewsFeed", [
@@ -125,13 +127,13 @@ export default {
         this.unLikeDisabled(post_no, newsFeedIndex);
       }
       this.newsFeedList[newsFeedIndex].post_like++;
-      this.getUpdateLikes(this.newsFeedList[newsFeedIndex].post_like, post_no);
+      this.getUpdateLikes({postLike: this.newsFeedList[newsFeedIndex].post_like, postNo: post_no});
     },
     likeDisabled(post_no, newsFeedIndex) {
       this.getLikeDisabled(post_no);
       this.newsFeedList[newsFeedIndex].like = false;
       this.newsFeedList[newsFeedIndex].post_like--;
-      this.getUpdateLikes(this.newsFeedList[newsFeedIndex].post_like, post_no);
+      this.getUpdateLikes({postLike:this.newsFeedList[newsFeedIndex].post_like, postNo: post_no});
     },
     unLikeActivation(post_no, newsFeedIndex) {
       this.getUnLikeActivation(post_no);
@@ -140,18 +142,23 @@ export default {
         this.likeDisabled(post_no, newsFeedIndex);
       }
       this.newsFeedList[newsFeedIndex].post_unlike++;
-      this.getUpdateUnLikes(this.newsFeedList[newsFeedIndex].post_unlike, post_no);
+      console.log(this.newsFeedList[newsFeedIndex].post_unlike);
+      this.getUpdateUnLikes({postLike:this.newsFeedList[newsFeedIndex].post_unlike, postNo: post_no});
     },
     unLikeDisabled(post_no, newsFeedIndex) {
       this.getUnLikeDisabled(post_no);
       this.newsFeedList[newsFeedIndex].unlike = false;
       this.newsFeedList[newsFeedIndex].post_unlike--;
-      this.getUpdateUnLikes(this.newsFeedList[newsFeedIndex].post_unlike, post_no);
+      console.log(this.newsFeedList[newsFeedIndex].post_unlike);
+      this.getUpdateUnLikes({postLike:this.newsFeedList[newsFeedIndex].post_unlike, postNo: post_no});
     },
   }
 };
 </script>
 <style lang="scss" scoped>
+.emptySpace{
+  height: 70px;
+}
 #detailTrue {
   font-size: 18px;
   display: inline-block;

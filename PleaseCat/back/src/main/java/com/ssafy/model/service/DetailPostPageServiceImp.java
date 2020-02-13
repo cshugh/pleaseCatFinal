@@ -6,23 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.model.dao.CommentDao;
-import com.ssafy.model.dao.CommentPageDao;
+import com.ssafy.model.dao.DetailPostPageDao;
 import com.ssafy.model.dto.PleaseCatException;
 import com.ssafy.model.dto.comment;
-import com.ssafy.model.dto.commentPage;
+import com.ssafy.model.dto.detailPostPage;
 
 
 @Service
-public class CommentPageServiceImp implements CommentPageService {
+public class DetailPostPageServiceImp implements DetailPostPageService {
 	
 	@Autowired
-	private CommentPageDao dao;
+	private DetailPostPageDao dao;
 
 	//게시글 번호로 댓글들 출력
 	@Override
-	public List<commentPage> searchCommentPagePost(int no) {
+	public List<detailPostPage> searchDetailPostPage(int no) {
 		try { 
-			return dao.searchCommentPagePost(no);
+			return dao.searchDetailPostPage(no);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PleaseCatException();

@@ -6,6 +6,7 @@ export default {
     namespaced: true,
     state: {
         detailPostList: [],
+        postno: 0,
         busy: false,
         limit: 2,
         page: 0,
@@ -33,7 +34,10 @@ export default {
         },
         post_content: state => {
             return state.post_content;
-        }
+        },
+        postno: state => {
+            return state.postno;
+        },
     },
     // mutations : 동기 처리 logic
     mutations: { // (state, rootState?)
@@ -77,6 +81,10 @@ export default {
         changeDetailPostList(state, payload, rootState) {
             state.detailPostList = state.detailPostList.concat(payload.append);
         },
+        setPostNo(state, payload, rootState) {
+            state.postno = payload.postNo;
+        },
+    
     },
     // actions : 비동기 처리 logic
     actions: { // ({ dispatch, commit, getters, rootGetters }, data) : context. 생략
@@ -87,11 +95,11 @@ export default {
         getSetDetailPost({ state, dispatch, commit, getters, rootGetters }){
             commit('detailPostListSet');
         },
-        getDetailPostList({ state, dispatch, commit, getters, rootGetters }, post_no) {
-            console.log(post_no);
+        getDetailPostList({ state, dispatch, commit, getters, rootGetters }, {post_no}) {
+            commit('setPostNo', { postNo: post_no });
             state.busy = true;
             axios
-                .get(`${rootGetters.getServer}/api/commentPage/searchCommentPagePost/{Post_no}?Post_no=` + post_no)
+                .get(`${rootGetters.getServer}/api/detailPostPage/searchDetailPostPage/{Post_no}?Post_no=` + post_no)
                 .then(res => {
                     // handle success
                     let all = res.data.data;
@@ -106,7 +114,31 @@ export default {
                             commit('pagePlus');
                         }
                     }
-                    console.log(state.busy);
+                })
+                .catch(err => {
+                    // handle error
+                    console.error(err);
+                    state.busy = false;
+                });
+        },
+        getDetailPostList2({ state, dispatch, commit, getters, rootGetters }) {
+            state.busy = true;
+            axios
+                .get(`${rootGetters.getServer}/api/detailPostPage/searchDetailPostPage/{Post_no}?Post_no=`+getters.postno)
+                .then(res => {
+                    // handle success
+                    let all = res.data.data;
+                    const append = all.slice(getters.lengthOfdetailPostList, getters.lengthOfdetailPostList + getters.limit)
+                    state.busy = false;
+                    if (append.length === 0) {
+                        state.busy = true;
+                    } else {
+                        commit('changeDetailPostList', { append: append });
+                        for (var i = 0; i < getters.limit; i++) {
+                            commit('changeDetailPostTime', { page: getters.page });
+                            commit('pagePlus');
+                        }
+                    }
                 })
                 .catch(err => {
                     // handle error
@@ -116,7 +148,7 @@ export default {
         },
         getDetailPostInfo({ state, dispatch, commit, getters, rootGetters }, post_no) {
             axios
-                .get(`${rootGetters.getServer}/api/post/searchPost/{Post_no}?Post_no=` + post_no)
+                .get(`${rootGetters.getServer}/api/post/searchPost?Post_no=` + post_no)
                 .then(({ data }) => {
                     commit('setDetailPostInfo', { data: data });
                 })

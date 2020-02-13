@@ -2,9 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.model.dao.CommentPageDao">
-	<select id="searchCommentPagePost" parameterType="int"
-		resultType="commentPage">
+<mapper namespace="com.ssafy.model.dao.DetailPostPageDao">
+	<select id="searchDetailPostPage" parameterType="int"
+		resultType="DetailPostPage">
 		SELECT u.user_id, u.user_image, c.comment_content, TIMESTAMPDIFF(minute,
 		c.comment_time, NOW()) AS comment_time, c.comment_no
 		FROM USER u, COMMENT c
