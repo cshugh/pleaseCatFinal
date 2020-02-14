@@ -73,9 +73,6 @@ export default {
 
 <style lang="scss" scoped>
 #myProfile{
-    #modal{
-        background-color: #F2E6E1;
-    }
     text-align: center;
     .btn{
         margin: 8px;
@@ -84,8 +81,10 @@ export default {
         border: 1px solid #dbdbdb;
         border-radius: 3px;
         color: #262626;
+        background-color: white;
         font-size: 2.7vw;
         padding: 3px 12px 3px 12px;
+        box-shadow: 1px 1px 5px 0px black;
     }
     h1{
         font-size: 7vw;

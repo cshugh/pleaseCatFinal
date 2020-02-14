@@ -1,9 +1,8 @@
 <template>
   <transition name="modal" appear>
-    <div class="modal modal-mask" @click.self="$emit('close')" @keyup.esc="$emit('close')" >
-      <div class="modal-wrapper">
+    <div class="modal modal-overlay" @click.self="$emit('close')" @keyup.esc="$emit('close')" >
+      <div id="modal" class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-header">
             <slot name="header">  </slot>
           </div>
@@ -23,14 +22,17 @@
 </template>
 
 <style lang="scss" scoped>
-.modal{
-    background-color: black;
-    .modal-header{
-    background-color: #F2E6E1;
-    }
-    .modal-footer{
-    background-color: #F2E6E1;
-    }
+.modal-container{
+  background-color: #F2E6E1;
+}
+.modal-header{
+  background-color: #F2E6E1;
+}
+.modal-body{
+  background-color: #F2E6E1;
+}
+.modal-footer{
+  background-color: #F2E6E1;
 }
 .closeModalBtn {
 	z-index: 9998;
