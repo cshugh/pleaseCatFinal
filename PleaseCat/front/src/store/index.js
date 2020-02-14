@@ -4,19 +4,22 @@ import axios from 'axios'
 import moduleCat from './modules/moduleCat'
 import moduleUser from './modules/moduleUser'
 import modulePost from './modules/modulePost'
+import moduleNewsFeed from './modules/moduleNewsFeed'
 import router from '@/router/index'
+import moduleDetailPost from './modules/moduleDetailPost'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
+        storeNewsFeed: moduleNewsFeed,
         storeCat: moduleCat,
         storeUser: moduleUser,
         storePost: modulePost,
+        storeDetailPost: moduleDetailPost,
     },
     state: {
-        server: 'http://70.12.246.120:8080',
-        // server: 'http://localhost:8080',
+        server: 'http://localhost:8080',
         token: '',
         loginInfo: null,    // 로그인 회원 정보
         isLogin: false,     // 로그인 여부
@@ -100,11 +103,13 @@ export default new Vuex.Store({
                     var obj = eval("("+response.data.data+")");
                     if(response.data.state === 'ok'){
                         commit('changeLoginId', obj);
-                        dispatch('storePost/getMyPosts', state.loginInfo.user_no)
+                        dispatch('storePost/getUserPosts', state.loginInfo)
+                        dispatch('storeNewsFeed/getNewsFeedList')
+                        dispatch('storeNewsFeed/getIsLike')
                     } else {
                         dispatch('logout');
                     }
-                    console.log(obj);
+                    // console.log(obj);
                 })
                 .catch(error => {
                     console.error(error);
