@@ -3,7 +3,6 @@
       <router-link :to="`/catProfile/${src}`">
       <div class="card" :class="{hover: isHovering}" @mouseover="isHovering=true" @mousemove="isHovering=true" @mouseout="isHovering=false">
           <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cats/_profile/${src}.jpg`)+')'}"></div>
-          <!-- <div class="bg" :style="{'background-image': url(`/home/ubuntu/images/${src}.jpg`)}"></div> -->
           <div class="text name">
               <h3>{{ name }}</h3>
           </div>
@@ -91,7 +90,7 @@ export default {
         height: 100%;
         overflow: hidden;
         background-color: #000;
-        box-shadow: 2px 2px 10px 2px black;
+        box-shadow: 10px 10px 15px 0px rgba(48, 54, 62, 0.7);
         border-radius: 30px;
         height: 100%;
         .bg {

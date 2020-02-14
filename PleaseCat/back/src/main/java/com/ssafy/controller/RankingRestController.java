@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,13 +47,13 @@ public class RankingRestController {
 	}
 	
 	@ApiOperation("rank에 존재하는 여부확인")
-	@GetMapping("/searchRanking")
+	@PostMapping("/searchRanking")
 	public ResponseEntity<Map<String, Object>> searchRanking(@RequestParam int cat_no, @RequestParam int user_no) throws Exception{
 		return handleSuccess(rankingService.searchRanking(cat_no,user_no));
 	}
 	
 	@ApiOperation("고양이에 해당하는 ranking")
-	@GetMapping("/searchRankingCat")
+	@PostMapping("/searchRankingCat")
 	public ResponseEntity<Map<String, Object>> searchRankingCat(@RequestParam int cat_no) throws Exception{
 		return handleSuccess(rankingService.searchRankingCat(cat_no));
 	}

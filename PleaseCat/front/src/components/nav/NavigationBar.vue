@@ -21,8 +21,8 @@ export default {
     
     computed: {
       ...mapGetters([
-        'getIsLogin', 'getUserLoc'
-      ]),
+        'getIsLogin'
+      ])
     },
     methods: {
       logout() {
@@ -40,7 +40,7 @@ export default {
   left:0;
   width: 100%;
   height: 50px;
-  background: orange;
+  background-color: pink;
   z-index:100;
   text-align: right;
   #greeting {

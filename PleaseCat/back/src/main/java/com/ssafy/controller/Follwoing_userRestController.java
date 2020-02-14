@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,19 +46,19 @@ public class Follwoing_userRestController {
 	}
 	
 	@ApiOperation("follower, followed no로 팔로잉 여부 확인")
-	@GetMapping("/searchFollwoingUser")
+	@PostMapping("/searchFollwoingUser")
 	public ResponseEntity<Map<String, Object>> searchFollwoingUser(@RequestParam int follower_no, @RequestParam int followed_no) throws Exception{
 		return handleSuccess(followingUserService.searchFollowingUser(follower_no,followed_no));
 	}
 	
 	@ApiOperation("follower no로 팔로잉 목록 출력")
-	@GetMapping("/searchFollwerUser")
+	@PostMapping("/searchFollwerUser")
 	public ResponseEntity<Map<String, Object>> searchFollwerUser(@RequestParam int follower_no) throws Exception{
 		return handleSuccess(followingUserService.searchFollowerUser(follower_no));
 	}
 	
 	@ApiOperation("followed no로 팔로잉 목록 출력")
-	@GetMapping("/searchFollowedUser")
+	@PostMapping("/searchFollowedUser")
 	public ResponseEntity<Map<String, Object>> searchFollowedUser(@RequestParam int followed_no) throws Exception{
 		return handleSuccess(followingUserService.searchFollowedUser(followed_no));
 	}

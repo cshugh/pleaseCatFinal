@@ -3,9 +3,7 @@ package com.ssafy.model.dto;
 public class ranking {
 	private int cat_no;
 	private int user_no;
-	private int rank_point; 
-	private String user_id;
-	
+	private int rank_point;
 	
 	
 	
@@ -35,12 +33,6 @@ public class ranking {
 	}
 	public void setRank_point(int rank_point) {
 		this.rank_point = rank_point;
-	}
-	public String getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
 	}
 	@Override
 	public String toString() {

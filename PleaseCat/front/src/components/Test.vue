@@ -1,12 +1,12 @@
 <template>
     <div id="test">
-        <mapComponent />
+        <mapComponent txt="catProfile" :pos="positions" />
         <!-- <mapComponent txt="readPost" :pos="positions" /> -->
     </div>
 </template>
 
 <script>
-import mapComponent from '@/components/map/selectlLocationMap'
+import mapComponent from '@/components/catMap/map'
 
 export default {
     data() {
@@ -52,21 +52,6 @@ export default {
                 }
             ],
       }
-    },
-    computed: {
-        getUser(navigator) {
-        // 사용자의 현재 위치를 가져오는 함수
-            if (navigator) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    return {
-                        pos_x: position.coords.latitude,
-                        pos_y: position.coords.longitude
-                    };
-                });
-            } else {
-                return null;
-            }
-        },
     },
     components: {
         mapComponent,

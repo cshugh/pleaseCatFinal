@@ -73,7 +73,7 @@ export default {
             ".customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}" +
             '</style>' +
             '<div class="customoverlay">' +
-            '  <a href="localhost:8080/catList" target="_blank">' +
+            '  <a href="http://70.12.246.77:8080/catList" target="_blank">' +
             '    <span class="title">나비</span>' +
             '  </a>' +
             '</div>'

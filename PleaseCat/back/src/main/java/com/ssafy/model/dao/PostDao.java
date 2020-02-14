@@ -19,5 +19,4 @@ public interface PostDao {
 	public void deletePost(int no);
 	public void updateLikes(post post);
 	public void updateUnLikes(post post);
-	public int findNextPostNo();
 }

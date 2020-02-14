@@ -59,19 +59,19 @@ public class PostRestController {
 	}
 	
 	@ApiOperation("게시글 관리번호로 게시글 정보를 찾는다.")
-	@GetMapping("/searchPost")
+	@GetMapping("/searchPost/{Post_no}")
 	public ResponseEntity<Map<String, Object>> searchPost(@RequestParam int Post_no) throws Exception{
 		return handleSuccess(postService.searchPost(Post_no));
 	}
 	
 	@ApiOperation("회원 관리번호로 게시글 정보를 찾는다.")
-	@GetMapping("/searchPostUser")
+	@GetMapping("/searchPostUser/{User_no}")
 	public ResponseEntity<Map<String, Object>> searchPostUser(@RequestParam int User_no) throws Exception{
 		return handleSuccess(postService.searchPostUser(User_no));
 	}
 	
 	@ApiOperation("고양이 관리번호로 게시글 정보를 찾는다.")
-	@GetMapping("/searchPostCat")
+	@GetMapping("/searchPostCat/{Cat_no}")
 	public ResponseEntity<Map<String, Object>> searchPostCat(@RequestParam int Cat_no) throws Exception{
 		return handleSuccess(postService.searchPostCat(Cat_no));
 	}
@@ -97,7 +97,7 @@ public class PostRestController {
 	}
 	
 	@ApiOperation("게시글 정보 삭제")
-	@DeleteMapping("/delete/")
+	@DeleteMapping("/delete/{Post_no}")
 	public ResponseEntity<Map<String, Object>> deletePost(@RequestParam int Post_no) throws Exception{
 		postService.deletePost(Post_no);
 		return handleSuccess(Post_no+"번 게시글 삭제완료");
@@ -108,12 +108,6 @@ public class PostRestController {
 	public ResponseEntity<Map<String, Object>> updatePost(@RequestBody post Post) throws Exception{
 		postService.updatePost(Post);
 		return handleSuccess("게시글 정보 수정완료");
-	}
-	
-	@ApiOperation("새로 저장하려는 게시글의 post_no를 찾는다.")
-	@GetMapping("/findPostNo")
-	public ResponseEntity<Map<String, Object>> findNextPostNo() throws Exception{
-		return handleSuccess(postService.findNextPostNo());
 	}
 	
 }

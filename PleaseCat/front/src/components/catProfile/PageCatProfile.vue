@@ -1,16 +1,12 @@
 <template>
 <div id="catProfile">
     <div class="emptySpace">-Navigation Bar-</div>
-    <div class="profileView">
-        <div class="leftPart" v-if="(selectedCat != null)">
+    <div id="profileView">
+        <div id="leftPart">
             <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile">
         </div>
-        <div id="fakeleftPart" class="leftPart" v-if="(selectedCat === null)">
-            <img id="catPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
-        </div>
         <section id="rightPart">
-            <div class="name"><h1 id="catName" class="text" v-if="(selectedCat != null)">{{ selectedCat.cat_name }}</h1></div>
-            <div id="fakename" class="name" v-if="(selectedCat === null)"><h1 id="catName" class="text">고양이</h1></div>
+            <div id="name"><h1 id="catName" class="text">{{ selectedCat.cat_name }}</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
                     <button>팔로우</button>
@@ -21,16 +17,16 @@
             </div>
         </section>
     </div>
-    <div id="summaryView" class="text" v-if="(selectedCat != null)">
-        <span class="summary">게시물<br>{{ selectedCat.count_followers }}</span>
-        <span class="summary">팔로우<br>{{ selectedCat.count_likes }}</span>
-        <span class="summary">좋아요<br>{{ selectedCat.count_posts }}</span>
+    <div id="summaryView" class="text">
+        <span class="summary">게시물<br>{{ selectedCat.countPosts }}</span>
+        <span class="summary">팔로우<br>{{ selectedCat.countFollowers }}</span>
+        <span class="summary">좋아요<br>{{ selectedCat.countLikes }}</span>
     </div>
-    <div id="photoView" v-if="(catPosts != null)">
+    <div id="photoView">
         <div id="photoList">
-            <span v-for="(post, idx) in catPosts" :key="idx">
-                <router-link :to="`/detailPost/${post.post_no}`">
-                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
+            <span v-for="n in selectedCat.count_posts" :key=n>
+                <router-link :to="{name:''}">
+                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/cats/${ selectedCat.cat_no }/${n}.jpg`)})`}"  :alt='`pic${n}`'>
                     </span>
                 </router-link>
             </span>
@@ -48,12 +44,6 @@ export default {
     name: 'catProfile',
     created() {
         this.no = this.$route.params.cat_no;
-        this.getSelectedCat(this.no);
-        this.getCatPosts(this.no);
-    },
-    destroyed() {
-        this.clearSelectedCat();
-        this.clearCatPosts();
     },
     data(){
         return{
@@ -62,25 +52,13 @@ export default {
     },
     computed:{
         ...mapGetters('storeCat',[
-            'selectedCat',
+            'catList',
         ]),
-        ...mapGetters('storePost',[
-            'catPosts',
-        ]),
+        selectedCat: function() {
+            return this.catList[this.no - 1];
+        },
     },
     methods: {
-        ...mapMutations('storeCat',[
-            'clearSelectedCat',
-        ]),
-        ...mapMutations('storePost',[
-            'clearCatPosts',
-        ]),
-        ...mapActions('storeCat',[
-            'getSelectedCat',
-        ]),
-        ...mapActions('storePost',[
-            'getCatPosts',
-        ])
     },
 }
 </script>
@@ -95,12 +73,8 @@ export default {
         border: 1px solid #dbdbdb;
         border-radius: 3px;
         color: #262626;
-        background-color: white;
         font-size: 2.7vw;
         padding: 3px 12px 3px 12px;
-        font-size: 2.7vw;
-        padding: 3px 12px 3px 12px;
-        box-shadow: 0px 0px 4px 0px black;
     }
     h1{
         font-size: 7vw;
@@ -115,17 +89,14 @@ export default {
         color: black;
     }
 }
-.profileView{
+#profileView{
     padding: 2% 2% 0 2%;
     position: relative;
     display: inline-block;
-    width: 90vw;
-    height: 40vw;
+    width: 90%;
     vertical-align: middle;
     text-align: center;
-    background-color: #F2E6E1;
-    border-radius: 10px;
-    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
+    background-color: white;
     // border: 2px solid red;
     img {
         width: 100%;
@@ -136,7 +107,7 @@ export default {
         display: block;
         padding-bottom: 100%;
     }
-    .leftPart{
+    #leftPart{
         width: 30%;
         position: absolute;
         left: 5%;
@@ -147,18 +118,16 @@ export default {
     #rightPart{
         position: absolute;
         left: 40%;
-        #fakename{
-            visibility: hidden;
-        }        
+        
         // box-sizing: border-box;
         // border: 1px solid red;
     }
 }
-// #profileView::after{
-//     content: "";
-//     display: block;
-//     padding-bottom: 40%;
-// }
+#profileView::after{
+    content: "";
+    display: block;
+    padding-bottom: 40%;
+}
 #summaryView{
     display: inline-block;
     font-size: 3vw;
@@ -167,8 +136,8 @@ export default {
     padding: 5px 0 5px 0;
     // box-sizing: border-box;
     // border: 1px solid blue;
-    // border-top: 1px solid black;
-    // border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
     .summary{
         display: inline-block;
         width: 33.3%;
@@ -188,13 +157,11 @@ export default {
             background-color: black;
             display: inline-block;
             overflow: hidden;
-            width: calc((100% - 3vw) / 3);
+            width: calc((100% - 6px) / 3);
             text-align: center;
             vertical-align: middle;
             box-sizing: border-box;
-            margin: 0.5vw;
-            border-radius: 1vw;
-            box-shadow: 1px 1px 5px 1px black;
+            margin: 1px;
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;

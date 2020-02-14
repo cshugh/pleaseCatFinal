@@ -51,8 +51,8 @@ public class CommentRestController {
 	
 	@ApiOperation("새로운 댓글 정보를 등록한다.")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insertComment(@RequestParam int post_no, @RequestParam int user_no, @RequestParam String comment_content) throws Exception{
-		commentService.insertComment(post_no, user_no, comment_content);
+	public ResponseEntity<Map<String, Object>> insertComment(@RequestBody comment Comment) throws Exception{
+		commentService.insertComment(Comment);
 		return handleSuccess("댓글 등록 완료");
 	}
 	

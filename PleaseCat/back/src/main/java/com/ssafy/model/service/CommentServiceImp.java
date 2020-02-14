@@ -1,6 +1,5 @@
 package com.ssafy.model.service;
 
-import java.util.HashMap;
 import java.util.List;   
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,6 @@ public class CommentServiceImp implements CommentService {
 	
 	@Autowired
 	private CommentDao dao;
-	
-	HashMap<String, Object> map;
 
 	//댓글 번호로 1개 검색
 	@Override
@@ -52,7 +49,8 @@ public class CommentServiceImp implements CommentService {
 	@Override
 	public List<comment> searchCommentPost(int no) {
 		try { 
-			return dao.searchCommentPost(no);
+			List<comment> finds = searchCommentPost(no);
+			return finds;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PleaseCatException();
@@ -61,14 +59,15 @@ public class CommentServiceImp implements CommentService {
 
 	//댓글입력
 	@Override
-	public void insertComment(int post_no, int user_no, String comment_content) {
+	public void insertComment(comment comment) {
 		try {
-				map = new HashMap<String, Object>();
-				map.put("post_no", post_no);
-				map.put("user_no", user_no);
-				map.put("comment_content", comment_content);
-				dao.insertComment(map);
+			comment find = dao.searchComment(comment.getPost_no());
+			if(find != null) {
+				throw new PleaseCatException();
+			}else {
+				dao.insertComment(comment);
 				System.out.println("댓글 입력 성공");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PleaseCatException();
