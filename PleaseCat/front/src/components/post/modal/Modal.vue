@@ -1,17 +1,17 @@
 <template>
   <transition name="modal" appear>
     <div class="modal modal-overlay" @click.self="$emit('close')" @keyup.esc="$emit('close')" >
-      
-      <div class="modal-wrapper">
+      <div id="modal" class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-header">
-            <slot name="header"></slot>
+            <slot name="header">  </slot>
           </div>
-
+          <div class="modal-body">
+            <slot name="body">  </slot>
+          </div>
           <div class="modal-footer">
             <slot name="footer">
-              <button @click="$emit('close')">Close</button>
+              <button @click="$emit('close')">Close</button>              
             </slot>
           </div>
 					     
@@ -21,7 +21,19 @@
   </transition>
 </template>
 
-<style lang="css">
+<style lang="scss" scoped>
+.modal-container{
+  background-color: #F2E6E1;
+}
+.modal-header{
+  background-color: #F2E6E1;
+}
+.modal-body{
+  background-color: #F2E6E1;
+}
+.modal-footer{
+  background-color: #F2E6E1;
+}
 .closeModalBtn {
 	z-index: 9998;
   color: #62acde;
