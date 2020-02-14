@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="btn-wrap">
-      <a href="/signUp">가입하기</a>
+      <router-link :to="'/signUp'">가입하기</router-link>
       <button class="btn-login" v-on:click="login">로그인</button>
     </div>
   </div>
