@@ -4,7 +4,7 @@
     <div id="profileView" v-if="(getLoginInfo != null)">
         <div id="leftPart">
             <!-- <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile"> -->
-            <img id="userPhoto" :src='' alt="catProfile">
+            <img id="userPhoto" :src='`/home/ubuntu/images/user/${ getLoginInfo.user_no }.jpg`' alt="catProfile">
         </div>
         <section id="rightPart">
             <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
