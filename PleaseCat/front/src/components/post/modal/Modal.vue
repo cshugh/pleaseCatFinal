@@ -11,7 +11,9 @@
             <slot name="body">  </slot>
           </div>
           <div class="modal-footer">
-            <slot name="footer">  </slot>
+            <slot name="footer">
+              <button @click="$emit('close')">Close</button>              
+            </slot>
           </div>
 					     
         </div>
@@ -24,10 +26,10 @@
 .modal{
     background-color: black;
     .modal-header{
-      background-color: black;
+    background-color: #F2E6E1;
     }
     .modal-footer{
-      background-color: black;
+    background-color: #F2E6E1;
     }
 }
 .closeModalBtn {

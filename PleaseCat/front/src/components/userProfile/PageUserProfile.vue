@@ -29,7 +29,7 @@
     <div id="photoView" v-if="(userPosts != null)">
         <div id="photoList">
             <span v-for="(post, idx) in userPosts" :key="idx">
-                <router-link :to="{name:''}">
+                <router-link :to="`/detailPost/${post.post_no}`">
                     <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> 
                     </span>
                 </router-link>

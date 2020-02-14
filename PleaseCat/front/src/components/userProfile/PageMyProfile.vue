@@ -12,21 +12,13 @@
                     <button id="show-modal-loc" @click="showModalFollow = true">
                         팔로우
                     </button>
-                    <ModalComponent v-if="showModalFollow" @close="showModalFollow = false">
-                        <h3 slot="head">
+                    <ModalComponent id="modal" v-if="showModalFollow" @close="showModalFollow = false">
+                        <h3 slot="header">
                             팔로우 목록
                         </h3>
                         <h3 slot="body">
                             본문
-                            본문
-                            본문
-                            본문
-                            본문
-                            본문
                         </h3>
-                        <div slot="foot">
-                            <button @click="$emit('close')">Close</button>
-                        </div>
                     </ModalComponent>
                 </span>
                 <span id="detailButton" class="btn text">
@@ -57,7 +49,7 @@
 <script>
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
-import ModalComponent from "@/components/post/addPost/Modal.vue";
+import ModalComponent from "@/components/post/modal/Modal.vue";
 
 export default {
     name: 'myProfile',
@@ -81,6 +73,9 @@ export default {
 
 <style lang="scss" scoped>
 #myProfile{
+    #modal{
+        background-color: #F2E6E1;
+    }
     text-align: center;
     .btn{
         margin: 8px;
