@@ -56,6 +56,11 @@
               :key=nc.no
             >{{ nc.name }}</button>
           </div>
+
+          <div slot="footer" >
+            <button @click="showModalSelectCat = false"> 확인</button>
+          </div>
+
         </modal>
       </div>
 
@@ -141,6 +146,7 @@ export default {
       nearCats: [],
       photoGps: [],
       userGps: [],
+      gps: [],
       
     };
   },
