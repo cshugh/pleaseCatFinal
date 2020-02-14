@@ -90,6 +90,7 @@ export default {
                 var callback = function(result, status) {
                     if (status === kakao.maps.services.Status.OK) {
                         vm.address = result[0].address.address_name;
+                        vm.$emit('selectLoc-event', { X: vm.mark_x, Y: vm.mark_y, Addr:vm.address})
                     }
                 };
                 geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
