@@ -4,6 +4,7 @@
     <div id="profileView" v-if="(getLoginInfo != null)">
         <div id="leftPart">
             <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile">
+            <!-- <img id="userPhoto" :src='' alt="catProfile"> -->
         </div>
         <section id="rightPart">
             <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
@@ -37,6 +38,7 @@
             <span v-for="(post, idx) in myPosts" :key="idx">
                 <router-link :to="{name:''}">
                     <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
+                    <!-- <span class="photo" :style="{'background-image' : `/home/ubuntu/images/post/${ post.post_image }`}"  :alt='`${ post.post_image }`'> -->
                     </span>
                 </router-link>
             </span>
