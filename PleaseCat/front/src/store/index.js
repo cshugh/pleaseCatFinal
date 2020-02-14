@@ -24,6 +24,7 @@ export default new Vuex.Store({
         loginInfo: null,    // 로그인 회원 정보
         isLogin: false,     // 로그인 여부
         userLoc: {lat: 1, lng:1 },      // 유저 현재 위치
+        dist: 1000,        // '근처' 의 기준이 될 meter 단위 반경
     },
     getters: {
         getServer: state => { return state.server },
@@ -31,6 +32,7 @@ export default new Vuex.Store({
         getLoginInfo: state => { return state.loginInfo },
         getIsLogin: state => { return state.isLogin },
         getUserLoc: state => { return state.userLoc },
+        getDist: state => { return state.dist }
     },
     mutations: {
         changeToken(state, payload) {
@@ -48,6 +50,9 @@ export default new Vuex.Store({
         },
         changeUserLoc(state, payload) {
             state.userLoc = payload;
+        },
+        changeDist(state, payload){
+            state.dist = payload;
         }
     },
     actions: {
@@ -112,15 +117,14 @@ export default new Vuex.Store({
         },
         findUserLoc({ state, dispatch, commit, getters, rootGetters }){
             // console.log('위치찾기');
-            if (navigator.geolocation) {
+            commit('changeUserLoc', { lat: 37.507072, lng: 127.0366208 });
+            if (navigator) {
                 // GeoLocation을 이용해서 접속 위치를 얻어옵니다
                 navigator.geolocation.getCurrentPosition(function(position) {
                     var lat = position.coords.latitude, // 위도
                         lon = position.coords.longitude; // 경도
                         commit('changeUserLoc', { lat: lat, lng: lon });
                 });
-            } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-                commit('changeUserLoc', { lat: 37.507072, lng: 127.0366208 });
             }
         }
     },

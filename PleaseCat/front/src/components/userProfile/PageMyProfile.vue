@@ -9,7 +9,25 @@
             <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
-                    <button>팔로우</button>
+                    <button id="show-modal-loc" @click="showModalFollow = true">
+                        팔로우
+                    </button>
+                    <ModalComponent v-if="showModalFollow" @close="showModalFollow = false">
+                        <h3 slot="head">
+                            팔로우 목록
+                        </h3>
+                        <h3 slot="body">
+                            본문
+                            본문
+                            본문
+                            본문
+                            본문
+                            본문
+                        </h3>
+                        <div slot="foot">
+                            <button @click="$emit('close')">Close</button>
+                        </div>
+                    </ModalComponent>
                 </span>
                 <span id="detailButton" class="btn text">
                     <router-link :to="`/catDetail/${no}`"><button>상세 정보</button></router-link>
@@ -22,9 +40,9 @@
         <span class="summary">팔로우<br>{{ getLoginInfo.count_followers }}</span>
         <span class="summary">좋아요<br>{{ getLoginInfo.count_likes }}</span>
     </div>
-    <div id="photoView" v-if="(userPosts != null)">
+    <div id="photoView" v-if="(myPosts != null)">
         <div id="photoList">
-            <span v-for="(post, idx) in userPosts" :key="idx">
+            <span v-for="(post, idx) in myPosts" :key="idx">
                 <router-link :to="{name:''}">
                     <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
                     </span>
@@ -39,17 +57,20 @@
 <script>
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
+import ModalComponent from "@/components/post/addPost/Modal.vue";
 
 export default {
     name: 'myProfile',
+    components: { ModalComponent },
     data(){
         return{
+            showModalFollow: false,
             no: '',
         }
     },
     computed:{
         ...mapGetters('storePost',[
-            'userPosts',
+            'myPosts',
         ]),
         ...mapGetters([
             'getLoginInfo',
@@ -91,8 +112,10 @@ export default {
     width: 90%;
     vertical-align: middle;
     text-align: center;
-    background-color: white;
-    // border: 2px solid red;
+    background-color: #F2E6E1;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px 2px black;
+    
     img {
         width: 100%;
         border-radius: 100%;
@@ -129,10 +152,12 @@ export default {
     width: 90%;
     text-align: center;
     padding: 5px 0 5px 0;
+    
+    border-radius: 10px;
     // box-sizing: border-box;
     // border: 1px solid blue;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    // border-top: 1px solid black;
+    // border-bottom: 1px solid black;
     .summary{
         display: inline-block;
         width: 33.3%;
@@ -152,11 +177,13 @@ export default {
             background-color: black;
             display: inline-block;
             overflow: hidden;
-            width: calc((100% - 6px) / 3);
+            width: calc((100% - 12px) / 3);
             text-align: center;
             vertical-align: middle;
             box-sizing: border-box;
-            margin: 1px;
+            margin: 2px;
+            border-radius: 3px;
+            box-shadow: 1px 1px 5px 1px black;
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;

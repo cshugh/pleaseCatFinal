@@ -40,10 +40,17 @@ export default {
     },
     state: {
         userList: '',
+        selectedUser: null,
     },
     mutations: { // (state, payload, rootState?)
         changeUserList(state, payload, rootState) {
             state.userList = payload;
+        },
+        changeSelectedUser(state, payload, rootState) {
+            state.selectedUser = payload;
+        },
+        clearSelectedUser(state, payload) {
+            state.selectedUser = null;
         }
     },
     actions: { // ({ dispatch, commit, getters, rootGetters }, data, ...) 'context.'는 생략
@@ -61,11 +68,30 @@ export default {
                     // always executed
                     // console.log(vm.man);
                 });
-        }
+        },
+        getSelectedUser({ dispatch, commit, getters, rootGetters },data){
+            axios
+                .get(`${rootGetters.getServer}/api/user/searchUserNo?user_no=${data}`)
+                .then(res => {
+                    // handle success
+                    var userInfo = res.data.data;
+                    commit('changeSelectedUser', userInfo);
+                })
+                .catch(err => {
+                    // handle error
+                })
+                .then(() => {
+                    // always executed
+                    // console.log(vm.man);
+                });
+        },
     },
     getters: { // (state, getters, rootState, rootGetters)
         userList: state => {
             return state.userList;
+        },
+        selectedUser: state => {
+            return state.selectedUser;
         },
     }
 };

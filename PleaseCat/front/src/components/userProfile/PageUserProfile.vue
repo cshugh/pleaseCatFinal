@@ -1,12 +1,16 @@
 <template>
 <div id="myProfile">
     <div class="emptySpace">-Navigation Bar-</div>
-    <div id="profileView" v-if="(getLoginInfo != null)">
-        <div id="leftPart">
-            <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile">
+    <div class="profileView" >
+        <div class="leftPart" v-if="(selectedUser != null)">
+            <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile">
+        </div>
+        <div id="fakeleftPart" class="leftPart" v-if="(selectedUser === null)">
+            <img id="userPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
         </div>
         <section id="rightPart">
-            <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
+            <div class="name" v-if="(selectedUser != null)"><h1 id="userName" class="text">{{ selectedUser.user_id }}</h1></div>
+            <div id="fakename" class="name" v-if="(selectedUser === null)"><h1 id="userName" class="text">사용자</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
                     <button>팔로우</button>
@@ -17,10 +21,10 @@
             </div>
         </section>
     </div>
-    <div id="summaryView" class="text" v-if="(getLoginInfo != null)">
-        <span class="summary">게시물<br>{{ getLoginInfo.count_posts }}</span>
-        <span class="summary">팔로우<br>{{ getLoginInfo.count_followers }}</span>
-        <span class="summary">좋아요<br>{{ getLoginInfo.count_likes }}</span>
+    <div id="summaryView" class="text" v-if="(selectedUser != null)">
+        <span class="summary">게시물<br>{{ selectedUser.count_posts }}</span>
+        <span class="summary">팔로우<br>{{ selectedUser.count_followers }}</span>
+        <span class="summary">좋아요<br>{{ selectedUser.count_likes }}</span>
     </div>
     <div id="photoView" v-if="(userPosts != null)">
         <div id="photoList">
@@ -44,6 +48,12 @@ export default {
     name: 'userProfile',
     created() {
         this.no = this.$route.params.user_no;
+        this.getSelectedUser(this.no);
+        this.getUserPosts(this.no);
+    },
+    destroyed() {
+        this.clearSelectedUser();
+        this.clearUserPosts();
     },
     data(){
         return{
@@ -51,13 +61,30 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('storePost',[
-            'userPosts',
-        ]),
         ...mapGetters([
             'getLoginInfo',
         ]),
+        ...mapGetters('storeUser',[
+            'selectedUser',
+        ]),
+        ...mapGetters('storePost',[
+            'userPosts',
+        ]),
     },
+    methods: {
+        ...mapMutations('storeUser',[
+            'clearSelectedUser',
+        ]),
+        ...mapMutations('storePost',[
+            'clearUserPosts',
+        ]),
+        ...mapActions('storeUser',[
+            'getSelectedUser',
+        ]),
+        ...mapActions('storePost',[
+            'getUserPosts',
+        ])
+    }
 }
 </script>
 
@@ -87,14 +114,17 @@ export default {
         color: black;
     }
 }
-#profileView{
+.profileView{
     padding: 2% 2% 0 2%;
     position: relative;
     display: inline-block;
-    width: 90%;
+    width: 90vw;
+    height: 36vw;
     vertical-align: middle;
     text-align: center;
-    background-color: white;
+    background-color: #F2E6E1;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
     // border: 2px solid red;
     img {
         width: 100%;
@@ -105,7 +135,7 @@ export default {
         display: block;
         padding-bottom: 100%;
     }
-    #leftPart{
+    .leftPart{
         width: 30%;
         position: absolute;
         left: 5%;
@@ -116,16 +146,18 @@ export default {
     #rightPart{
         position: absolute;
         left: 40%;
-        
+        #fakename{
+            visibility: hidden;
+        }
         // box-sizing: border-box;
         // border: 1px solid red;
     }
 }
-#profileView::after{
-    content: "";
-    display: block;
-    padding-bottom: 40%;
-}
+// #profileView::after{
+//     content: "";
+//     display: block;
+//     padding-bottom: 40%;
+// }
 #summaryView{
     display: inline-block;
     font-size: 3vw;
@@ -134,8 +166,8 @@ export default {
     padding: 5px 0 5px 0;
     // box-sizing: border-box;
     // border: 1px solid blue;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    // border-top: 1px solid black;
+    // border-bottom: 1px solid black;
     .summary{
         display: inline-block;
         width: 33.3%;
@@ -155,11 +187,12 @@ export default {
             background-color: black;
             display: inline-block;
             overflow: hidden;
-            width: calc((100% - 6px) / 3);
+            width: calc((100% - 12px) / 3);
             text-align: center;
             vertical-align: middle;
             box-sizing: border-box;
             margin: 1px;
+            box-shadow: 1px 1px 5px 1px black;
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;
