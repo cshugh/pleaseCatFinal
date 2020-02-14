@@ -12,7 +12,7 @@ import PageAddCat from '../components/post/addCat/PageAddCat'
 import Comment from '../components/comment/Comment'
 import PageDetailPost from '@/components/post/detailPost/PageDetailPost'
 // import PageNearMap from '@/components/catMap/PageNearMap'
-import ModalParent from '../components/post/addPost/ModalParent'
+// import ModalParent from '../components/post/addPost/ModalParent'
 import PageNearMap from '@/components/map/PageNearMap'
 import PageMyProfile from '@/components/userProfile/PageMyProfile'
 import PageUserProfile from '@/components/userProfile/PageUserProfile'
@@ -79,11 +79,6 @@ const routes = [
     path: '/addCat',
     name: 'PageAddCat',
     component: PageAddCat
-  },
-  {
-    path: '/modalParent',
-    name: 'ModalParent',
-    component: ModalParent
   },
   {
     path: '/myProfile',
