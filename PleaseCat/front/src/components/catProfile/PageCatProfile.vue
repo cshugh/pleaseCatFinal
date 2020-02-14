@@ -4,11 +4,15 @@
     <div class="profileView">
         <div class="leftPart" v-if="(selectedCat != null)">
             <!-- <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile"> -->
+<<<<<<< HEAD
             <img id="catPhoto" :src='`/home/ubuntu/images/cat/${ selectedCat.cat_no }.jpg`' alt="catProfile">
+=======
+            <img id="catPhoto" :src='`/static/images/cat/${ selectedCat.cat_no }.jpg`' alt="catProfile">
+>>>>>>> e38e049c9d994ccce65b34b1c6b2b36bdaf3a45d
         </div>
         <div id="fakeleftPart" class="leftPart" v-if="(selectedCat === null)">
             <!-- <img id="catPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile"> -->
-            <img id="catPhoto" src='/home/ubuntu/images/icon/user.png' alt="catProfile">
+            <img id="catPhoto" src='/static/images/icon/user.png' alt="catProfile">
         </div>
         <section id="rightPart">
             <div class="name"><h1 id="catName" class="text" v-if="(selectedCat != null)">{{ selectedCat.cat_name }}</h1></div>
@@ -33,7 +37,7 @@
             <span v-for="(post, idx) in catPosts" :key="idx">
                 <router-link :to="`/detailPost/${post.post_no}`">
                     <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> -->
-                    <span class="photo" :style="{'background-image' : url(`/home/ubuntu/images/post/${ post.post_image }`)}"  :alt='`${ post.post_image }`'>
+                    <span class="photo" :style="{'background-image' : url(`/static/images/post/${ post.post_image }`)}"  :alt='`${ post.post_image }`'>
                     </span>
                 </router-link>
             </span>
