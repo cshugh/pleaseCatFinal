@@ -54,9 +54,12 @@ export default {
             } else if (state.detailPostList[payload.page].comment_time < 1440) {
                 state.detailPostList[payload.page].comment_time =
                     Math.floor(state.detailPostList[payload.page].comment_time / 60) + "시간 전";
-            } else if (state.detailPostList[payload.page].comment_time < 44640) {
+            } else if (state.detailPostList[payload.page].comment_time < 10080) {
                 state.detailPostList[payload.page].comment_time =
                     Math.floor(state.detailPostList[payload.page].comment_time / 1440) + "일 전";
+            } else if (state.detailPostList[payload.page].comment_time < 44640) {
+                state.detailPostList[payload.page].comment_time =
+                    Math.floor(state.detailPostList[payload.page].comment_time / 10080) + "주 전";
             } else if (state.detailPostList[payload.page].comment_time < 525600) {
                 state.detailPostList[payload.page].comment_time =
                     Math.floor(state.detailPostList[payload.page].comment_time / 44640) +
@@ -94,6 +97,9 @@ export default {
         */
         getSetDetailPost({ state, dispatch, commit, getters, rootGetters }){
             commit('detailPostListSet');
+        },
+        getAddComment({ state, dispatch, commit, getters, rootGetters }, {comment_content, post_no, user_no}){
+            axios.post(`${rootGetters.getServer}/api/comment/insert?comment_content=${comment_content}&post_no=${post_no}&user_no=${user_no}`);
         },
         getDetailPostList({ state, dispatch, commit, getters, rootGetters }, {post_no}) {
             commit('setPostNo', { postNo: post_no });

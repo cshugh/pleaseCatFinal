@@ -78,9 +78,12 @@ export default {
             } else if (state.newsFeedList[payload.page].post_time < 1440) {
                 state.newsFeedList[payload.page].post_time =
                     Math.floor(state.newsFeedList[payload.page].post_time / 60) + "시간 전";
-            } else if (state.newsFeedList[payload.page].post_time < 44640) {
+            } else if (state.newsFeedList[payload.page].post_time < 10080) {
                 state.newsFeedList[payload.page].post_time =
                     Math.floor(state.newsFeedList[payload.page].post_time / 1440) + "일 전";
+            } else if (state.newsFeedList[payload.page].post_time < 44640) {
+                state.newsFeedList[payload.page].post_time =
+                    Math.floor(state.newsFeedList[payload.page].post_time / 10080) + "주 전";
             } else if (state.newsFeedList[payload.page].post_time < 525600) {
                 state.newsFeedList[payload.page].post_time =
                     Math.floor(state.newsFeedList[payload.page].post_time / 44640) +

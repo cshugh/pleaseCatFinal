@@ -5,34 +5,37 @@
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <template>
   <div>
-    <div id="content">
-      <img :src="require(`../../../assets/images/cat/1.jpg`)" id="img" />
-    </div>
-    <div>
-      <div class="content" id="post_content">{{post_content}}</div>
-    </div>
-    <div
-      v-infinite-scroll="getDetailPostList2"
-      infinite-scroll-disabled="busy"
-      infinite-scroll-distance="limit"
-    >
-      <div id="repeat" class="text" v-for="list in detailPostList" :key="list.comment_no">
-        <div class="comment" id="profileDiv">
-          <!-- <router-link v-bind:to="{name:'Home'}"> -->
-          <button id="profileButton">
-            <img :src="require(`../../../assets/images/cat/1.jpg`)" id="profile" />
-          </button>
-          <!-- </router-link> -->
-        </div>
-        <div class="comment">
-          <div>{{list.user_id}} {{list.comment_content}}</div>
-          <div>{{list.comment_time}} 신고</div>
-        </div>
+    <div id="wrapper">
+      <div v-if="this.post_image" id="content">
+        <img :src="require(`../../../assets/images/cat/${this.post_image}`)" id="img" />
       </div>
-      <hr />
-      <br />
+      <div>
+        <div class="content" id="post_content">{{post_content}}</div>
+      </div>
+      <div
+        v-infinite-scroll="getDetailPostList2"
+        infinite-scroll-disabled="busy"
+        infinite-scroll-distance="limit"
+      >
+        <div id="repeat" class="text" v-for="list in detailPostList" :key="list.comment_no">
+          <div class="comment" id="profileDiv">
+            <!-- <router-link v-bind:to="{name:'Home'}"> -->
+            <button id="profileButton">
+              <img :src="require(`../../../assets/images/cat/${list.user_image}`)" id="profile" />
+            </button>
+            <!-- </router-link> -->
+          </div>
+          <div class="comment">
+            <div>{{list.user_id}} {{list.comment_content}}</div>
+            <div>{{list.comment_time}} 신고</div>
+          </div>
+        </div>
+        <hr />
+        <br />
+      </div>
+      <!-- <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading> -->
     </div>
-    <!-- <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading> -->
+    <div id="inputComment">댓글 <input v-on:keyup.enter="inputComment()" v-model="comment" placeholder="댓글을 입력해주세요"><button v-on:click="inputComment()">버튼</button></div>
   </div>
 </template>
 <script>
@@ -43,12 +46,13 @@ export default {
   created() {
     this.getSetDetailPost();
     this.post_no = this.$route.params.post_no;
-    this.getDetailPostList({post_no: this.post_no});
+    this.getDetailPostList({ post_no: this.post_no });
     this.getDetailPostInfo(this.post_no);
   },
   data() {
     return {
-      post_no: 0
+      post_no: 0,
+      comment: "",
     };
   },
   computed: {
@@ -58,19 +62,37 @@ export default {
       "limit",
       "post_image",
       "post_content"
-    ])
+    ]),
+    ...mapGetters(["getLoginInfo"]),
   },
   methods: {
     ...mapActions("storeDetailPost", [
       "getDetailPostList",
       "getDetailPostList2",
       "getDetailPostInfo",
+      "getAddComment",
       "getSetDetailPost"
-    ])
+    ]),
+    inputComment(){
+      this.getAddComment({ comment_content: this.comment, post_no: this.post_no, user_no: this.getLoginInfo.user_no});
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
+#wrapper {
+  padding-bottom: 150px;
+}
+#inputComment {
+  background-color: white;
+  width: 100%;
+  position: fixed;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding-bottom: 100px;
+}
 button {
   padding-top: 50px;
 }
