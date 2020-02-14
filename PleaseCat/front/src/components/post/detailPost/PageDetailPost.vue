@@ -7,7 +7,7 @@
   <div>
     <div id="wrapper">
       <div v-if="this.post_image" id="content">
-        <img :src="require(`../../../assets/images/cat/${this.post_image}`)" id="img" />
+        <img :src="require(`../../../assets/images/posts/${this.post_image}`)" id="img" />
       </div>
       <div>
         <div class="content" id="post_content">{{post_content}}</div>
