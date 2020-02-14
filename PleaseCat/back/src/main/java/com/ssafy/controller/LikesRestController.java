@@ -59,6 +59,12 @@ public class LikesRestController {
 		return handleSuccess(likesService.searchAllLikes(user_no));
 	}
 	
+	@ApiOperation("user_no로 모든 좋아요 정보를 찾는다.")
+	@GetMapping("/searchAllLikesOfUser{user_no}")
+	public ResponseEntity<Map<String, Object>> searchAllLikesOfUser(@RequestParam int user_no) throws Exception{
+		return handleSuccess(likesService.searchAllLikesOfUser(user_no));
+	}
+	
 	@ApiOperation("좋아요를 누른다")
 	@PostMapping("/insert")
 	public ResponseEntity<Map<String, Object>> insertLikes(@RequestParam int user_no, @RequestParam int post_no) throws Exception{
