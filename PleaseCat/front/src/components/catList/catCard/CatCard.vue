@@ -3,11 +3,7 @@
       <router-link :to="`/catProfile/${src}`">
       <div class="card" :class="{hover: isHovering}" @mouseover="isHovering=true" @mousemove="isHovering=true" @mouseout="isHovering=false">
           <!-- <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cats/_profile/${src}.jpg`)+')'}"></div> -->
-<<<<<<< HEAD
-          <div class="bg" :style="{'background-image': url(`/home/ubuntu/images/cat/${src}.jpg`)}"></div>
-=======
           <div class="bg" :style="{'background-image': url(`/static/images/cat/${src}.jpg`)}"></div>
->>>>>>> e38e049c9d994ccce65b34b1c6b2b36bdaf3a45d
           <div class="text name">
               <h3>{{ name }}</h3>
           </div>

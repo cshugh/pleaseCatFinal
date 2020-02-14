@@ -4,11 +4,7 @@
     <div class="profileView">
         <div class="leftPart" v-if="(selectedCat != null)">
             <!-- <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile"> -->
-<<<<<<< HEAD
-            <img id="catPhoto" :src='`/home/ubuntu/images/cat/${ selectedCat.cat_no }.jpg`' alt="catProfile">
-=======
             <img id="catPhoto" :src='`/static/images/cat/${ selectedCat.cat_no }.jpg`' alt="catProfile">
->>>>>>> e38e049c9d994ccce65b34b1c6b2b36bdaf3a45d
         </div>
         <div id="fakeleftPart" class="leftPart" v-if="(selectedCat === null)">
             <!-- <img id="catPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile"> -->
