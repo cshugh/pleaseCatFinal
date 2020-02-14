@@ -3,10 +3,12 @@
     <div class="emptySpace">-Navigation Bar-</div>
     <div class="profileView" >
         <div class="leftPart" v-if="(selectedUser != null)">
-            <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile">
+            <!-- <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile"> -->
+            <img id="userPhoto" :src='`/static/images/user/${ selectedUser.user_no }.jpg`' alt="catProfile">
         </div>
         <div id="fakeleftPart" class="leftPart" v-if="(selectedUser === null)">
-            <img id="userPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
+            <!-- <img id="userPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile"> -->
+            <img id="userPhoto" :src='`/static/images/icons/user.png`' alt="catProfile">
         </div>
         <section id="rightPart">
             <div class="name" v-if="(selectedUser != null)"><h1 id="userName" class="text">{{ selectedUser.user_id }}</h1></div>
@@ -30,7 +32,8 @@
         <div id="photoList">
             <span v-for="(post, idx) in userPosts" :key="idx">
                 <router-link :to="`/detailPost/${post.post_no}`">
-                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> 
+                    <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>  -->
+                    <span class="photo" :style="{'background-image' : url(`/static/images/posts/${ post.post_image }`)}"  :alt='`${ post.post_image }`'> 
                     </span>
                 </router-link>
             </span>
