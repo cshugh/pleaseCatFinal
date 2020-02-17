@@ -21,8 +21,9 @@
     </div>
     <div class="btn-wrap">
       <router-link :to="'/signUp'">
-        <button class="btn-login" v-on:click="login">로그인</button>
+        회원가입
       </router-link>
+      <button class="btn-login" v-on:click="login">로그인</button>
     </div>
   </div>
 </template>
