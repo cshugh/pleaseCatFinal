@@ -4,8 +4,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <template>
-  <div>
-    <div id="wrapper">
+  <div id="out">
+    <div id="wrapper" class="in">
       <div v-if="this.post_image" id="content">
         <img :src="require(`../../../assets/images/posts/${this.post_image}`)" id="img" />
       </div>
@@ -18,24 +18,28 @@
         infinite-scroll-distance="limit"
       >
         <div id="repeat" class="text" v-for="list in detailPostList" :key="list.comment_no">
-          <div class="comment" id="profileDiv">
+          <div id="commentWrapper">
+          <div class="comment left" id="profileDiv">
             <!-- <router-link v-bind:to="{name:'Home'}"> -->
-            <button id="profileButton">
+            <button id="profileButton" class="left">
               <img :src="require(`../../../assets/images/cat/${list.user_image}`)" id="profile" />
             </button>
             <!-- </router-link> -->
           </div>
-          <div class="comment">
-            <div>{{list.user_id}} {{list.comment_content}}</div>
-            <div>{{list.comment_time}} 신고</div>
+          <div class="comment left" id="comment2">
+            <div><span id="userIdSpan">{{list.user_id}}</span> {{list.comment_content}}</div>
+            <div id="comment_time">{{list.comment_time}} 신고</div>
           </div>
+        </div>
+        <br>
+        <br>
         </div>
         <hr />
         <br />
       </div>
       <!-- <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading> -->
     </div>
-    <div id="inputComment">댓글 <input v-on:keyup.enter="inputComment()" v-model="comment" placeholder="댓글을 입력해주세요"><button v-on:click="inputComment()">버튼</button></div>
+    <div class="in" id="inputComment">댓글 <input v-on:keyup.enter="inputComment()" v-model="comment" placeholder="댓글을 입력해주세요"><button v-on:click="inputComment()">버튼</button></div>
   </div>
 </template>
 <script>
@@ -80,6 +84,34 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+#userIdSpan{
+  font-weight: 700;
+}
+#comment_time{
+  float: left;
+}
+#comment2{
+  float: left;
+  padding-top: 50px;
+  padding-left: 7px;
+}
+
+.left{
+  float: left;
+}
+#commentWrapper{
+  float: left;
+}
+@media (min-width: 600px) {
+  #out {
+ width: 100%;
+ text-align: center;
+ }
+  .in {
+    display: inline-block;
+    width: 600px;
+  }
+}
 #wrapper {
   padding-bottom: 150px;
 }
@@ -97,40 +129,13 @@ button {
   padding-top: 50px;
 }
 #profileDiv {
-  width: 40px;
+  width: 50px;
+  float: left;
+  padding-left: 10px;
 }
-#detailTrue {
-  font-size: 18px;
-  display: inline-block;
-  width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
-  white-space: normal;
-  line-height: 1.2;
-  text-align: left;
-  word-wrap: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-#detailFalse {
-  font-size: 18px;
-  display: inline-block;
-  width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
-  white-space: normal;
-  line-height: 1.2;
-  text-align: left;
-  word-wrap: break-word;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-}
-.comment {
-  display: inline-block;
-}
+// .comment {
+//   display: inline-block;
+// }
 .content {
   font-size: 18px;
   display: inline-block;
@@ -146,22 +151,6 @@ button {
   // -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-#HR {
-  display: inline;
-}
-.HR {
-  display: inline;
-}
-.HRSize {
-  width: 100%;
-}
-.btnSize {
-  width: 9%;
-}
-.like {
-  font-size: 3vw;
-  display: inline;
-}
 #content {
   height: 100%;
   font-size: 0;
@@ -169,15 +158,6 @@ button {
 }
 #img {
   width: 100%;
-}
-.top {
-  font-size: 3vw;
-  display: inline;
-}
-#time {
-  height: 100%;
-  float: bottom;
-  float: right;
 }
 #repeat {
   background-color: white;
@@ -190,8 +170,5 @@ button {
 #profile {
   width: 100%;
   border-radius: 100%;
-}
-#profileButton {
-  width: 100%;
 }
 </style>

@@ -200,6 +200,7 @@ export default {
   height: 50px;
 }
 #userId {
+  font-weight: 700;
   padding-left: 3px;
   float: left;
   line-height: 2.6;
