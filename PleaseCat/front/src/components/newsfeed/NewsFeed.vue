@@ -205,6 +205,7 @@ export default {
   width: 90%;
 }
 #likeWrapper{
+  padding-left: 12px;
   width: 450px;
 }
 .HR{
@@ -288,7 +289,7 @@ export default {
 .content {
   font-size: 18px;
   display: inline-block;
-  width: 200px;
+  width: 450px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
