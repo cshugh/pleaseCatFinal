@@ -4,6 +4,7 @@
     <div id="profileView" v-if="(getLoginInfo != null)">
         <div id="leftPart">
             <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile">
+            <!-- <img id="userPhoto" :src='' alt="catProfile"> -->
         </div>
         <section id="rightPart">
             <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
@@ -37,6 +38,7 @@
             <span v-for="(post, idx) in myPosts" :key="idx">
                 <router-link :to="{name:''}">
                     <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
+                    <!-- <span class="photo" :style="{'background-image' : `/home/ubuntu/images/post/${ post.post_image }`}"  :alt='`${ post.post_image }`'> -->
                     </span>
                 </router-link>
             </span>
@@ -84,7 +86,7 @@ export default {
         background-color: white;
         font-size: 2.7vw;
         padding: 3px 12px 3px 12px;
-        box-shadow: 1px 1px 5px 0px black;
+        box-shadow: 0px 0px 4px 0px black;
     }
     h1{
         font-size: 7vw;
@@ -171,12 +173,12 @@ export default {
             background-color: black;
             display: inline-block;
             overflow: hidden;
-            width: calc((100% - 12px) / 3);
+            width: calc((100% - 3vw) / 3);
             text-align: center;
             vertical-align: middle;
             box-sizing: border-box;
-            margin: 2px;
-            border-radius: 3px;
+            margin: 0.5vw;
+            border-radius: 1vw;
             box-shadow: 1px 1px 5px 1px black;
             // border: 1px solid red;
             background-position-x: 50%;

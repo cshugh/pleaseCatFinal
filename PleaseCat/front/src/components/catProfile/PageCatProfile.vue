@@ -95,8 +95,12 @@ export default {
         border: 1px solid #dbdbdb;
         border-radius: 3px;
         color: #262626;
+        background-color: white;
         font-size: 2.7vw;
         padding: 3px 12px 3px 12px;
+        font-size: 2.7vw;
+        padding: 3px 12px 3px 12px;
+        box-shadow: 0px 0px 4px 0px black;
     }
     h1{
         font-size: 7vw;
@@ -184,11 +188,12 @@ export default {
             background-color: black;
             display: inline-block;
             overflow: hidden;
-            width: calc((100% - 12px) / 3);
+            width: calc((100% - 3vw) / 3);
             text-align: center;
             vertical-align: middle;
             box-sizing: border-box;
-            margin: 1px;
+            margin: 0.5vw;
+            border-radius: 1vw;
             box-shadow: 1px 1px 5px 1px black;
             // border: 1px solid red;
             background-position-x: 50%;

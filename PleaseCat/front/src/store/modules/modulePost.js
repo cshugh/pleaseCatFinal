@@ -63,7 +63,7 @@ export default {
         getUserPosts({ dispatch, commit, getters, rootGetters }, data) {
             console.log('getUserPosts');
             axios
-                .get(`${rootGetters.getServer}/api/post/searchPostUser?User_no=${data.user_no}`)
+                .get(`${rootGetters.getServer}/api/post/searchPostUser?User_no=${data}`)
                 .then(res => {
                     // handle success
                     commit('changeUserPosts', res.data.data);

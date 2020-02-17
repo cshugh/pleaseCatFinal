@@ -103,7 +103,7 @@ export default new Vuex.Store({
                     var obj = eval("("+response.data.data+")");
                     if(response.data.state === 'ok'){
                         commit('changeLoginId', obj);
-                        dispatch('storePost/getUserPosts', state.loginInfo)
+                        dispatch('storePost/getUserPosts', state.loginInfo.user_no)
                         dispatch('storeNewsFeed/getNewsFeedList')
                         dispatch('storeNewsFeed/getIsLike')
                     } else {

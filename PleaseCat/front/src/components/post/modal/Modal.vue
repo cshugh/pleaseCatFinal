@@ -22,18 +22,6 @@
 </template>
 
 <style lang="scss" scoped>
-.modal-container{
-  background-color: #F2E6E1;
-}
-.modal-header{
-  background-color: #F2E6E1;
-}
-.modal-body{
-  background-color: #F2E6E1;
-}
-.modal-footer{
-  background-color: #F2E6E1;
-}
 .closeModalBtn {
 	z-index: 9998;
   color: #62acde;
