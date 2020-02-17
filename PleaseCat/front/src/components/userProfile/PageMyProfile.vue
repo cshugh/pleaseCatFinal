@@ -4,7 +4,7 @@
     <div id="profileView" v-if="(getLoginInfo != null)">
         <div id="leftPart">
             <!-- <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile"> -->
-            <img id="userPhoto" :src='`/static/images/user/${ getLoginInfo.user_no }.jpg`' alt="myProfile">
+            <img id="userPhoto" :src='`/static/images/user/${ getLoginInfo.user_no }.jpg`' alt="catProfile">
             <!-- <img id="userPhoto" :src='' alt="catProfile"> -->
         </div>
         <section id="rightPart">

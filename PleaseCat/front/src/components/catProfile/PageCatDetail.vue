@@ -3,16 +3,20 @@
     <div class="emptySpace">-Navigation Bar-</div>
     <div id="photoView">
         <div id="cat" >
+            <router-link :to="`/catProfile/${selectedCat.cat_no}`">
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
             <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
             <img id="catPhoto" :src='require(`../../assets/images/cats/_profile/${selectedCat.cat_no}.jpg`)' alt="">
             <h1 id="catName" class="text">{{selectedCat.cat_name}}</h1>
+            </router-link>
         </div>
         <div id="man" v-if="catManager">
+            <router-link :to="`/userProfile/${catManager.user_no}`">
             <!-- <img id="manPhoto" src="../../assets/images/man/1.jpg" alt="" > -->
             <img id="manPhoto" :src='require(`../../assets/images/man/${catManager.user_no}.jpg`)' alt="">
             <h1 id="manName" class="text">{{catManager.user_id}}</h1>
+            </router-link>
         </div>
     </div>
     <div id="descView" class="text">
@@ -27,18 +31,19 @@
     <div id="mapView">
         <mapComponent v-if="postList" txt="readPost" :pos="positions" />
     </div>
-    <div id="rankView">
+    <div id="rankView" v-if="rankList">
         <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div>
-        <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
+        <RankComponent v-for="(rank, idx) in rankList" :key="idx" :ranking="idx+1" :user_no="rank.user_no" :score='rank.rank_point' :name="rank.user_id"/>
+        <!-- <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
         <RankComponent :ranking='2' :name="'김집사'" :user_no='3' :score='97'/>
-        <RankComponent :ranking='3' :name="'박집사'" :user_no='2' :score='89'/>
+        <RankComponent :ranking='3' :name="'박집사'" :user_no='2' :score='89'/> -->
     </div>
     <div class="emptySpace">-Tab Bar-</div>
 </div>
 </template>
 
 <script>
-import mapComponent from '@/components/catMap/map'
+import mapComponent from '@/components/map/map'
 import RankComponent from './view/Rank';
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
@@ -47,8 +52,7 @@ export default {
     name: 'catProfile',
     created() {
         this.no = this.$route.params.cat_no;
-        // this.server = this.$store.state.server;
-        // this.pullMan();
+        this.getRankList({cat_no: this.no});
     },
     data(){
         return{
@@ -65,12 +69,15 @@ export default {
         ...mapGetters('storePost',[
             'postList',
         ]),
+        ...mapGetters('storeUser/storeRank',[
+            'rankList',
+        ]),
         selectedCat: function() {
             return this.catList[this.no - 1];
         },
         catManager: function() {
             if(this.selectedCat != null){
-                return this.userList[this.selectedCat.cat_manager];
+                return this.userList[this.selectedCat.cat_manager-1];
             } else {
                 return null;
             }
@@ -96,6 +103,9 @@ export default {
         mapComponent,
     },
     methods: {
+        ...mapActions('storeUser/storeRank',[
+            'getRankList',
+        ]),
     }
 }
 </script>

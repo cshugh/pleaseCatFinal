@@ -91,7 +91,7 @@ export default {
         height: 100%;
         overflow: hidden;
         background-color: #000;
-        box-shadow: 10px 10px 15px 0px rgba(48, 54, 62, 0.7);
+        box-shadow: 2px 2px 10px 2px black;
         border-radius: 30px;
         height: 100%;
         .bg {

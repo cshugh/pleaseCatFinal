@@ -4,16 +4,16 @@
 	
 <mapper namespace="com.ssafy.model.dao.CommentDao" >
 	
-	<insert id ="insertComment" parameterType="comment">
+	<insert id ="insertComment" parameterType="hashmap" useGeneratedKeys="true" keyProperty="comment_no">
 	insert into COMMENT(post_no, user_no,comment_time,comment_content,comment_like,comment_unlike,comment_report) 
 				values(  <!-- INT로 써줘서 오류 났었음 INTEGER해줘야함 -->
 					  #{post_no:INTEGER}
 					  ,#{user_no:INTEGER}
-					  ,#{comment_time:VARCHAR}
+					  ,NOW()
 					  ,#{comment_content:VARCHAR}
-					  ,#{comment_like:INTEGER}
-					  ,#{comment_unlike:INTEGER}
-					  ,#{comment_report:INTEGER})			
+					  ,0
+					  ,0
+					  ,0)		
 	</insert>
    
     <select id = "searchCommentPost" parameterType="int" resultType="comment">
