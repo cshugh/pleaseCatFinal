@@ -5,6 +5,7 @@
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <template>
   <div id="out">
+    <div id="paddingTop"></div>
     <div id="wrapper" class="in">
       <div v-if="this.post_image" id="content">
         <img :src="require(`../../../assets/images/posts/${this.post_image}`)" id="img" />
@@ -33,8 +34,8 @@
         </div>
         <br>
         <br>
+        <br>
         </div>
-        <hr />
         <br />
       </div>
       <!-- <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading> -->
@@ -84,6 +85,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+#paddingTop{
+  padding-top: 50px;
+}
 #userIdSpan{
   font-weight: 700;
 }
@@ -138,8 +142,9 @@ button {
 // }
 .content {
   font-size: 18px;
+  padding-left: 6.3px;
   display: inline-block;
-  width: 200px;
+  width: 470px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
