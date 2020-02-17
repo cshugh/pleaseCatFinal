@@ -11,11 +11,12 @@
             <!-- <img id="catPhoto" src='/static/images/icon/user.png' alt="catProfile"> -->
         </div>
         <section id="rightPart">
-            <div class="name"><h1 id="catName" class="text" v-if="(selectedCat != null)">{{ selectedCat.cat_name }}</h1></div>
-            <div id="fakename" class="name" v-if="(selectedCat === null)"><h1 id="catName" class="text">고양이</h1></div>
+            <div id="name" v-if="(selectedCat != null)"><h1 id="catName" class="text">{{ selectedCat.cat_name }}</h1></div>
+            <div id="name" v-if="(selectedCat == null)"><h1 id="catName" class="text"> 고양이 </h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
-                    <button >팔로우</button>
+                    <button v-if="!followed" @click="postAddFollow(selectedCat.cat_no)">팔로우</button>
+                    <button v-if="followed" @click="deleteFollow(selectedCat.cat_no)">언팔로우</button>
                 </span>
                 <span id="detailButton" class="btn text">
                     <router-link :to="`/catDetail/${no}`"><button>상세 정보</button></router-link>
@@ -24,8 +25,8 @@
         </section>
     </div>
     <div id="summaryView" class="text" v-if="(selectedCat != null)">
-        <span class="summary">게시물<br>{{ selectedCat.count_followers }}</span>
-        <span class="summary" @click="showModalFollower = true">팔로우<br>{{ selectedCat.count_likes }}</span>
+        <span class="summary">게시물<br>{{ selectedCat.count_posts }}</span>
+        <span class="summary" @click="showModalFollower = true">팔로우<br>{{ selectedCatFollowerList.length }}</span>
             <modal v-if="showModalFollower" @close="showModalFollower = false">
                 <div slot="header">
                     <h3>Follower List</h3>
@@ -42,9 +43,9 @@
                     <button @click="showModalFollower = false"> 확인</button>
                 </div>
             </modal>
-        <span class="summary">좋아요<br>{{ selectedCat.count_posts }}</span>
+        <span class="summary">좋아요<br>{{ selectedCat.count_likes }}</span>
     </div>
-    <div id="photoView" v-if="(catPosts != null)">
+    <div id="photoView">
         <div id="photoList">
             <span v-for="(post, idx) in catPosts" :key="idx">
                 <router-link :to="`/detailPost/${post.post_no}`">
@@ -87,11 +88,22 @@ export default {
     },
     computed:{
         ...mapGetters('storeCat',[
-            'selectedCat', 'selectedCatFollowerList'
+            'selectedCat', 'selectedCatFollowerList', 'myFollowingCatList',
+            'catList',
         ]),
         ...mapGetters('storePost',[
             'catPosts',
         ]),
+        followed: function(myFollowingCatList){
+            const cno = this.$route.params.cat_no;
+            var result = false;
+            this.myFollowingCatList.forEach(el => {
+                if(el.cat_no == cno){
+                    return result = true;
+                }
+            });
+            return result;
+        },
     },
     methods: {
         ...mapMutations('storeCat',[
@@ -101,7 +113,7 @@ export default {
             'clearCatPosts',
         ]),
         ...mapActions('storeCat',[
-            'getSelectedCat',  'getCatFollowerList',
+            'getSelectedCat',  'getCatFollowerList', 'postAddFollow', 'deleteFollow',
         ]),
         ...mapActions('storePost',[
             'getCatPosts',
@@ -145,13 +157,12 @@ export default {
     position: relative;
     display: inline-block;
     width: 90vw;
-    height: 40vw;
+    height: 36vw;
     vertical-align: middle;
     text-align: center;
     background-color: #F2E6E1;
     border-radius: 10px;
     box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
-    // border: 2px solid red;
     img {
         width: 100%;
         border-radius: 100%;
@@ -172,18 +183,16 @@ export default {
     #rightPart{
         position: absolute;
         left: 40%;
-        #fakename{
-            visibility: hidden;
-        }        
+        
         // box-sizing: border-box;
         // border: 1px solid red;
     }
 }
-// #profileView::after{
-//     content: "";
-//     display: block;
-//     padding-bottom: 40%;
-// }
+.profileView::after{
+    content: "";
+    display: block;
+    padding-bottom: 40%;
+}
 #summaryView{
     display: inline-block;
     font-size: 3vw;
@@ -192,8 +201,8 @@ export default {
     padding: 5px 0 5px 0;
     // box-sizing: border-box;
     // border: 1px solid blue;
-    // border-top: 1px solid black;
-    // border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
     .summary{
         display: inline-block;
         width: 33.3%;

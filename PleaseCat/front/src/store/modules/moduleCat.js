@@ -142,6 +142,38 @@ export default {
                     // console.log(vm.man);
                 });
         },
+        postAddFollow({ dispatch, commit, getters, rootGetters },data){
+            axios
+                .post(`${rootGetters.getServer}/api/FollwoingCat/insert?cat_no=${data}&follower_no=${rootGetters.getLoginInfo.user_no}`)
+                .then(res => {
+                    // handle success
+                    dispatch('getCatFollowerList', data);
+                    dispatch('getMyFollowingCatList', rootGetters.getLoginInfo.user_no);
+                })
+                .catch(err => {
+                    // handle error
+                })
+                .then(() => {
+                    // always executed
+                    // console.log(vm.man);
+                });
+        },
+        deleteFollow({ dispatch, commit, getters, rootGetters },data){
+            axios
+                .delete(`${rootGetters.getServer}/api/FollwoingCat/delete?cat_no=${data}&follower_no=${rootGetters.getLoginInfo.user_no}`)
+                .then(res => {
+                    // handle success
+                    dispatch('getCatFollowerList', data);
+                    dispatch('getMyFollowingCatList', rootGetters.getLoginInfo.user_no);
+                })
+                .catch(err => {
+                    // handle error
+                })
+                .then(() => {
+                    // always executed
+                    // console.log(vm.man);
+                });
+        },
     },
     getters: { // (state, getters, rootState, rootGetters)
         catList: state => {
