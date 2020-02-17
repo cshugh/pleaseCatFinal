@@ -139,6 +139,7 @@ export default {
                 .then(res => {
                     // handle success
                     let all = res.data.data;
+                    console.log(all)
                     const append = all.slice(getters.lengthOfNewsFeedList, getters.lengthOfNewsFeedList + getters.limit)
                     state.busy = false;
                     if (append.length === 0) {

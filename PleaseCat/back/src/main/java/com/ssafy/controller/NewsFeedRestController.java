@@ -63,6 +63,7 @@ public class NewsFeedRestController {
 	@ApiOperation("모든 뉴스피드 정보를 찾는다.")
 	@GetMapping("/searchAll/{follower_no}")
 	public ResponseEntity<Map<String, Object>> searchAllNewsFeed(@RequestParam int follower_no) throws Exception{
+		System.out.println(follower_no);
 		return handleSuccess(newsFeedService.searchAllNewsFeed(follower_no));
 	}
 }
