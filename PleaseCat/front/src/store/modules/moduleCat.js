@@ -8,6 +8,9 @@ export default {
         catList: [],
         selectedCat: null,
         nearCatList: [],
+        selectedCatFollowerList: [],
+        userFollowingCatList: [],
+        myFollowingCatList: [],
     },
     // mutations : 동기 처리 logic
     mutations: { // (state, rootState?)
@@ -25,9 +28,19 @@ export default {
         changeNearCatList(state, payload, rootState) {
             state.nearCatList = payload;
         },
+        changeCatFollowerList(state, payload, rootState){
+            state.selectedCatFollowerList = payload;
+        },
+        changeUserFollowingCatList(state, payload, rootState){
+            state.userFollowingCatList = payload;
+        },
+        changeMyFollowingCatList(state, payload, rootState){
+            state.myFollowingCatList = payload;
+        },
         clearSelectedCat(state, payload) {
             state.selectedCat = null;
-        }
+            state.selectedCatFollowerList = [];
+        },
     },
     // actions : 비동기 처리 logic
     actions: { // ({ dispatch, commit, getters, rootGetters }, data) : context. 생략
@@ -81,6 +94,54 @@ export default {
                     // console.log(vm.man);
                 });
         },
+        getCatFollowerList({ dispatch, commit, getters, rootGetters },data){
+            axios
+                .get(`${rootGetters.getServer}/api/FollwoingCat/searchFollwerCat?cat_no=${data}`)
+                .then(res => {
+                    // handle success
+                    var followerArray = res.data.data;
+                    commit('changeCatFollowerList', followerArray);
+                })
+                .catch(err => {
+                    // handle error
+                })
+                .then(() => {
+                    // always executed
+                    // console.log(vm.man);
+                });
+        },
+        getUserFollowingCatList({ dispatch, commit, getters, rootGetters },data){
+            axios
+                .get(`${rootGetters.getServer}/api/FollwoingCat/searchFollowedCat?follower_no=${data}`)
+                .then(res => {
+                    // handle success
+                    var followerArray = res.data.data;
+                    commit('changeUserFollowingCatList', followerArray);
+                })
+                .catch(err => {
+                    // handle error
+                })
+                .then(() => {
+                    // always executed
+                    // console.log(vm.man);
+                });
+        },
+        getMyFollowingCatList({ dispatch, commit, getters, rootGetters },data){
+            axios
+                .get(`${rootGetters.getServer}/api/FollwoingCat/searchFollowedCat?follower_no=${data}`)
+                .then(res => {
+                    // handle success
+                    var followerArray = res.data.data;
+                    commit('changeMyFollowingCatList', followerArray);
+                })
+                .catch(err => {
+                    // handle error
+                })
+                .then(() => {
+                    // always executed
+                    // console.log(vm.man);
+                });
+        },
     },
     getters: { // (state, getters, rootState, rootGetters)
         catList: state => {
@@ -89,5 +150,14 @@ export default {
         selectedCat: state => {
             return state.selectedCat;
         },
+        selectedCatFollowerList: state => {
+            return state.selectedCatFollowerList;
+        },
+        userFollowingCatList: state => {
+            return state.userFollowingCatList;
+        },
+        myFollowingCatList: state => {
+            return state.myFollowingCatList;
+        }
     }
 };

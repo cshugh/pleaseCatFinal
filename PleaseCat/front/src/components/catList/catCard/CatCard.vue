@@ -2,8 +2,8 @@
   <div class="card-box">
       <router-link :to="`/catProfile/${src}`">
       <div class="card" :class="{hover: isHovering}" @mouseover="isHovering=true" @mousemove="isHovering=true" @mouseout="isHovering=false">
-          <!-- <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cats/_profile/${src}.jpg`)+')'}"></div> -->
-          <div class="bg" :style="{'background-image': 'url(`/static/images/cat/${src}.jpg`)'}"></div>
+          <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cats/_profile/${src}.jpg`)+')'}"></div>
+          <!-- <div class="bg" :style="{'background-image': 'url(`/static/images/cat/${src}.jpg`)'}"></div> -->
           <div class="text name">
               <h3>{{ name }}</h3>
           </div>

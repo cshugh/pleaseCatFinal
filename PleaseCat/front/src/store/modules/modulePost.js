@@ -5,7 +5,7 @@ export default {
     namespaced: true,
     state: {
         postList: [],
-        myPosts: null,
+        myPosts: [],
         userPosts: null,
         catPosts: null,
     },
@@ -76,7 +76,7 @@ export default {
                     // console.log(vm.man);
                 });
         },
-        async getCatPosts({ dispatch, commit, getters, rootGetters }, data) {
+        getCatPosts({ dispatch, commit, getters, rootGetters }, data) {
             console.log('getCatPosts');
             axios
                 .get(`${rootGetters.getServer}/api/post/searchPostCat?Cat_no=${data}`)

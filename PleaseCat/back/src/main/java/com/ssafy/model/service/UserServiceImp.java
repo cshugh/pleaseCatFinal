@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.model.dao.Following_catDao;
 import com.ssafy.model.dao.Following_userDao;
 import com.ssafy.model.dao.LikesDao;
 import com.ssafy.model.dao.PostDao;
@@ -31,6 +32,8 @@ public class UserServiceImp implements UserService {
 	@Autowired
 	private Following_userDao followUserDao;
 	@Autowired
+	private Following_catDao followCatDao;
+	@Autowired
 	private LikesDao likesDao;
 	@Autowired
 	private PostDao postDao;
@@ -42,7 +45,6 @@ public class UserServiceImp implements UserService {
 
 	SHA256 sha = SHA256.getInsatnce();
 
-
 	//회원번호로 회원검색
 	public user searchUser(int no) {
 		try { 
@@ -52,13 +54,19 @@ public class UserServiceImp implements UserService {
 		
 			} else {
 				User.setCount_followers(followUserDao.searchFollowedUser(User.getUser_no()).size());
+				
 				List<post> postList = postDao.searchPostUser(User.getUser_no());
 				User.setCount_posts(postList.size());
+				
 				int sumLikeAboutPost = 0;
 				for (post post : postList) {
 					sumLikeAboutPost += likesDao.searchAllLikesOfPost(post.getPost_no()).size();
 				}
 				User.setCount_likes(sumLikeAboutPost);
+				
+				User.setCount_followings_user(followUserDao.searchFollowerUser(User.getUser_no()).size());
+				
+				User.setCount_followings_cat(followCatDao.searchFollowedCat(User.getUser_no()).size());
 				System.out.println(User);
 				return User;
 			}
@@ -76,13 +84,19 @@ public class UserServiceImp implements UserService {
 				throw new PleaseCatException("찾으려는 정보가 없습니다");
 			} else {
 				User.setCount_followers(followUserDao.searchFollowedUser(User.getUser_no()).size());
+				
 				List<post> postList = postDao.searchPostUser(User.getUser_no());
 				User.setCount_posts(postList.size());
+				
 				int sumLikeAboutPost = 0;
 				for (post post : postList) {
 					sumLikeAboutPost += likesDao.searchAllLikesOfPost(post.getPost_no()).size();
 				}
 				User.setCount_likes(sumLikeAboutPost);
+				
+				User.setCount_followings_user(followUserDao.searchFollowerUser(User.getUser_no()).size());
+				
+				User.setCount_followings_cat(followCatDao.searchFollowedCat(User.getUser_no()).size());
 				System.out.println(User);
 				return User;
 			}

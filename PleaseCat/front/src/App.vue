@@ -23,7 +23,6 @@ export default {
   created() {
     this.findUserLoc();
     this.getCatList();
-    // this.$store.dispatch('storeCat/getCatList');
     this.getUserList();
     this.getPostList();
   },
