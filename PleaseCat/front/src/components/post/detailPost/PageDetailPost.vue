@@ -28,7 +28,12 @@
             <!-- </router-link> -->
           </div>
           <div class="comment left" id="comment2">
-            <div><span id="userIdSpan">{{list.user_id}}</span> {{list.comment_content}}</div>
+            <div>
+              <router-link :to="`/userProfile/${list.user_no}`">
+                <span id="userIdSpan">{{list.user_id}}</span>
+              </router-link>
+              {{list.comment_content}}
+            </div>
             <div id="comment_time">{{list.comment_time}} 신고</div>
           </div>
         </div>
