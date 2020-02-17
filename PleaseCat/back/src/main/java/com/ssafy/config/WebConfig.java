@@ -41,7 +41,7 @@ public class WebConfig implements WebMvcConfigurer {
 		 */
 		
 	
-		List<String> imageFolders = Arrays.asList("cat","post","user");
+		List<String> imageFolders = Arrays.asList("cat","post","user","icon");
 		for(String imageFolder : imageFolders) {
 			registry.addResourceHandler("/static/images/"+imageFolder+"/**")
 			.addResourceLocations("file:///"+uploadImagesPath+imageFolder+"/")
