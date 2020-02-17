@@ -1,21 +1,27 @@
 <template>
 <div id="myProfile">
     <div class="emptySpace">-Navigation Bar-</div>
-    <div class="profileView" >
-        <div class="leftPart" v-if="(selectedUser != null)">
-            <!-- <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile"> -->
-            <img id="userPhoto" :src='`/static/images/user/${ selectedUser.user_no }.jpg`' alt="catProfile">
-        </div>
-        <div id="fakeleftPart" class="leftPart" v-if="(selectedUser === null)">
-            <!-- <img id="userPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile"> -->
-            <img id="userPhoto" :src='`/static/images/icons/user.png`' alt="catProfile">
+    <div id="profileView" v-if="(getLoginInfo != null)">
+        <div id="leftPart">
+            <!-- <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile"> -->
+            <img id="userPhoto" :src='`/static/images/user/${ getLoginInfo.user_no }.jpg`' alt="catProfile">
+            <!-- <img id="userPhoto" :src='' alt="catProfile"> -->
         </div>
         <section id="rightPart">
-            <div class="name" v-if="(selectedUser != null)"><h1 id="userName" class="text">{{ selectedUser.user_id }}</h1></div>
-            <div id="fakename" class="name" v-if="(selectedUser === null)"><h1 id="userName" class="text">사용자</h1></div>
+            <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
-                    <button>팔로우</button>
+                    <button id="show-modal-loc" @click="showModalFollow = true">
+                        팔로우
+                    </button>
+                    <ModalComponent id="modal" v-if="showModalFollow" @close="showModalFollow = false">
+                        <h3 slot="header">
+                            팔로우 목록
+                        </h3>
+                        <h3 slot="body">
+                            본문
+                        </h3>
+                    </ModalComponent>
                 </span>
                 <span id="detailButton" class="btn text">
                     <router-link :to="`/catDetail/${no}`"><button>상세 정보</button></router-link>
@@ -23,17 +29,17 @@
             </div>
         </section>
     </div>
-    <div id="summaryView" class="text" v-if="(selectedUser != null)">
-        <span class="summary">게시물<br>{{ selectedUser.count_posts }}</span>
-        <span class="summary">팔로우<br>{{ selectedUser.count_followers }}</span>
-        <span class="summary">좋아요<br>{{ selectedUser.count_likes }}</span>
+    <div id="summaryView" class="text" v-if="(getLoginInfo != null)">
+        <span class="summary">게시물<br>{{ getLoginInfo.count_posts }}</span>
+        <span class="summary">팔로우<br>{{ getLoginInfo.count_followers }}</span>
+        <span class="summary">좋아요<br>{{ getLoginInfo.count_likes }}</span>
     </div>
-    <div id="photoView" v-if="(userPosts != null)">
+    <div id="photoView" v-if="(myPosts != null)">
         <div id="photoList">
-            <span v-for="(post, idx) in userPosts" :key="idx">
-                <router-link :to="`/detailPost/${post.post_no}`">
-                    <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>  -->
-                    <span class="photo" :style="{'background-image' : url(`/static/images/posts/${ post.post_image }`)}"  :alt='`${ post.post_image }`'> 
+            <span v-for="(post, idx) in myPosts" :key="idx">
+                <router-link :to="{name:''}">
+                    <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> -->
+                    <span class="photo" :style="{'background-image' : `/static/images/post/${ post.post_image }`}"  :alt='`${ post.post_image }`'>
                     </span>
                 </router-link>
             </span>
@@ -46,48 +52,25 @@
 <script>
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
+import ModalComponent from "@/components/post/modal/Modal.vue";
 
 export default {
-    name: 'userProfile',
-    created() {
-        this.no = this.$route.params.user_no;
-        this.getSelectedUser(this.no);
-        this.getUserPosts(this.no);
-    },
-    destroyed() {
-        this.clearSelectedUser();
-        this.clearUserPosts();
-    },
+    name: 'myProfile',
+    components: { ModalComponent },
     data(){
         return{
+            showModalFollow: false,
             no: '',
         }
     },
     computed:{
+        ...mapGetters('storePost',[
+            'myPosts',
+        ]),
         ...mapGetters([
             'getLoginInfo',
         ]),
-        ...mapGetters('storeUser',[
-            'selectedUser',
-        ]),
-        ...mapGetters('storePost',[
-            'userPosts',
-        ]),
     },
-    methods: {
-        ...mapMutations('storeUser',[
-            'clearSelectedUser',
-        ]),
-        ...mapMutations('storePost',[
-            'clearUserPosts',
-        ]),
-        ...mapActions('storeUser',[
-            'getSelectedUser',
-        ]),
-        ...mapActions('storePost',[
-            'getUserPosts',
-        ])
-    }
 }
 </script>
 
@@ -101,8 +84,10 @@ export default {
         border: 1px solid #dbdbdb;
         border-radius: 3px;
         color: #262626;
+        background-color: white;
         font-size: 2.7vw;
         padding: 3px 12px 3px 12px;
+        box-shadow: 0px 0px 4px 0px black;
     }
     h1{
         font-size: 7vw;
@@ -117,18 +102,17 @@ export default {
         color: black;
     }
 }
-.profileView{
+#profileView{
     padding: 2% 2% 0 2%;
     position: relative;
     display: inline-block;
-    width: 90vw;
-    height: 36vw;
+    width: 90%;
     vertical-align: middle;
     text-align: center;
     background-color: #F2E6E1;
     border-radius: 10px;
-    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
-    // border: 2px solid red;
+    box-shadow: 2px 2px 10px 2px black;
+    
     img {
         width: 100%;
         border-radius: 100%;
@@ -138,7 +122,7 @@ export default {
         display: block;
         padding-bottom: 100%;
     }
-    .leftPart{
+    #leftPart{
         width: 30%;
         position: absolute;
         left: 5%;
@@ -149,24 +133,24 @@ export default {
     #rightPart{
         position: absolute;
         left: 40%;
-        #fakename{
-            visibility: hidden;
-        }
+        
         // box-sizing: border-box;
         // border: 1px solid red;
     }
 }
-// #profileView::after{
-//     content: "";
-//     display: block;
-//     padding-bottom: 40%;
-// }
+#profileView::after{
+    content: "";
+    display: block;
+    padding-bottom: 40%;
+}
 #summaryView{
     display: inline-block;
     font-size: 3vw;
     width: 90%;
     text-align: center;
     padding: 5px 0 5px 0;
+    
+    border-radius: 10px;
     // box-sizing: border-box;
     // border: 1px solid blue;
     // border-top: 1px solid black;
