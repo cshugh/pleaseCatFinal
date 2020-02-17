@@ -4,7 +4,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <template>
-  <div>
+<div id="out">
+  <div id="in">
     <div class="emptySpace"></div>
     <div
       v-infinite-scroll="getNewsFeedList"
@@ -43,7 +44,7 @@
               <img :src="require('../../assets/images/icons/868598.png')" class="HRSize" />
             </button>
           </div>
-           <div class="likeClass">{{post.post_like}}개</div>
+          <div class="likeClass">{{post.post_like}}개</div>
           <div v-if="post.unlike === true" class="HR">
             <button
               v-on:click="unLikeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
@@ -64,44 +65,40 @@
           <div class="HR" id="commentDiv">
             <router-link :to="`/detailPost/${post.post_no}`">
               <button class="btnSize3">
-                <img
-                  :src="require('../../assets/images/icons/png.png')"
-                  class="HRSize"
-                />
+                <img :src="require('../../assets/images/icons/png.png')" class="HRSize" />
               </button>
             </router-link>
           </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-    <div id="contentDiv">
-    <button id="userButton">
-              <img :src="require(`../../assets/images/cat/${post.user_image}`)" id="user_image"/>
-            </button>
-            <!-- </router-link> -->
-            <div id="userId">{{post.user_id}}</div>
-            <br>
-            <br>
-            <div v-if="post.detail === 'Init'">
-        <div class="content">{{post.post_content}}</div>
-      </div>
-      <div v-if="post.detail === 'true'">
-        <div id="detailTrue">{{post.post_content}}</div>
-        <button v-on:click="detailTrue(`${post.newsFeedIndex}`)">자세히보기</button>
-      </div>
-      <div v-if="post.detail === 'false'">
-        <div id="detailFalse">{{post.post_content}}</div>
-        <button v-on:click="detailFalse(`${post.newsFeedIndex}`)">간략히</button>
-      </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="contentDiv">
+          <button id="userButton">
+            <img :src="require(`../../assets/images/cat/${post.user_image}`)" id="user_image" />
+          </button>
+          <!-- </router-link> -->
+          <div id="userId">{{post.user_id}}</div>
+          <br />
+          <br />
+          <div v-if="post.detail === 'Init'">
+            <div class="content">{{post.post_content}}</div>
+          </div>
+          <div v-if="post.detail === 'true'">
+            <div id="detailTrue">{{post.post_content}}</div>
+            <button class="buttons" v-on:click="detailTrue(`${post.newsFeedIndex}`)">자세히보기</button>
+          </div>
+          <div v-if="post.detail === 'false'">
+            <div id="detailFalse">{{post.post_content}}</div>
+            <button class="buttons" v-on:click="detailFalse(`${post.newsFeedIndex}`)">간략히</button>
+          </div>
+        </div>
       </div>
     </div>
+    <div id="bottomDiv"></div>
   </div>
-  <div id="bottomDiv">
-
-  </div>
-  </div>
+</div>
 </template>
 <script>
 import "../../assets/css/style.css";
@@ -115,7 +112,7 @@ export default {
   },
   computed: {
     ...mapGetters("storeNewsFeed", ["newsFeedList", "busy"]),
-    ...mapGetters(["getLoginInfo"]),
+    ...mapGetters(["getLoginInfo"])
   },
   methods: {
     ...mapActions("storeNewsFeed", [
@@ -126,7 +123,7 @@ export default {
       "getLikeDisabled",
       "getUnLikeDisabled",
       "getUpdateLikes",
-      "getUpdateUnLikes",
+      "getUpdateUnLikes"
     ]),
     detailTrue(newsFeedIndex) {
       this.newsFeedList[newsFeedIndex].detail = "false";
@@ -141,13 +138,19 @@ export default {
         this.unLikeDisabled(post_no, newsFeedIndex);
       }
       this.newsFeedList[newsFeedIndex].post_like++;
-      this.getUpdateLikes({postLike: this.newsFeedList[newsFeedIndex].post_like, postNo: post_no});
+      this.getUpdateLikes({
+        postLike: this.newsFeedList[newsFeedIndex].post_like,
+        postNo: post_no
+      });
     },
     likeDisabled(post_no, newsFeedIndex) {
       this.getLikeDisabled(post_no);
       this.newsFeedList[newsFeedIndex].like = false;
       this.newsFeedList[newsFeedIndex].post_like--;
-      this.getUpdateLikes({postLike:this.newsFeedList[newsFeedIndex].post_like, postNo: post_no});
+      this.getUpdateLikes({
+        postLike: this.newsFeedList[newsFeedIndex].post_like,
+        postNo: post_no
+      });
     },
     unLikeActivation(post_no, newsFeedIndex) {
       this.getUnLikeActivation(post_no);
@@ -157,61 +160,81 @@ export default {
       }
       this.newsFeedList[newsFeedIndex].post_unlike++;
       console.log(this.newsFeedList[newsFeedIndex].post_unlike);
-      this.getUpdateUnLikes({postLike:this.newsFeedList[newsFeedIndex].post_unlike, postNo: post_no});
+      this.getUpdateUnLikes({
+        postLike: this.newsFeedList[newsFeedIndex].post_unlike,
+        postNo: post_no
+      });
     },
     unLikeDisabled(post_no, newsFeedIndex) {
       this.getUnLikeDisabled(post_no);
       this.newsFeedList[newsFeedIndex].unlike = false;
       this.newsFeedList[newsFeedIndex].post_unlike--;
       console.log(this.newsFeedList[newsFeedIndex].post_unlike);
-      this.getUpdateUnLikes({postLike:this.newsFeedList[newsFeedIndex].post_unlike, postNo: post_no});
-    },
+      this.getUpdateUnLikes({
+        postLike: this.newsFeedList[newsFeedIndex].post_unlike,
+        postNo: post_no
+      });
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
-#contentDiv{
+.buttons{
+  float: left;
+  padding-left: 3px;
+}
+@media (min-width: 600px) {
+  #out {
+ width: 100%;
+ text-align: center;
+ }
+  #in {
+    display: inline-block;
+    width: 600px;
+  }
+}
+#contentDiv {
   padding-left: 9px;
 }
-#bottomDiv{
+#bottomDiv {
   height: 50px;
 }
-#userId{
+#userId {
   padding-left: 3px;
   float: left;
   line-height: 2.6;
 }
-#userButton{
+#userButton {
   width: 40px;
   float: left;
 }
-#user_image{
+#user_image {
   width: 100%;
   border-radius: 100%;
 }
-#unlike{
+#unlike {
   width: 50px;
   float: left;
   line-height: 3.9;
 }
-#commentDiv{
+#commentDiv {
   line-height: 3.9;
   float: left;
   padding-left: 14px;
 }
-.likeClass{
+.likeClass {
   float: left;
-   line-height: 3.9;
-   width: 70px;
+  line-height: 3.9;
+  width: 70px;
 }
-.HRSize{
+.HRSize {
   width: 90%;
 }
-#likeWrapper{
+#likeWrapper {
   padding-left: 10px;
   width: 400px;
 }
-.HR{
+.HR {
   width: 50px;
   float: left;
 }
