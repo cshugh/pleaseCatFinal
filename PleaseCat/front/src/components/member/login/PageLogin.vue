@@ -20,8 +20,9 @@
       </div>
     </div>
     <div class="btn-wrap">
-      <a href="/signUp">가입하기</a>
-      <button class="btn-login" v-on:click="login">로그인</button>
+      <router-link :to="'/signUp'">
+        <button class="btn-login" v-on:click="login">로그인</button>
+      </router-link>
     </div>
   </div>
 </template>
