@@ -13,7 +13,7 @@
         <h1><button v-if="isList" @click="isList = false">지도보기</button></h1> 
         <h1><button v-if="!isList" @click="isList = true">목록보기</button></h1> 
         <div id="mapView" v-if="!isList">
-            <mapComponent v-if="catList" txt="catProfile" :pos="nearCatList" :curLoca="getUserLoc" :range="distance"/>
+            <mapComponent v-if="catList" :pos="nearCatList" :curLoca="getUserLoc" :range="distance"/>
         </div>
         <!-- <CatCardComponent key="1" name="name" desc1="♀" desc2="loca" src="1" /> -->
         <div id="listView" v-if="isList">
