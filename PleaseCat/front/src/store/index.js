@@ -19,7 +19,8 @@ export default new Vuex.Store({
         storeDetailPost: moduleDetailPost,
     },
     state: {
-        server: 'http://localhost:8080',
+        // server: 'http://localhost:8080',
+        server: 'http://13.124.251.3:8080',
         token: '',
         loginInfo: null,    // 로그인 회원 정보
         isLogin: false,     // 로그인 여부
