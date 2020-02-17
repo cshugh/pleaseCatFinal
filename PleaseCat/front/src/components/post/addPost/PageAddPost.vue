@@ -54,7 +54,7 @@
               v-for="nc in nearCats"
               @click="tagCat(`${nc.no}`, `${nc.name}`)"
               :key=nc.no
-            >{{ nc.name }}</button>
+            ><img class="circle" src=""/><p>{{ nc.name }}</p></button>
           </div>
 
           <div slot="footer" >
@@ -398,6 +398,9 @@ export default {
   padding-top: 10px;
   padding-bottom: 125px;
 }
+.circle {
+  border-radius: 50%;
+}
 .canvas-wrap {
   position: relative;
   width: 60%;
@@ -418,4 +421,16 @@ export default {
   height: 200px;
   width: 420px;
 }
+
+@media ( min-width: 1024px ) {
+  .selectPhoto {
+    float: none;
+    width: auto;
+  }
+  .writingText {
+    float: none;
+    width: auto;
+  }
+}
+
 </style>
