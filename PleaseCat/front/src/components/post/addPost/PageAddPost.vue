@@ -59,8 +59,9 @@
 
           <div slot="footer" >
             <button @click="showModalSelectCat = false"> 확인</button>
+            <button @click="showModalSelectCat = false"> 고양이 추가하기</button>
           </div>
-
+          
         </modal>
       </div>
 
@@ -358,9 +359,9 @@ export default {
       fd.append("catImg", this.postImage);
 
       // FormData 확인할 때 key 이용.
-      // for (let key of fd.entries()) {
-      //   console.log(`${key}`);
-      // }
+      for (let key of fd.entries()) {
+        console.log(`${key}`);
+      }
 
       // axios 통신
       axios
