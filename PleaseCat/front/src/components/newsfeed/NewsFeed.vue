@@ -76,13 +76,12 @@
         <br>
         <br>
         <br>
-    <div>
+    <div id="contentDiv">
     <button id="userButton">
               <img :src="require(`../../assets/images/cat/${post.user_image}`)" id="user_image"/>
             </button>
             <!-- </router-link> -->
             <div id="userId">{{post.user_id}}</div>
-            </div>
             <br>
             <br>
             <div v-if="post.detail === 'Init'">
@@ -95,6 +94,7 @@
       <div v-if="post.detail === 'false'">
         <div id="detailFalse">{{post.post_content}}</div>
         <button v-on:click="detailFalse(`${post.newsFeedIndex}`)">간략히</button>
+      </div>
       </div>
     </div>
   </div>
@@ -170,6 +170,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+#contentDiv{
+  padding-left: 9px;
+}
 #bottomDiv{
   height: 50px;
 }
@@ -205,7 +208,8 @@ export default {
   width: 90%;
 }
 #likeWrapper{
-  width: 450px;
+  padding-left: 10px;
+  width: 400px;
 }
 .HR{
   width: 50px;
@@ -252,12 +256,11 @@ export default {
 .loading_img.on {
   display: block;
 }
-
-//
 #detailTrue {
+  padding-left: 2px;
+  width: 470px;
   font-size: 18px;
   display: inline-block;
-  width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
@@ -271,9 +274,10 @@ export default {
   -webkit-box-orient: vertical;
 }
 #detailFalse {
+  padding-left: 2px;
+  width: 470px;
   font-size: 18px;
   display: inline-block;
-  width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
@@ -286,9 +290,10 @@ export default {
   -webkit-box-orient: vertical;
 }
 .content {
+  padding-left: 2px;
+  width: 470px;
   font-size: 18px;
   display: inline-block;
-  width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */

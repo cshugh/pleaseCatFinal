@@ -46,7 +46,7 @@ export default {
         },
         setDetail(state, payload, rootState) {
             state.newsFeedList[payload.page].detail = "Init";
-            if (state.newsFeedList[payload.page].post_content.length > 36)
+            if (state.newsFeedList[payload.page].post_content.length > 84)
                 state.newsFeedList[payload.page].detail = "true";
         },
         setNewsFeedIndex(state, payload, rootState) {
