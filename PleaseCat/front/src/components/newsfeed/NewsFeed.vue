@@ -43,7 +43,7 @@
               <img :src="require('../../assets/images/icons/868598.png')" class="HRSize" />
             </button>
           </div>
-           <div class="likeClass">{{post.post_like}}개,</div>
+           <div class="likeClass">{{post.post_like}}개</div>
           <div v-if="post.unlike === true" class="HR">
             <button
               v-on:click="unLikeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
@@ -63,9 +63,9 @@
           <div id="unlike">{{post.post_unlike}}개</div>
           <div class="HR" id="commentDiv">
             <router-link :to="`/detailPost/${post.post_no}`">
-              <button class="btnSize">
+              <button class="btnSize3">
                 <img
-                  :src="require('../../assets/images/icons/depositphotos_68123991-stock-illustration-comments-icon.jpg')"
+                  :src="require('../../assets/images/icons/png.png')"
                   class="HRSize"
                 />
               </button>
@@ -97,6 +97,9 @@
         <button v-on:click="detailFalse(`${post.newsFeedIndex}`)">간략히</button>
       </div>
     </div>
+  </div>
+  <div id="bottomDiv">
+
   </div>
   </div>
 </template>
@@ -167,6 +170,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+#bottomDiv{
+  height: 50px;
+}
 #userId{
   padding-left: 3px;
   float: left;
@@ -188,6 +194,7 @@ export default {
 #commentDiv{
   line-height: 3.9;
   float: left;
+  padding-left: 14px;
 }
 .likeClass{
   float: left;
@@ -198,7 +205,7 @@ export default {
   width: 90%;
 }
 #likeWrapper{
-  width: 300px;
+  width: 450px;
 }
 .HR{
   width: 50px;
@@ -211,6 +218,10 @@ export default {
 .btnSize2 {
   padding-top: 17px;
   width: 80%;
+}
+.btnSize3 {
+  padding-top: 13px;
+  width: 40px;
 }
 #profileDiv {
   padding-left: 10px;
