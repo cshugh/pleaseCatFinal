@@ -58,6 +58,7 @@
   color: #FF339E;
 }
 .modal-body {
+  text-align: left;
   margin: 20px 0;
 }
 .modal-default-button {
