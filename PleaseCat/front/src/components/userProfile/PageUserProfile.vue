@@ -14,7 +14,7 @@
             <div class="name" v-if="(selectedUser != null)"><h1 id="userName" class="text">{{ selectedUser.user_id }}</h1></div>
             <div id="fakename" class="name" v-if="(selectedUser === null)"><h1 id="userName" class="text">사용자</h1></div>
             <div id="buttons">
-                <span id="followButton" class="btn text">
+                <span id="followButton" class="btn text" v-if="(selectedUser != null)">
                     <button v-if="!followed" @click="postAddFollow(selectedUser.user_no)">팔로우</button>
                     <button v-if="followed" @click="deleteFollow(selectedUser.user_no)">언팔로우</button>
                 </span>
@@ -189,8 +189,10 @@ export default {
         border: 1px solid #dbdbdb;
         border-radius: 3px;
         color: #262626;
+        background-color: white;
         font-size: 2.7vw;
         padding: 3px 12px 3px 12px;
+        box-shadow: 0px 0px 4px 0px black;
     }
     h1{
         font-size: 7vw;
