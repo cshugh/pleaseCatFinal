@@ -121,13 +121,14 @@ export default {
 }
 #inputComment {
   background-color: white;
-  width: 100%;
+  // width: 100%;
+  margin: 0 auto;
   position: fixed;
-  bottom: 40px;
+  bottom: 20px;
   left: 0;
   right: 0;
   z-index: 100;
-  padding-bottom: 100px;
+  padding-bottom: 82px;
 }
 button {
   padding-top: 50px;
