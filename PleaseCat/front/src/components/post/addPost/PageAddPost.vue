@@ -1,26 +1,33 @@
 <template>
   <div class="addPost">
-    <div class="title-selectPhoto">NEW POST</div>
+    <div class="title-addPost">게시글 등록</div>
 
     <div class="upload-wrap">
       <div class="selectPhoto">
-        <p>ORIGINAL 포스트 이미지 추가</p>
-        
-        
+
         <div class="canvas-wrap">
           <canvas id="previewCanvas"></canvas>
         </div>
- 
-        <p>
-          <input
-            v-on:change="fileSelect"
-            ref="postImage"
-            type="file"
-            name="photo"
-            id="uploadPhoto"
-            required="required"
-          />
-        </p>
+
+        <div class="file-input-div">
+          <p>
+            <input
+              type="button"
+              value="고양이 사진 선택"
+              class="file-input-button"
+            />
+            <input
+              class="file-input-hidden"
+              v-on:change="fileSelect"
+              ref="postImage"
+              type="file"
+              name="photo"
+              id="uploadPhoto"
+              required="required"
+            />
+          </p>
+        </div>
+
       </div>
 
       <div class="writingText">
@@ -46,22 +53,46 @@
           v-if="showModalSelectCat"
           @close="showModalSelectCat = false"
         >
-          <h3 slot="header">이 중에 고양이가 있나요?</h3>
-          <div
-            slot="footer"
-          >
+          <h3
+            slot="header"
+            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
+          >이 중에 고양이가 있나요?</h3>
+          <div slot="footer">
+
             <button
+              class="btn-selectCat"
               v-for="nc in nearCats"
-              @click="tagCat(`${nc.no}`, `${nc.name}`)"
+              @click="tagCat(`${nc.no}`, `${nc.name}`), showModalSelectCat = false "
               :key=nc.no
-            ><img class="circle" src=""/><p>{{ nc.name }}</p></button>
+            >
+              <div class="btn-circle-border">
+                <img
+                  class="btn-circle"
+                  :src='require(`@/assets/images/cats/_profile/${ nc.no }.jpg`)'
+                />
+                <!-- <img
+                  class="btn-circle"
+                  :src='`/static/images/cat/${ nc.no }.jpg`'
+                /> -->
+              </div>
+              <p style="margin-top:4px">{{ nc.name }}</p>
+            </button>
           </div>
 
-          <div slot="footer" >
-            <button @click="showModalSelectCat = false"> 확인</button>
-            <button @click="showModalSelectCat = false"> 고양이 추가하기</button>
+          <div
+            slot="footer"
+            class="modal-footer-addCat"
+          >
+            <!-- <button @click="showModalSelectCat = false"> 확인</button> -->
+            이 중에 고양이가 없나요?
+            <button
+              class="btn-addCat"
+              @click="showModalSelectCat = false"
+            > 고양이 추가</button>
+            <p></p>
+
           </div>
-          
+
         </modal>
       </div>
 
@@ -77,7 +108,10 @@
           v-if="showModalRegLocation"
           @close="showModalRegLocation = false"
         >
-          <h3 slot="header">핀을 움직여 위치를 선택해주세요!</h3>
+          <h3
+            slot="header"
+            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
+          >핀을 움직여 위치를 선택해주세요!</h3>
 
           <div slot="footer">
             <!-- 지도 component 추가 -->
@@ -86,7 +120,7 @@
             </div>
 
           </div>
-          <div slot="footer" >
+          <div slot="footer">
             <button @click="showModalRegLocation = false"> 확인</button>
           </div>
         </modal>
@@ -110,25 +144,25 @@
 
 <script>
 import axios from "axios";
-import Modal from "@/components/post/modal/Modal.vue";
+import Modal from "@/components/post/modal/ModalAddPost.vue";
 import EXIF from "../../../../node_modules/exif-js/exif";
-import mapComponent from '@/components/map/selectlLocationMap'
-
+import mapComponent from "@/components/map/selectlLocationMap";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  components: { 
-    Modal: Modal, 
+  components: {
+    Modal: Modal,
     mapComponent,
-
+    InfiniteLoading
   },
   data() {
     return {
       positions: [
         {
-          no: '1', 
+          no: "1",
           pos_x: 33.450705,
-          pos_y: 126.570677,
-        },
+          pos_y: 126.570677
+        }
       ],
 
       showModalSelectCat: false,
@@ -148,7 +182,9 @@ export default {
       photoGps: [],
       userGps: [],
       gps: [],
-      
+
+      // infiniteLoading
+      limit: 0
     };
   },
   created() {
@@ -157,11 +193,11 @@ export default {
 
   methods: {
     receiveLoc(rLocation) {
-      this.gpsX = rLocation.X
-      this.gpsY = rLocation.Y
-      this.post_location = rLocation.Addr
-      console.log(this.gpsX, this.gpsY)
-      console.log(this.post_location)
+      this.gpsX = rLocation.X;
+      this.gpsY = rLocation.Y;
+      this.post_location = rLocation.Addr;
+      console.log(this.gpsX, this.gpsY);
+      console.log(this.post_location);
     },
     toDecimal(gpsInfo) {
       return (
@@ -172,22 +208,22 @@ export default {
     },
     setGps() {
       // 사진의 메타데이터에 gps 정보가 있는 경우.
-      if(this.photoGps) {
-        console.log("사진에 gps 정보 있음")
-        this.gps = this.photoGps
+      if (this.photoGps) {
+        console.log("사진에 gps 정보 있음");
+        this.gps = this.photoGps;
       }
       // 사진 메타데이터에 gps정보가 없는 경우, 사용자의 현재위치를 gps에 저장한다.
       else if (!this.photoGps.latitude || !this.photoGps.longitude) {
-        console.log("사진에 gps 정보 없음...")
+        console.log("사진에 gps 정보 없음...");
         this.gps = this.userGps;
       }
       // 사용자의 현재위치가 없는 경우,  default값 설정
       else if (!this.userGps.latitude || this.userGps.latitude) {
-        console.log("사용자의 현재위치 없음..")
+        console.log("사용자의 현재위치 없음..");
         this.gps = {
           latitude: 37.558245,
           longitude: 126.998207
-        }
+        };
       }
     },
     getUserLoc() {
@@ -195,22 +231,28 @@ export default {
       if (navigator.geolocation) {
         var self = this;
         navigator.geolocation.getCurrentPosition(
-
           function(position) {
             self.userGps = {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude
             };
-            alert("위도 : " + position.coords.latitude + ", 경도: " + position.coords.longitude);
+            alert(
+              "위도 : " +
+                position.coords.latitude +
+                ", 경도: " +
+                position.coords.longitude
+            );
           },
 
           function(err) {
             console.log("error");
-            if (err.code == 1) { alert("Error: Access is denied!"); } 
-            else if (err.code == 2) { alert("Error: Position is unavailable!"); }
+            if (err.code == 1) {
+              alert("Error: Access is denied!");
+            } else if (err.code == 2) {
+              alert("Error: Position is unavailable!");
+            }
           },
           { timeout: 30000, enableHighAccuracy: true, maximumAge: 75000 }
-
         );
       } else {
         alert("이 브라우저는 Geolocation을 지원하지 않음.");
@@ -226,8 +268,8 @@ export default {
         var img = new Image();
 
         img.onload = function() {
-          var MAX_WIDTH = 420;
-          var MAX_HEIGHT = 420;
+          var MAX_WIDTH = 600;
+          var MAX_HEIGHT = 600;
           var width = img.width;
           var height = img.height;
 
@@ -292,8 +334,6 @@ export default {
           // self.setGps();
           // 지도에서 위치 선택
 
-          
-
           // gps 정보 이용해 근처 고양이 목록 불러오기
           axios
             .get(self.$store.getters.getServer + `/api/cat/searchAll`)
@@ -332,15 +372,15 @@ export default {
 
       // 사진, 위치, 고양이 없으면 게시글 등록 불가 => 동작 test 후 alert로 바꾸기
       if (this.postImage == null) {
-        console.log("고양이 사진 없음")
+        console.log("고양이 사진 없음");
         return false;
       }
-      if(this.post_location == '') {
-        console.log("위치를 추가해주세요!")
+      if (this.post_location == "") {
+        console.log("위치를 추가해주세요!");
         return false;
       }
-      if(this.cat_no == '') {
-        console.log("고양이를 태그해주세요!")
+      if (this.cat_no == "") {
+        console.log("고양이를 태그해주세요!");
         return false;
       }
 
@@ -398,22 +438,148 @@ export default {
   padding-top: 10px;
   padding-bottom: 125px;
 }
-.circle {
-  border-radius: 50%;
+.addPost .title-addPost {
+  margin-top: 60px;
+  margin-bottom: 40px;
+  font-weight: bold;
+  font-size: 42px;
 }
 .canvas-wrap {
   position: relative;
-  width: 60%;
+  margin: 16px auto;
+  // width: 70%;
+  // padding-bottom: 70%;
+  // border: solid 1px #1d2f3a;
+
+  &::after {
+    content: "";
+    display: block;
+    // padding-bottom: 100%;
+  }
 }
-.canvas-wrap:after {
-  content: "";
-  display: block;
-  // padding-bottom: 100%;
+.file-input-div {
+  // margin: 0 auto;
+  position: relative;
+  width: 200px;
+  height: 50px;
+  overflow: hidden;
+}
+.file-input-button {
+  width: 142px;
+  height: 42px;
+  position: absolute;
+  top: 0px;
+  color: #1d2f3a;
+  border-radius: 8px;
+
+  background: linear-gradient(137deg, #ffdab7, #f77c99, #657af2, #c2ffc5);
+  background-size: 600% 600%;
+  -webkit-animation: inputBtn-Animation 10s ease infinite;
+  -moz-animation: inputBtn-Animation 10s ease infinite;
+  -o-animation: inputBtn-Animation 10s ease infinite;
+  animation: inputBtn-Animation 10s ease infinite;
+  @-webkit-keyframes inputBtn-Animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @-moz-keyframes inputBtn-Animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @-o-keyframes inputBtn-Animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes inputBtn-Animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}
+.file-input-hidden {
+  font-size: 25px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  opacity: 0;
+
+  filter: alpha(opacity=0);
+  -ms-filter: "alpha(opacity=0)";
+  -khtml-opacity: 0;
+  -moz-opacity: 0;
 }
 #uploadCanvas {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+.btn-selectCat {
+  font-size: 12px;
+  text-align: center;
+  margin: 10px 6px 0 6px;
+
+  transition-duration: 0.3s;
+  transition-property: transform;
+  &:hover {
+    color: #1d2f3a;
+    font-weight: 550;
+  }
+}
+.btn-circle-border {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1.5px solid rgb(255, 182, 48);
+  // box-shadow: 5px 5px 20px rgb(211, 211, 211);
+  -webkit-box-shadow: 11px 10px 22px 0px rgba(92, 88, 78, 0.48);
+  -moz-box-shadow: 11px 10px 22px 0px rgba(148, 141, 118, 0.48);
+  box-shadow: 5px 5px 12px 0px rgba(148, 141, 118, 0.48);
+
+  transition-duration: 0.3s;
+  transition-property: transform;
+  &:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+    font-size: 10.9px;
+  }
+}
+.btn-circle {
+  text-align: center;
+  margin-top: 2.5px;
+  // margin-top: 4px;
+  width: 56px;
+  height: 56px;
+  line-height: 28px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #f2709c center 100% no-repeat; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #ff9472,
+    #f2709c
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #ff9472,
+    #f2709c
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.modal-footer-addCat {
+  font-size: 13px;
+  margin: 14px 6px 0 4.5px;
+  padding-bottom: 6px;
+}
+.btn-addCat {
+  float: right;
+  color: #1d2f3a;
+  font-weight: 550;
 }
 .textField {
   // resize: none;
@@ -422,7 +588,7 @@ export default {
   width: 420px;
 }
 
-@media ( min-width: 1024px ) {
+@media (min-width: 1024px) {
   .selectPhoto {
     float: none;
     width: auto;
@@ -432,5 +598,4 @@ export default {
     width: auto;
   }
 }
-
 </style>
