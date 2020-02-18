@@ -3,12 +3,16 @@
         <div class="emptySpace">-Navigation Bar-</div>
         <div><span>주변 반경</span></div>
         <div>
+            <input type="radio" id="d300" value="0" v-model="distance">
+            <label for="d300">0m</label>
             <input type="radio" id="d300" value="300" v-model="distance">
             <label for="d300">300m</label>
             <input type="radio" id="d500" value="500" v-model="distance">
             <label for="d500">500m</label>
             <input type="radio" id="d1000" value="1000" v-model="distance">
-            <label for="d1000">1000m</label>
+            <label for="d1000">1km</label>
+            <input type="radio" id="d1000" value="10000" v-model="distance">
+            <label for="d1000">10km</label>
         </div>
         <h1><button v-if="isList" @click="isList = false">지도보기</button></h1> 
         <h1><button v-if="!isList" @click="isList = true">목록보기</button></h1> 
@@ -17,16 +21,16 @@
         </div>
         <!-- <CatCardComponent key="1" name="name" desc1="♀" desc2="loca" src="1" /> -->
         <div id="listView" v-if="isList">
-        <transition-group
-            name="staggered-fade"
-            tag="ul"
-            v-bind:css="false"
-            v-on:before-enter="beforeEnter"
-            v-on:enter="enter"
-            v-on:leave="leave"
-        >
-            <CatCardComponent v-for="cat in nearCatList" :key=cat.no :name=cat.cat_name :desc1="cat.sex==='남'?'♂':'♀'" :desc2=cat.cat_location :src=cat.no  />
-        </transition-group>
+            <transition-group
+                name="staggered-fade"
+                tag="ul"
+                v-bind:css="false"
+                v-on:before-enter="beforeEnter"
+                v-on:enter="enter"
+                v-on:leave="leave"
+            >
+                <CatCardComponent v-for="cat in nearCatList" :key=cat.no :name=cat.cat_name :desc1="cat.sex==='남'?'♂':'♀'" :desc2=cat.cat_location :src=cat.no  />
+            </transition-group>
         </div>
         <div class="emptySpace">-Tab Bar-</div>
     </div>
@@ -150,10 +154,18 @@ export default {
         height: 100px;
         text-align: center;
     }
+    #mapView {
+        display: inline-block;
+        // text-align: center;
+        width: 100vw;
+        height: 50vw;
+    }
+    #listView {
+        display: inline-block;
+        // text-align: center;
+        width: 100vw;
+        height: 50vw;
+    }
 }
-#mapView {
-    display: inline-block;
-    width: 90vw;
-    height: 50vw; 
-}
+
 </style>
