@@ -22,7 +22,6 @@
               ref="postImage"
               type="file"
               name="photo"
-              id="uploadPhoto"
               required="required"
             />
           </p>
@@ -560,10 +559,17 @@ export default {
   -khtml-opacity: 0;
   -moz-opacity: 0;
 }
-#uploadCanvas {
-  position: absolute;
+// #uploadCanvas {
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+// }
+.textField {
+  // resize: none;
+  margin-top: 30px;
+  resize: vertical;
+  height: 252px;
   width: 100%;
-  height: 100%;
 }
 #btn-show-modal-cat {
   border-top: solid 1px #3da0a9;
@@ -663,13 +669,7 @@ export default {
   color: #1d2f3a;
   font-weight: 550;
 }
-.textField {
-  // resize: none;
-  margin-top: 30px;
-  resize: vertical;
-  height: 252px;
-  width: 100%;
-}
+
 .submit-wrap {
   width: 100%;
   height: 42px;

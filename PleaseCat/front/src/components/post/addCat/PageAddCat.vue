@@ -1,7 +1,7 @@
 <script src="js/load-image.all.min.js"></script>
 <template>
   <div class="addCat">
-    <div class="title-addCat">NEW POST</div>
+    <div class="title-addCat">고양이 등록</div>
 
     <div class="reg-wrap">
       <div class="selectPhoto">
@@ -14,16 +14,24 @@
 
         </div>
 
-        <p>
-          <input
-            v-on:change="fileSelect"
-            ref="catProfileImage"
-            type="file"
-            name="photo"
-            id="uploadPhoto"
-            required="required"
-          >
-        </p>
+        <div class="file-input-div">
+          <p>
+            <input
+              type="button"
+              value="고양이 사진 선택"
+              class="file-input-button"
+            />
+            <input
+              class="file-input-hidden"
+              v-on:change="fileSelect"
+              ref="catProfileImage"
+              type="file"
+              name="photo"
+              required="required"
+            >
+          </p>
+        </div>
+
       </div>
 
       <div class="input-wrap">
@@ -31,7 +39,7 @@
 
         <div class="basic-input">
           <!-- 입력받을 정보: cat_name, age, sex, cat_desc -->
-          <div class="input-row">
+          <div class="basic-input-row">
             <label for="name">고양이 이름</label>
             <input
               type="text"
@@ -40,7 +48,7 @@
               placeholder="고양이 이름을 지어주세요!!"
             >
           </div>
-          <div class="input-row">
+          <div class="basic-input-row">
             <label for="age">나이</label>
             <input
               type="text"
@@ -49,7 +57,7 @@
               placeholder="고양이 나이"
             >
           </div>
-          <div class="input-row">
+          <div class="basic-input-row">
             <label for="sex">성별</label>
             <input
               type="text"
@@ -60,14 +68,15 @@
           </div>
 
           <div class="writingText">
-            <p>
+            <div class="basic-input-row">
+              <label for="sex">상세 설명</label>
               <textarea
                 class="textField"
                 v-model="cat_desc"
                 wrap="hard"
                 placeholder=" 상세 설명.."
               ></textarea>
-            </p>
+            </div>
           </div>
         </div>
 
@@ -150,14 +159,17 @@
       </div>
     </div>
 
-    <p>
-      <input
-        class="btn-upload"
-        v-on:click="submit"
-        type="submit"
-        value="저장~!"
-      >
-    </p>
+    <div class="submit-wrap">
+      <p>
+        <input
+          class="btn-save"
+          v-on:click="submit"
+          type="submit"
+          value="등록하기"
+        >
+      </p>
+    </div>
+
   </div>
 </template>
 
@@ -199,16 +211,19 @@ export default {
 
       // uploadImage: '',
 
+      /* 피부병 Yes: 1, No: 0, 모름: -1  */
       skinDiseaseOptions: [
         { value: 1, text: "네 피부병이 있습니다." },
         { value: 2, text: "아니요 피부병이 없습니다." },
         { value: 3, text: "모르겠습니다." }
       ],
+      /* 중성화 Yes: 1, No: 0, 모름: -1 */
       neuterOptions: [
         { value: 1, text: "네 중성화 수술을 했습니다." },
         { value: 2, text: "아니요 중성화 수술을 하지 않았습니다." },
         { value: 3, text: "모르겠습니다." }
       ],
+      /* 상처 Yes: 1, No: 0, 모름: -1 */
       hurtOptions: [
         { value: 1, text: "네 상처가 있습니다." },
         { value: 2, text: "아니요 상처가 없습니다." },
@@ -258,27 +273,6 @@ export default {
       reader.readAsDataURL(event.target.files[0]);
     },
     submit() {
-      /* 피부병, 중성화, 다침 여부 Integer값으로 설정 */
-      /*
-      // 피부병 Yes: 1, No: 0, ?: -1
-      if(this.skin_disease=='네 피부병이 있습니다.') {
-        this.skin_disease = 1
-      }else if(this.skin_disease=='아니요 피부병이 없습니다.') {
-        this.skin_disease = 2
-      }else {
-        this.skin_disease = 3
-      }
-
-      // 중성화 Yes: 1, No: 0, ?: -1
-      if(this.neuter=='네 중성화 수술을 했습니다.') {
-        this.neuter = 1
-      }else if(this.neuter=='아니요 중성화 수술을 하지 않았습니다.') {
-        this.neuter = 2
-      }else {
-        this.neuter = 3
-      }
-      */
-
       const fd = new FormData();
       fd.append("cat_location", this.cat_location);
       fd.append("catImg", this.catImg);
@@ -308,12 +302,10 @@ export default {
       console.log(fd);
 
       axios
-        .post(this.server + `/api/cat/insert`, 
-          fd, 
-          {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
+        .post(this.server + `/api/cat/insert`, fd, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
         })
         .then(res => {
           console.log("200");
@@ -343,35 +335,191 @@ export default {
   padding-top: 10px;
   padding-bottom: 125px;
 }
-#previewCanvas{
-    width: 100%;
-  }
+.addCat .title-addCat {
+  margin-top: 60px;
+  margin-bottom: 40px;
+  font-weight: bold;
+  font-size: 42px;
+}
+#previewCanvas {
+  width: 100%;
+}
 .canvas-wrap {
   position: relative;
-  // width: 70%;
-  height: 360px;
-}
-.canvas-wrap:after {
-  content: "";
-  display: block;
-  // padding-bottom: 100%;
-}
-#uploadCanvas {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-@media (min-width: 600px) {
-  .addPost {
-    width: 600px;
-    margin: 0 auto;
-    margin-top: 10px;
-    margin-bottom: 60px;
-    // padding-top: 100px;
-    padding-top: 10px;
-    padding-bottom: 125px;
+  margin: 16px auto;
+
+  &::after {
+    content: "";
+    display: block;
+    // padding-bottom: 100%;
   }
-  #previewCanvas{
+}
+.file-input-div {
+  // margin: 0 auto;
+  position: relative;
+  width: 200px;
+  height: 50px;
+  overflow: hidden;
+}
+.file-input-button {
+  width: 142px;
+  height: 42px;
+  position: absolute;
+  top: 0px;
+  color: #1d2f3a;
+  border-radius: 8px;
+
+  background: linear-gradient(137deg, #ffdab7, #f77c99, #657af2, #c2ffc5);
+  background-size: 600% 600%;
+  -webkit-animation: inputBtn-Animation 10s ease infinite;
+  -moz-animation: inputBtn-Animation 10s ease infinite;
+  -o-animation: inputBtn-Animation 10s ease infinite;
+  animation: inputBtn-Animation 10s ease infinite;
+  @-webkit-keyframes inputBtn-Animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @-moz-keyframes inputBtn-Animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @-o-keyframes inputBtn-Animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @keyframes inputBtn-Animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+.file-input-hidden {
+  font-size: 25px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  opacity: 0;
+
+  filter: alpha(opacity=0);
+  -ms-filter: "alpha(opacity=0)";
+  -khtml-opacity: 0;
+  -moz-opacity: 0;
+}
+// .basic-input {
+  
+// }
+.basic-input label {
+  display: inline-block;
+  max-width: 100%;
+  height: 52px;
+  // font-weight: 550;
+}
+.basic-input input {
+  width: 82%;
+  height: 52px;
+  float: right;
+  background: 0 0; //? 이게 무슨 속성일까!
+  // border-bottom: 1px solid #3da0a9;
+  box-sizing: border-box;
+}
+#btn-show-modal-cat {
+  border-top: solid 1px #3da0a9;
+}
+#btn-show-modal-cat,
+#btn-show-modal-loc {
+  #lb-tagCat,
+  #lb-addLoc {
+    float: left;
+    text-align: left;
+    width: 30%;
+  }
+  #lb-selectedCat,
+  #lb-selectedLoc {
+    float: right;
+    text-align: right;
+    width: 70%;
+    padding-right: 5%;
+  }
+}
+.input-wrap {
+  margin-top: 20px;
+}
+.input-wrap .basic-input-row {
+  // margin-bottom: 25px;
+}
+.basic-input-row {
+  width: 100%;
+  height: 52px;
+  border-bottom: solid 1px #3da0a9;
+}
+.textField {
+  // resize: none;
+  margin-top: 30px;
+  resize: vertical;
+  // height: 252px;
+  width: 70%;
+  float: right;
+}
+
+.submit-wrap {
+  width: 100%;
+  height: 42px;
+  padding-right: 5%;
+}
+.btn-save {
+  float: right;
+  width: 142px;
+  height: 42px;
+  border-radius: 8px;
+  background: #3da0a9;
+  color: #113538;
+  text-align: center;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  transition: all 0.3s;
+
+  &:hover {
+    color: #fff;
+    box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
+    // color: #1d2f3a;
+    // font-weight: 550;
+  }
+}
+
+@media (min-width: 600px) {
+  .addCat {
+    width: 600px;
+  }
+  #previewCanvas {
     width: 600px;
   }
   .selectPhoto {
