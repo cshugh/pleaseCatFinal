@@ -588,7 +588,7 @@ export default {
   width: 420px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 500px) {
   .selectPhoto {
     float: none;
     width: auto;
