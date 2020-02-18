@@ -69,7 +69,8 @@ export default {
 
             // var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
             var markerImage = '';
-            var imageSrc = require(`@/assets/images/cats/_profile/${positions[0].no}.jpg`), // 마커이미지의 주소입니다    
+            var imageSrc = require(`@/assets/images/posts/${positions[0].no}.jpg`), // 마커이미지의 주소입니다    
+            // var imageSrc = `/static/images/cat/${positions[0].no}.jpg`, // 마커이미지의 주소입니다    
             imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
             imageOption = {offset: new kakao.maps.Point(30, 30)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
             
@@ -101,10 +102,9 @@ export default {
 
             for (var i = 0; i < positions.length; i ++) {
                 // 마커를 생성합니다
-                if(i == positions.length - 1){
+                if(i == 0){
                     var marker = new kakao.maps.Marker({
                         map: map, // 마커를 표시할 지도
-                        image: markerImage,
                         position: new kakao.maps.LatLng(positions[i].pos_x, positions[i].pos_y), // 마커의 위치
                     });
                 } else {
