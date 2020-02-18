@@ -20,7 +20,13 @@
       </div>
     </div>
     <div class="btn-wrap">
+<<<<<<< HEAD
       <router-link :to="'/signUp'">가입하기</router-link>
+=======
+      <router-link :to="'/signUp'">
+        회원가입
+      </router-link>
+>>>>>>> 2eb65453887c25049c3d7725777ee37acb9aa7cd
       <button class="btn-login" v-on:click="login">로그인</button>
     </div>
   </div>

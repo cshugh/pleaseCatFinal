@@ -52,7 +52,8 @@
     </select>
     
     <select id = "searchAllPost" resultType="post">
-    	select * from POST 
+    	select * from POST
+    	order by post_time DESC;
     </select>
 
 	<select id = "findNextPostNo" resultType="int">
