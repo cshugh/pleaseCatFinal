@@ -107,13 +107,10 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   created() {
-    console.log(this);
-    // this.getIsLike();
-    // this.getNewsFeedList();
   },
   computed: {
     ...mapGetters("storeNewsFeed", ["newsFeedList", "busy"]),
-    ...mapGetters(["getLoginInfo"])
+    ...mapGetters(["getLoginInfo"]),
   },
   methods: {
     ...mapActions("storeNewsFeed", [
