@@ -12,7 +12,7 @@
       </div>
       <div id="contentDiv">
         <div class="content" id="post_content">{{post_content}}</div>
-        <br><br>
+        <br>
       </div>
       <div
         v-infinite-scroll="getDetailPostList2"
@@ -36,8 +36,6 @@
               <div id="comment_time">{{list.comment_time}} 신고</div>
             </div>
           </div>
-          <br />
-          <br />
           <br />
         </div>
       </div>
@@ -71,6 +69,7 @@ export default {
     this.post_no = this.$route.params.post_no;
     this.getDetailPostList({ post_no: this.post_no });
     this.getDetailPostInfo(this.post_no);
+    console.log(this);
   },
   data() {
     return {
@@ -112,7 +111,7 @@ export default {
 <style lang="scss" scoped>
 #contentDiv{
   background-color: white;
-  height: 100%;
+  // height: 100%;
 }
 #checkIcon {
   width: 100%;
@@ -154,6 +153,7 @@ export default {
   float: left;
 }
 #commentWrapper {
+  height: 30px;
   float: left;
 }
 @media (min-width: 600px) {
@@ -195,7 +195,7 @@ export default {
   font-size: 18px;
   padding-left: 6.3px;
   display: inline-block;
-  width: 470px;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */

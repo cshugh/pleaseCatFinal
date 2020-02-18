@@ -44,13 +44,17 @@ export default {
         pagePlus(state, payload, rootState) {
             state.page++;
         },
+        
         setDetail(state, payload, rootState) {
+            console.log(payload.width);
             state.newsFeedList[payload.page].detail = "Init";
-            if (state.newsFeedList[payload.page].post_content.length > 84)
+            if (state.newsFeedList[payload.page].post_content.length > payload.width/5.196){
                 state.newsFeedList[payload.page].detail = "true";
+            } else {
+                state.newsFeedList[payload.page].detail = "Init";
+              }
         },
         setNewsFeedIndex(state, payload, rootState) {
-            // state.postNo = state.newsFeedList[payload.page].post_no;
             state.newsFeedList[payload.page].newsFeedIndex = state.page;
         },
         setNewsFeedLike(state, payload, rootState) {
@@ -100,12 +104,12 @@ export default {
             DB에서 모든 고양이 정보를 읽어옴 -> storeCat/changeCatList 호출
             호출 위치 : App.vue
         */
-        getUpdateLikes({ state, dispatch, commit, getters, rootGetters }, {postLike, postNo}) {
+        getUpdateLikes({ state, dispatch, commit, getters, rootGetters }, { postLike, postNo }) {
             axios.put(`${rootGetters.getServer}/api/post/updateLikes`, {
                 post_like: postLike,
                 post_no: postNo
             });
-        }, getUpdateUnLikes({ state, dispatch, commit, getters, rootGetters }, {postLike, postNo}) {
+        }, getUpdateUnLikes({ state, dispatch, commit, getters, rootGetters }, { postLike, postNo }) {
             axios.put(`${rootGetters.getServer}/api/post/updateUnLikes`, {
                 post_unlike: postLike,
                 post_no: postNo
@@ -124,9 +128,9 @@ export default {
             axios.delete(`${rootGetters.getServer}/api/Unlikes/delete?post_no=` + post_no + `&user_no=${rootGetters.getLoginInfo.user_no}`);
         },
         getIsLike({ state, dispatch, commit, getters, rootGetters }) {
-            axios.get(`${rootGetters.getServer}`+"/api/Likes/searchAllLikesOfUser?user_no="+`${rootGetters.getLoginInfo.user_no}`).then(({ data }) => {
+            axios.get(`${rootGetters.getServer}` + "/api/Likes/searchAllLikesOfUser?user_no=" + `${rootGetters.getLoginInfo.user_no}`).then(({ data }) => {
                 state.likes = data.data;
-                axios.get(`${rootGetters.getServer}`+"/api/Unlikes/searchAllUnLikes?user_no="+`${rootGetters.getLoginInfo.user_no}`).then(({ data }) => {
+                axios.get(`${rootGetters.getServer}` + "/api/Unlikes/searchAllUnLikes?user_no=" + `${rootGetters.getLoginInfo.user_no}`).then(({ data }) => {
                     state.unlikes = data.data;
                     dispatch('getNewsFeedList');
                 });
@@ -149,7 +153,7 @@ export default {
                             commit('setNewsFeedLike', { page: getters.page });
                             commit('changePostTime', { page: getters.page });
                             commit('setNewsFeedIndex', { page: getters.page });
-                            commit('setDetail', { page: getters.page });
+                            commit('setDetail', { page: getters.page, width: window.innerWidth });
                             commit('pagePlus');
                         }
                     }

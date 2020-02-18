@@ -12,6 +12,7 @@ export default {
         page: 0,
         post_image: "",
         post_content: "",
+        
     },
     getters: { // (state, getters, rootState, rootGetters)
         detailPostList: state => {
@@ -80,6 +81,7 @@ export default {
         setDetailPostInfo(state, payload, rootState) {
             state.post_image = payload.data.data.post_image;
             state.post_content = payload.data.data.post_content;
+            
         },
         changeDetailPostList(state, payload, rootState) {
             state.detailPostList = state.detailPostList.concat(payload.append);
