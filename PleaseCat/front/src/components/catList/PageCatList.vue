@@ -3,6 +3,17 @@
         <div class="emptySpace">-Navigation Bar-</div>
         <div><span>주변 반경</span></div>
         <div>
+            <v-row justify="space-around">
+                <v-radio-group v-model="distance" row >
+                    <v-radio color="orange" label="0m"     value="0"></v-radio>
+                    <v-radio color="orange" label="300m"   value="300"></v-radio>
+                    <v-radio color="orange" label="500m"   value="500"></v-radio>
+                    <v-radio color="orange" label="1km"  value="1000"></v-radio>
+                    <v-radio color="orange" label="10km" value="10000"></v-radio>
+                </v-radio-group>
+            </v-row>
+        </div>
+        <!-- <div>
             <input type="radio" id="d300" value="0" v-model="distance">
             <label for="d300">0m</label>
             <input type="radio" id="d300" value="300" v-model="distance">
@@ -12,8 +23,8 @@
             <input type="radio" id="d1000" value="1000" v-model="distance">
             <label for="d1000">1km</label>
             <input type="radio" id="d1000" value="10000" v-model="distance">
-            <label for="d1000">10km</label>
-        </div>
+            <label for="d10000">10km</label>
+        </div> -->
         <h1><button v-if="isList" @click="isList = false">지도보기</button></h1> 
         <h1><button v-if="!isList" @click="isList = true">목록보기</button></h1> 
         <div id="mapView" v-if="!isList">

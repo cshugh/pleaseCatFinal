@@ -4,7 +4,7 @@
       <!-- <HelloWorld/> -->
       <NavigationBar/>
       <transition :name="transitionName">
-      <router-view class="child-view"></router-view>
+        <router-view class="child-view"></router-view>
       </transition>
       <TabBar/>
     </v-content>
