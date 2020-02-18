@@ -16,13 +16,15 @@ public class newsFeed {
 	private int newsFeedIndex;
 	private String detail;
 	private String user_image;
+	private int cat_no;
+	private int user_no;
 	
 	public newsFeed() {
 		super();
 	}
 
 	public newsFeed(String cat_name, String cat_image, String user_id, int post_like, int post_unlike,
-			String post_image, String post_content, String post_time, int post_no, String user_image) {
+			String post_image, String post_content, String post_time, int post_no, String user_image, int cat_no, int user_no) {
 		super();
 		this.cat_name = cat_name;
 		this.cat_image = cat_image;
@@ -38,9 +40,26 @@ public class newsFeed {
 		this.newsFeedIndex=0;
 		this.detail="Init";
 		this.user_image=user_image;
+		this.cat_no=cat_no;
+		this.user_no=user_no;
 	}
 	
-	
+	public int getUser_no() {
+		return user_no;
+	}
+
+	public void setUser_no(int user_no) {
+		this.user_no = user_no;
+	}
+
+	public int getCat_no() {
+		return cat_no;
+	}
+
+	public void setCat_no(int cat_no) {
+		this.cat_no = cat_no;
+	}
+
 	public String getUser_image() {
 		return user_image;
 	}
