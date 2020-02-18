@@ -106,7 +106,6 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   created() {
-    console.log(this);
     // this.getIsLike();
     // this.getNewsFeedList();
   },

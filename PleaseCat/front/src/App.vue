@@ -3,7 +3,9 @@
     <v-content>
       <!-- <HelloWorld/> -->
       <NavigationBar/>
-      <router-view></router-view>
+      <transition :name="transitionName">
+      <router-view class="child-view"></router-view>
+      </transition>
       <TabBar/>
     </v-content>
   </v-app>
@@ -18,8 +20,30 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   name: 'App',
   data: () => ({
-    //
+      transitionName: 'slide-left'
   }),
+  watch: {
+    '$route' (to, from) {
+      console.log(to.matched[0].props.default)
+      console.log(from.matched[0].props.default)
+      const toDepth = to.matched[0].props.default
+      const fromDepth = from.matched[0].props.default
+      // this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left''
+      if(toDepth === undefined){
+        if(fromDepth === undefined){
+          this.transitionName = 'slide-left';
+        } else {
+          this.transitionName = 'slide-left';
+        }
+      } else {
+          if(fromDepth === undefined){
+            this.transitionName = 'slide-right';            
+          } else {
+            this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';            
+          }
+      }
+    }
+  },
   created() {
     this.findUserLoc();
     this.getCatList();
@@ -56,4 +80,18 @@ export default {
     // background: #DCE3E7;
     // background: #A2B0B2;
 };
+.child-view {
+  position: absolute;
+  transition: all .5s cubic-bezier(.3,0,.3,1);
+}
+.slide-left-enter, .slide-right-leave-active {
+  opacity: 0;
+  -webkit-transform: translate(120vw, 0);
+  transform: translate(120vw, 0);
+}
+.slide-left-leave-active, .slide-right-enter {
+  opacity: 0;
+  -webkit-transform: translate(-120vw, 0);
+  transform: translate(-120vw, 0);
+}
 </style>

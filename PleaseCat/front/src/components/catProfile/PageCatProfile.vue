@@ -214,9 +214,10 @@ export default {
     // border-bottom: 1px solid black;
     .summary{
         display: inline-block;
+        font-weight: bold;
         width: 33.3%;
         text-align: center;
-
+        
         // box-sizing: border-box;
         // border: 1px solid red;
     }

@@ -12,7 +12,7 @@
       :prev-icon="prevIcon ? 'mdi-arrow-left-bold-box-outline' : undefined"
       :next-icon="nextIcon ? 'mdi-arrow-right-bold-box-outline' : undefined"
       :icons-and-text="icons"
-      :height="65"
+      :height="60"
     >
       <!-- <v-tabs-slider></v-tabs-slider> -->
 
@@ -41,13 +41,13 @@ export default {
       prevIcon: false,
       nextIcon: false,
       right: false,
-      tabs: 5,
+      tabs: 6,
 
       tabs: [
         { id: 1, name: "NewsFeed", route: `/` },
         { id: 2, name: "Location", route: `/catList` },
         { id: 3, name: "AddPost", route: `/addpost` },
-        { id: 4, name: "DashBoard", route: `/catPostMap` },
+        { id: 4, name: "DashBoard", route: `/nearMap` },
         { id: 5, name: "MyProfile", route: `/myProfile` },
         { id: 6, name: "Test", route: `/test` }
         // { id: 5, name: "TimeLine", route: `/user/${this.id}` }
