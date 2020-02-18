@@ -46,13 +46,13 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    props: 20,
+    props: 100,
     component: Login
   },
   {
     path: '/signUp',
     name: 'SignUp',
-    props: 21,
+    props: 101,
     component: SignUp
   },
   {

@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="signup text">
     <div class="title-signup">Sign Up</div>
     <div class="input-wrap">
@@ -24,6 +25,7 @@
       <button class="btn-signup" v-on:click="signup">Create Account</button>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -85,7 +87,9 @@ export default {
 
 <style lang="scss" scoped>
 .signup {
-  width: 350px;
+  position: absolute;
+  width: 90vw;
+  // width: 350px;
   margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 60px;

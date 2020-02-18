@@ -29,18 +29,24 @@ export default {
       const toDepth = to.matched[0].props.default
       const fromDepth = from.matched[0].props.default
       // this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left''
-      if(toDepth === undefined){
-        if(fromDepth === undefined){
-          this.transitionName = 'slide-left';
-        } else {
-          this.transitionName = 'slide-left';
-        }
+      if(toDepth === 101 || toDepth === 100){
+          this.transitionName = 'slide-up';
+      } else if(fromDepth === 101 || fromDepth === 100){
+        this.transitionName = 'slide-down';
       } else {
+        if(toDepth === undefined){
+          if(fromDepth === undefined){
+            this.transitionName = 'slide-left';
+          } else {
+              this.transitionName = 'slide-left';
+          }
+        } else {
           if(fromDepth === undefined){
             this.transitionName = 'slide-right';            
           } else {
             this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';            
           }
+        }
       }
     }
   },
@@ -93,5 +99,15 @@ export default {
   opacity: 0;
   -webkit-transform: translate(-120vw, 0);
   transform: translate(-120vw, 0);
+}
+.slide-down-leave-active, .slide-up-enter {
+  opacity: 0;
+  -webkit-transform: translate(0, -120vw);
+  transform: translate(0, -120vw);
+}
+.slide-up-leave-active, .slide-down-enter {
+  opacity: 0;
+  -webkit-transform: translate(0, 120vw);
+  transform: translate(0, 120vw);
 }
 </style>
