@@ -21,11 +21,11 @@
         <div id="repeat" class="text" v-for="list in detailPostList" :key="list.comment_no">
           <div id="commentWrapper">
             <div class="comment left" id="profileDiv">
-              <!-- <router-link v-bind:to="{name:'Home'}"> -->
+                <router-link :to="`/userProfile/${list.user_no}`">
               <button id="profileButton" class="left">
-                <img :src="require(`../../../assets/images/cat/${list.user_image}`)" id="profile" />
+                <img :src="require(`../../../assets/images/user/${list.user_image}`)" id="profile" />
               </button>
-              <!-- </router-link> -->
+              </router-link>
             </div>
             <div class="comment left" id="comment2">
               <div>
