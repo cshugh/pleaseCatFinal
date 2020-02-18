@@ -148,12 +148,16 @@ import Modal from "@/components/post/modal/ModalAddPost.vue";
 import EXIF from "../../../../node_modules/exif-js/exif";
 import mapComponent from "@/components/map/selectlLocationMap";
 import InfiniteLoading from "vue-infinite-loading";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
     Modal: Modal,
     mapComponent,
     InfiniteLoading
+  },
+  computed: {
+    ...mapGetters(["getLoginInfo"])
   },
   data() {
     return {
@@ -169,7 +173,7 @@ export default {
       showModalRegLocation: false,
 
       cat_no: "",
-      user_no: "1", // user 받아와서 바꿔야함
+      user_no: "",
       post_image: "",
       post_time: "",
       post_content: "",
@@ -320,14 +324,14 @@ export default {
             // photoGps 정보(시, 분, 초)를 소수로 바꿔 저장
             var lat = EXIF.getTag(this, "GPSLatitude");
             var long = EXIF.getTag(this, "GPSLongitude");
-            console.log(lat, long);
+            // console.log(lat, long);
             var dec_lat = self.toDecimal(lat);
             var dec_long = self.toDecimal(long);
             self.photoGps = {
               latitude: dec_lat,
               longitude: dec_long
             };
-            console.log(dec_lat, dec_long);
+            // console.log(dec_lat, dec_long);
           }
 
           // 지도 선택 시 기준이 될 gps좌표 설정
@@ -387,7 +391,7 @@ export default {
       // backend와 통신 할 때 넘겨줄 FormData 구성
       const fd = new FormData();
       fd.append("cat_no", this.cat_no);
-      fd.append("user_no", this.user_no);
+      fd.append("user_no", this.getLoginInfo.user_no);
       fd.append(
         "post_time",
         Vue.prototype.moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
@@ -479,24 +483,48 @@ export default {
   -o-animation: inputBtn-Animation 10s ease infinite;
   animation: inputBtn-Animation 10s ease infinite;
   @-webkit-keyframes inputBtn-Animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
   @-moz-keyframes inputBtn-Animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
   @-o-keyframes inputBtn-Animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
   @keyframes inputBtn-Animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 }
 .file-input-hidden {

@@ -1,3 +1,4 @@
+<script src="js/load-image.all.min.js"></script>
 <template>
   <div class="addCat">
     <div class="title-addCat">NEW POST</div>
@@ -164,10 +165,14 @@
 import axios from "axios";
 import Modal from "@/components/post/modal/Modal.vue";
 import myModal from "@/components/post/modal/ModalExtraInfo";
+import { mapGetters } from "vuex";
 export default {
   components: {
     Modal: Modal,
     appMyModal: myModal
+  },
+  computed: {
+    ...mapGetters(["getLoginInfo"])
   },
   data() {
     return {
@@ -219,9 +224,9 @@ export default {
       this.visible = !this.visible;
     },
     fileSelect: function(event) {
-      console.log(this.$refs);
+      // console.log(this.$refs);
       this.catImg = this.$refs.catProfileImage.files[0];
-      console.log(this.catImg);
+      // console.log(this.catImg);
 
       /*
 			var input = event.target
@@ -279,7 +284,7 @@ export default {
       fd.append("catImg", this.catImg);
 
       fd.append("cat_no", this.cat_no);
-      fd.append("cat_manager", this.cat_manager);
+      fd.append("cat_manager", this.getLoginInfo.user_no);
       fd.append(
         "reg_date",
         Vue.prototype.moment(new Date()).format("YYYY-MM-DD")
@@ -305,7 +310,8 @@ export default {
       axios
         .post(this.server + `/api/cat/insert`, 
           fd, 
-          { headers: {
+          {
+            headers: {
               "Content-Type": "multipart/form-data"
             }
         })
