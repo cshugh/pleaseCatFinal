@@ -20,8 +20,8 @@ export default new Vuex.Store({
     },
     state: {
         // server: 'http://localhost:8080',
-        server: 'http://70.12.246.120:8080/',
-        // server: 'http://13.124.251.3:8080',
+        // server: 'http://70.12.246.120:8080/',
+        server: 'http://13.124.251.3:8080',
         token: '',
         loginInfo: null,    // 로그인 회원 정보
         isLogin: false,     // 로그인 여부
