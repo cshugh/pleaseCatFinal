@@ -31,23 +31,27 @@
       </div>
 
       <div class="writingText">
-        <p>
-          <textarea
-            class="textField"
-            v-model="post_content"
-            wrap="hard"
-            placeholder=" 문구 입력..."
-          ></textarea>
-        </p>
+        <textarea
+          class="textField"
+          v-model="post_content"
+          wrap="hard"
+          placeholder=" 문구 입력..."
+        ></textarea>
+        <!-- <hr noshade border="0px"  size="0.5px" color="#3da0a9"> -->
       </div>
     </div>
 
     <div class="btn-wrap">
       <div class="modal selectCat">
+
         <button
-          id="show-modal-cat"
+          id="btn-show-modal-cat"
           @click=" showModalSelectCat = true"
-        >#고양이 태그</button>
+        >
+          <div id="lb-tagCat">#고양이 태그</div>
+          <div id="lb-selectedCat">{{ selectedCat }}</div>
+          <div style="clear:both:"></div>
+        </button>
 
         <modal
           v-if="showModalSelectCat"
@@ -56,7 +60,8 @@
           <h3
             slot="header"
             style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
-          >이 중에 고양이가 있나요?</h3>
+          >찾는 고양이가 있나요?</h3>
+
           <div slot="footer">
 
             <button
@@ -85,24 +90,27 @@
           >
             <!-- <button @click="showModalSelectCat = false"> 확인</button> -->
             이 중에 고양이가 없나요?
-            <button
-              class="btn-addCat"
-              @click="showModalSelectCat = false"
-            > 고양이 추가</button>
-            <p></p>
-
+            <router-link :to="'/addcat'">
+              <button
+                class="btn-addNewCat"
+                @click="showModalSelectCat = false"
+              > 고양이 추가</button>
+              <p></p>
+            </router-link>
           </div>
 
         </modal>
       </div>
 
-      <br>
-
       <div class="modal selectLoc">
         <button
-          id="show-modal-loc"
+          id="btn-show-modal-loc"
           @click="showModalRegLocation = true"
-        >위치 추가</button>
+        >
+          <div id="lb-addLoc">위치 추가</div>
+          <div id="lb-selectedLoc">{{ post_location }}</div>
+          <div style="clear:both:"></div>
+        </button>
 
         <modal
           v-if="showModalRegLocation"
@@ -111,7 +119,7 @@
           <h3
             slot="header"
             style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
-          >핀을 움직여 위치를 선택해주세요!</h3>
+          >핀을 움직여 위치를 선택하세요</h3>
 
           <div slot="footer">
             <!-- 지도 component 추가 -->
@@ -120,8 +128,15 @@
             </div>
 
           </div>
-          <div slot="footer">
-            <button @click="showModalRegLocation = false"> 확인</button>
+          <div
+            slot="footer"
+            class="modal-footer-regLoc"
+          >
+            <button
+              class="btn-regLoc"
+              @click="showModalRegLocation = false"
+            > 확인</button>
+            <p></p>
           </div>
         </modal>
       </div>
@@ -134,7 +149,7 @@
           class="btn-upload"
           v-on:click="submit"
           type="submit"
-          value="저장~!"
+          value="공유하기"
         />
       </p>
     </div>
@@ -188,7 +203,9 @@ export default {
       gps: [],
 
       // infiniteLoading
-      limit: 0
+      limit: 0,
+
+      selectedCat: ""
     };
   },
   created() {
@@ -272,8 +289,8 @@ export default {
         var img = new Image();
 
         img.onload = function() {
-          var MAX_WIDTH = 600;
-          var MAX_HEIGHT = 600;
+          var MAX_WIDTH = 375;
+          var MAX_HEIGHT = 375;
           var width = img.width;
           var height = img.height;
 
@@ -367,6 +384,7 @@ export default {
     tagCat(no, name) {
       // 선택한 고양이 값 받아오기
       this.cat_no = no;
+      this.selectedCat = name;
       // console.log("cat_no: " + no + ", cat_name: " + name + "  선택!!")
     },
     submit() {
@@ -434,7 +452,7 @@ export default {
 
 <style lang="scss" scoped>
 .addPost {
-  width: 600px;
+  width: 100%;
   margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 60px;
@@ -447,6 +465,9 @@ export default {
   margin-bottom: 40px;
   font-weight: bold;
   font-size: 42px;
+}
+#previewCanvas {
+  width: 100%;
 }
 .canvas-wrap {
   position: relative;
@@ -544,6 +565,32 @@ export default {
   width: 100%;
   height: 100%;
 }
+#btn-show-modal-cat {
+  border-top: solid 1px #3da0a9;
+}
+#btn-show-modal-cat,
+#btn-show-modal-loc {
+  width: 100%;
+  height: 52px;
+  border-bottom: solid 1px #3da0a9;
+  &:hover {
+    color: #1d2f3a;
+    font-weight: 550;
+  }
+  #lb-tagCat,
+  #lb-addLoc {
+    float: left;
+    text-align: left;
+    width: 30%;
+  }
+  #lb-selectedCat,
+  #lb-selectedLoc {
+    float: right;
+    text-align: right;
+    width: 70%;
+    padding-right: 5%;
+  }
+}
 .btn-selectCat {
   font-size: 12px;
   text-align: center;
@@ -604,19 +651,65 @@ export default {
   margin: 14px 6px 0 4.5px;
   padding-bottom: 6px;
 }
-.btn-addCat {
+.btn-addNewCat {
   float: right;
+  color: #1d2f3a;
+  font-weight: 550;
+}
+.modal-footer-regLoc {
+  margin: 14px 6px 0 0px;
+}
+.btn-regLoc {
   color: #1d2f3a;
   font-weight: 550;
 }
 .textField {
   // resize: none;
+  margin-top: 30px;
   resize: vertical;
-  height: 200px;
-  width: 420px;
+  height: 252px;
+  width: 100%;
+}
+.submit-wrap {
+  width: 100%;
+  height: 42px;
+  padding-right: 5%;
+}
+.btn-upload {
+  float: right;
+  width: 142px;
+  height: 42px;
+  border-radius: 8px;
+  background: #3da0a9;
+  color: #113538;
+  text-align: center;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  transition: all 0.3s;
+
+  &:hover {
+    color: #fff;
+    box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
+    // color: #1d2f3a;
+    // font-weight: 550;
+  }
 }
 
-@media (min-width: 500px) {
+@media (min-width: 600px) {
+  .addPost {
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 60px;
+    // padding-top: 100px;
+    padding-top: 10px;
+    padding-bottom: 125px;
+  }
+  #previewCanvas {
+    width: 600px;
+  }
   .selectPhoto {
     float: none;
     width: auto;

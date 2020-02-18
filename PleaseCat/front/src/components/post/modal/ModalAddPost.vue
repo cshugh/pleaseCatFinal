@@ -38,9 +38,10 @@
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+  width: 100%;
 }
 .modal-container {
-  width: 365px;
+  width: 80%;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -70,5 +71,10 @@
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+@media (min-width: 600px) {
+  .modal-wrapper {
+    width: 600px;
+}
 }
 </style>

@@ -8,11 +8,10 @@ import PageCatList from '../components/catList/PageCatList.vue'
 import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
 import AddPost from '../components/post/addPost/PageAddPost'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
-import PageAddCat from '../components/post/addCat/PageAddCat'
+import AddCat from '../components/post/addCat/PageAddCat'
 import Comment from '../components/comment/Comment'
 import PageDetailPost from '@/components/post/detailPost/PageDetailPost'
 // import PageNearMap from '@/components/catMap/PageNearMap'
-// import ModalParent from '../components/post/addPost/ModalParent'
 import PageNearMap from '@/components/map/PageNearMap'
 import PageMyProfile from '@/components/userProfile/PageMyProfile'
 import PageUserProfile from '@/components/userProfile/PageUserProfile'
@@ -77,8 +76,8 @@ const routes = [
   },
   {
     path: '/addCat',
-    name: 'PageAddCat',
-    component: PageAddCat
+    name: 'AddCat',
+    component: AddCat
   },
   {
     path: '/myProfile',

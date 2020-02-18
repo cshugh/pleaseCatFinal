@@ -247,9 +247,9 @@ export default {
         var img = new Image();
 
         img.onload = function() {
-          canvas.width = 300;
-          canvas.height = 300;
-          ctx.drawImage(img, 0, 0, 300, 300);
+          canvas.width = 600;
+          canvas.height = 600;
+          ctx.drawImage(img, 0, 0, 600, 600);
         };
 
         img.src = event.target.result;
@@ -335,7 +335,7 @@ export default {
 
 <style lang="scss" scoped>
 .addCat {
-  width: 600px;
+  width: 100%;
   margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 60px;
@@ -343,9 +343,12 @@ export default {
   padding-top: 10px;
   padding-bottom: 125px;
 }
+#previewCanvas{
+    width: 100%;
+  }
 .canvas-wrap {
   position: relative;
-  width: 70%;
+  // width: 70%;
   height: 360px;
 }
 .canvas-wrap:after {
@@ -357,5 +360,27 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+@media (min-width: 600px) {
+  .addPost {
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 60px;
+    // padding-top: 100px;
+    padding-top: 10px;
+    padding-bottom: 125px;
+  }
+  #previewCanvas{
+    width: 600px;
+  }
+  .selectPhoto {
+    float: none;
+    width: auto;
+  }
+  .writingText {
+    float: none;
+    width: auto;
+  }
 }
 </style>
