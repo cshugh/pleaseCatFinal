@@ -389,7 +389,9 @@ export default {
 
 <style lang="scss" scoped>
 .addPost {
-  width: 600px;
+  position: absolute;
+  width: 100vw;
+  // width: 600px;
   margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 60px;
