@@ -23,7 +23,8 @@
           <div class="comment left" id="profileDiv">
             <!-- <router-link v-bind:to="{name:'Home'}"> -->
             <button id="profileButton" class="left">
-              <img :src="require(`../../../assets/images/cat/${list.user_image}`)" id="profile" />
+              <!-- <img :src="require(`../../../assets/images/cat/${list.user_image}`)" id="profile" /> -->
+              <img :src="require(`../../../assets/images/posts/${list.user_image}`)" id="profile" />
             </button>
             <!-- </router-link> -->
           </div>

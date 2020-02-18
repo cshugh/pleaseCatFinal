@@ -32,7 +32,8 @@
         <mapComponent v-if="postList" :pos="positions" />
     </div>
     <div id="rankView" v-if="rankList">
-        <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div>
+        <!-- <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div> -->
+        <div id="rankIcon" class="circle" :style="{'background-image' : `url('@/assets/images/icons/rankIcon.jpg')`}" alt="rank"></div>
         <RankComponent v-for="(rank, idx) in rankList" :key="idx" :ranking="idx+1" :user_no="rank.user_no" :score='rank.rank_point' :name="rank.user_id"/>
         <!-- <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
         <RankComponent :ranking='2' :name="'김집사'" :user_no='3' :score='97'/>

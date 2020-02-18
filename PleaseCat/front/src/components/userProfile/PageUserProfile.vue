@@ -3,12 +3,12 @@
     <div class="emptySpace">-Navigation Bar-</div>
     <div class="profileView" >
         <div class="leftPart" v-if="(selectedUser != null)">
-            <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile">
-            <!-- <img id="userPhoto" :src='`/static/images/user/${ selectedUser.user_no }.jpg`' alt="catProfile"> -->
+            <!-- <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile"> -->
+            <img id="userPhoto" :src='`/static/images/user/${ selectedUser.user_no }.jpg`' alt="catProfile">
         </div>
         <div id="fakeleftPart" class="leftPart" v-if="(selectedUser === null)">
-            <img id="userPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
-            <!-- <img id="userPhoto" :src='`/static/images/icons/user.png`' alt="catProfile"> -->
+            <!-- <img id="userPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile"> -->
+            <img id="userPhoto" :src='`/static/images/icon/user.png`' alt="catProfile">
         </div>
         <section id="rightPart">
             <div class="name" v-if="(selectedUser != null)"><h1 id="userName" class="text">{{ selectedUser.user_id }}</h1></div>
@@ -32,7 +32,8 @@
                     <div class="followerList" v-for="(f, idx) in selectedUserFollowedList" :key="idx">
                         <span @click="showModalFollower = false; no = f.user_no">
                         <router-link :to="`/userProfile/${ f.user_no }`">
-                            <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <!-- <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto"> -->
+                            <img id="followerPhoto" :src='`/static/images/user/${ f.user_no }.jpg`' alt="followerPhoto">
                             <span id="followerName">{{ f.user_id }}</span>
                         </router-link>
                         </span>
@@ -51,7 +52,8 @@
                     <div class="followerList" v-for="(f, idx) in selectedUserFollowerList" :key="idx">
                         <span @click="showModalFollowingUser = false; no = f.user_no">
                             <router-link :to="`/userProfile/${ f.user_no }`">
-                                <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                                <!-- <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto"> -->
+                                <img id="followerPhoto" :src='`/static/images/user/${ f.user_no }.jpg`' alt="followerPhoto">
                                 <span id="followerName">{{ f.user_id }}</span>
                             </router-link>
                         </span>
@@ -70,7 +72,8 @@
                     <div class="followerList" v-for="(f, idx) in userFollowingCatList" :key="idx">
                         <span @click="showModalFollowingCat = false; no = f.cat_no">
                             <router-link :to="`/catProfile/${ f.cat_no }`">
-                                <img id="followerPhoto" :src='require(`@/assets/images/cat/${ f.cat_no }.jpg`)' alt="followerPhoto">
+                                <!-- <img id="followerPhoto" :src='require(`@/assets/images/cat/${ f.cat_no }.jpg`)' alt="followerPhoto"> -->
+                                <img id="followerPhoto" :src='`/static/images/cat/${ f.cat_no }.jpg`' alt="followerPhoto">
                                 <span id="followerName">{{ f.cat_name }}</span>
                             </router-link>
                         </span>
@@ -85,8 +88,8 @@
         <div id="photoList">
             <span v-for="(post, idx) in userPosts" :key="idx">
                 <router-link :to="`/detailPost/${post.post_no}`">
-                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> 
-                    <!-- <span class="photo" :style="{'background-image' : `url(/static/images/posts/${ post.post_image })`}"  :alt='`${ post.post_image }`'>  -->
+                    <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>  -->
+                    <span class="photo" :style="{'background-image' : `url(/static/images/post/${ post.post_image })`}"  :alt='`${ post.post_image }`'> 
                     </span>
                 </router-link>
             </span>

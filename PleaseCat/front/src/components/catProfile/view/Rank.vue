@@ -2,11 +2,12 @@
   <div id="rank-box">
       <router-link :to="`/userProfile/${user_no}`" style="color: black;">
         <span class="text">
-            <div v-if="user_no>0" class="square" :class="{rank1 : (ranking==1), rank2 : (ranking==2), rank3 : (ranking==3) }"   :style="{'background-image' : `url(${require('@/assets/images/icons/rankMedal.jpg')})`}" alt="medal"></div>
-            <!-- <img class="square" :src='require(`@/assets/images/icons/rankMedal.jpg`)' alt=""> -->
+            <!-- <div v-if="user_no>0" class="square" :class="{rank1 : (ranking==1), rank2 : (ranking==2), rank3 : (ranking==3) }"   :style="{'background-image' : `url(${require('@/assets/images/icons/rankMedal.jpg')})`}" alt="medal"></div> -->
+            <div v-if="user_no>0" class="square" :class="{rank1 : (ranking==1), rank2 : (ranking==2), rank3 : (ranking==3) }"   :style="{'background-image' : `url('/static/images/icon/rankMedal.jpg')`}" alt="medal"></div>
         </span>
         <span>
-            <img class="circle" :src='require(`@/assets/images/man/${user_no}.jpg`)' alt="">      
+            <!-- <img class="circle" :src='require(`@/assets/images/man/${user_no}.jpg`)' alt=""> -->
+            <img class="circle" :src='`/static/images/user/${user_no}.jpg`' alt="">
         </span>
         <span class="text name">{{name}}</span>
         <span class="text score">{{score}}p</span>
