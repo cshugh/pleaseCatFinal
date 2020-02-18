@@ -10,8 +10,9 @@
       <div v-if="this.post_image" id="content">
         <img :src="require(`../../../assets/images/posts/${this.post_image}`)" id="img" />
       </div>
-      <div>
+      <div id="contentDiv">
         <div class="content" id="post_content">{{post_content}}</div>
+        <br><br>
       </div>
       <div
         v-infinite-scroll="getDetailPostList2"
@@ -109,6 +110,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+#contentDiv{
+  background-color: white;
+  height: 100%;
+}
 #checkIcon {
   width: 100%;
   float: left;
@@ -186,6 +191,7 @@ export default {
 //   display: inline-block;
 // }
 .content {
+  background-color: white;
   font-size: 18px;
   padding-left: 6.3px;
   display: inline-block;
