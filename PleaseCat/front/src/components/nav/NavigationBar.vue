@@ -40,8 +40,9 @@ export default {
   left:0;
   width: 100%;
   height: 50px;
-  background: orange;
+  background: #A2B0B2;
   z-index:100;
+  opacity: 0.85;
   text-align: right;
   #greeting {
     margin-right: 20px;

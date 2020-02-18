@@ -17,14 +17,23 @@
         </div>
         <!-- <CatCardComponent key="1" name="name" desc1="♀" desc2="loca" src="1" /> -->
         <div id="listView" v-if="isList">
-        <CatCardComponent v-for="cat in nearCatList" :key=cat.no :name=cat.cat_name :desc1="cat.sex==='남'?'♂':'♀'" :desc2=cat.cat_location :src=cat.no  />
+        <transition-group
+            name="staggered-fade"
+            tag="ul"
+            v-bind:css="false"
+            v-on:before-enter="beforeEnter"
+            v-on:enter="enter"
+            v-on:leave="leave"
+        >
+            <CatCardComponent v-for="cat in nearCatList" :key=cat.no :name=cat.cat_name :desc1="cat.sex==='남'?'♂':'♀'" :desc2=cat.cat_location :src=cat.no  />
+        </transition-group>
         </div>
         <div class="emptySpace">-Tab Bar-</div>
     </div>
 </template>
 <script>
 import mapComponent from '@/components/map/map';
-import CatCardComponent from './catCard/CatCard'
+import CatCardComponent from '@/components/catList/catCard/CatCard'
 import axios from 'axios'
 import { mapActions, mapMutations, mapGetters } from "vuex";
 
@@ -105,6 +114,30 @@ export default {
         ...mapActions('storeCat',[
             'getCatList',
         ]),
+        beforeEnter: function (el) {
+            el.style.opacity = 0
+            el.style.height = 0
+        },
+        enter: function (el, done) {
+            var delay = el.dataset.index * 150
+            setTimeout(function () {
+                Velocity(
+                    el,
+                    { opacity: 1, height: '43vw' },
+                    { complete: done }
+                )
+            }, delay)
+        },
+        leave: function (el, done) {
+            var delay = el.dataset.index * 150
+            setTimeout(function () {
+                Velocity(
+                    el,
+                    { opacity: 0, height: 0 },
+                    { complete: done }
+                )
+            }, delay)
+        }
     }
 }
 </script>
