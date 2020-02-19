@@ -127,6 +127,8 @@ export default {
 
 <style lang="scss" scoped>
 #myProfile{
+    position: absolute;
+    width: 100vw;
     text-align: center;
     .btn{
         margin: 8px;
