@@ -15,6 +15,7 @@ import PageDetailPost from '@/components/post/detailPost/PageDetailPost'
 import PageNearMap from '@/components/map/PageNearMap'
 import PageMyProfile from '@/components/userProfile/PageMyProfile'
 import PageUserProfile from '@/components/userProfile/PageUserProfile'
+import PageDashboard from '@/components/dashboard/PageDashboard'
 
 Vue.use(VueRouter)
 
@@ -100,6 +101,11 @@ const routes = [
     name: 'PageUserProfile',
     props: 8,
     component: PageUserProfile
+  },
+  {
+    path: '/dashboard',
+    name: 'PageDashboard',
+    component: PageDashboard
   },
   // {
   //   path: '/about',
