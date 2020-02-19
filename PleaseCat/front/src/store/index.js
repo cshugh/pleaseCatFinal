@@ -19,9 +19,9 @@ export default new Vuex.Store({
         storeDetailPost: moduleDetailPost,
     },
     state: {
-        // server: 'http://localhost:8080',
+        server: 'http://localhost:8080',
         // server: 'http://70.12.246.120:8080/',
-        server: 'http://13.124.251.3:8080',
+        // server: 'http://13.124.251.3:8080',
         token: '',
         loginInfo: null,    // 로그인 회원 정보
         isLogin: false,     // 로그인 여부
@@ -90,7 +90,7 @@ export default new Vuex.Store({
                     console.error(err);
                 });
         },
-        checkToken({ state, dispatch, commit, getters, rootGetters }) {
+        checkToken({ state, dispatch, commit, getters, rootGetters }, callBack) {
             // 토큰을 헤더에 포함시켜서 유저 정보를 요청
             let token = localStorage.getItem('savedToken');
             

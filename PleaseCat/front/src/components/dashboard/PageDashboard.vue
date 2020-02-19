@@ -410,7 +410,7 @@ export default {
     },
     catRankChartData: function() {
       let rankChartData = [],
-          cnt = 0
+          cnt = 0,
           rankLen = 3;
 
       for (rank in this.rankList.length){

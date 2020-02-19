@@ -4,115 +4,143 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <template>
-<div id="out">
-  <div id="in">
-    <div class="emptySpace"></div>
-    <div
-      v-infinite-scroll="getNewsFeedList"
-      infinite-scroll-disabled="busy"
-      infinite-scroll-distance="limit"
-    >
-      <div id="repeat" class="text" v-for="post in newsFeedList" :key="post.post_no">
-        <div id="top">
-          <div class="top" id="profileDiv">
-            <router-link :to="`/catProfile/${post.cat_no}`">
-            <button id="profileButton">
-              <img :src="require(`../../assets/images/cat/${post.cat_image}`)" id="profile" />
-            </button>
-            </router-link>
+  <div id="out">
+    <div id="in">
+      <div class="emptySpace"></div>
+      <div
+        v-infinite-scroll="getNewsFeedList"
+        infinite-scroll-disabled="busy"
+        infinite-scroll-distance="limit"
+      >
+        <div id="repeat" class="text" v-for="post in newsFeedList" :key="post.post_no">
+          <div id="top" class="opacityDiv">
+            <div class="top" id="profileDiv">
+              <router-link :to="`/catProfile/${post.cat_no}`">
+                <button id="profileButton">
+                  <img :src="require(`../../assets/images/cat/${post.cat_image}`)" id="profile" />
+                </button>
+              </router-link>
+            </div>
+            <div class="top" id="cat_name">{{post.cat_name}}</div>
+            <div id="time">{{post.post_time}}</div>
           </div>
-          <div class="top" id="cat_name">{{post.cat_name}}</div>
-          <div id="time">{{post.post_time}}</div>
-        </div>
-        <div id="content">
-          <img :src="require(`../../assets/images/post/${post.post_image}`)" id="img" />
-        </div>
-        <div id="likeWrapper">
-          <div v-if="post.like === true" class="HR" id="likeDisabled">
-            <button
-              v-on:click="likeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
-              class="btnSize2"
-            >
-              <img :src="require('../../assets/images/icons/868700.png')" class="HRSize" />
-            </button>
+          <div id="content">
+            <img :src="require(`../../assets/images/post/${post.post_image}`)" id="img" />
           </div>
-          <div v-if="post.like === false" class="HR" id="likeActivation">
-            <button
-              v-on:click="likeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
-              class="btnSize2"
-            >
-              <img :src="require('../../assets/images/icons/868598.png')" class="HRSize" />
-            </button>
+          <div id="likeWrapper" class="opacityDiv">
+            <div v-if="post.like === true" class="HR" id="likeDisabled">
+              <button
+                v-on:click="likeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
+                class="btnSize2"
+              >
+                <img :src="require('../../assets/images/icons/868700.png')" class="HRSize" />
+              </button>
+            </div>
+            <div v-if="post.like === false" class="HR" id="likeActivation">
+              <button
+                v-on:click="likeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
+                class="btnSize2"
+              >
+                <img :src="require('../../assets/images/icons/868598.png')" class="HRSize" />
+              </button>
+            </div>
+            <div class="likeClass">{{post.post_like}}개</div>
+            <div v-if="post.unlike === true" class="HR">
+              <button
+                v-on:click="unLikeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
+                class="btnSize"
+              >
+                <img
+                  :src="require('../../assets/images/icons/broken-heart (1).png')"
+                  class="HRSize"
+                />
+              </button>
+            </div>
+            <div v-if="post.unlike === false" class="HR">
+              <button
+                v-on:click="unLikeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
+                class="btnSize"
+              >
+                <img
+                  :src="require('../../assets/images/icons/broken-heart (2).png')"
+                  class="HRSize"
+                />
+              </button>
+            </div>
+            <div id="unlike">{{post.post_unlike}}개</div>
+            <div class="HR" id="commentDiv">
+              <router-link :to="`/detailPost/${post.post_no}`" >
+                <button class="btnSize3">
+                  <img :src="require('../../assets/images/icons/png.png')" class="HRSize" />
+                </button>
+              </router-link>
+            </div>
           </div>
-          <div class="likeClass">{{post.post_like}}개</div>
-          <div v-if="post.unlike === true" class="HR">
-            <button
-              v-on:click="unLikeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
-              class="btnSize"
-            >
-              <img :src="require('../../assets/images/icons/broken-heart (1).png')" class="HRSize" />
-            </button>
-          </div>
-          <div v-if="post.unlike === false" class="HR">
-            <button
-              v-on:click="unLikeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
-              class="btnSize"
-            >
-              <img :src="require('../../assets/images/icons/broken-heart (2).png')" class="HRSize" />
-            </button>
-          </div>
-          <div id="unlike">{{post.post_unlike}}개</div>
-          <div class="HR" id="commentDiv">
-            <router-link :to="`/detailPost/${post.post_no}`">
-              <button class="btnSize3">
-                <img :src="require('../../assets/images/icons/png.png')" class="HRSize" />
+          <br />
+          <br />
+          <br />
+          <div id="contentDiv" class="opacityDiv">
+            <router-link :to="`/userProfile/${post.user_no}`">
+              <button id="userButton">
+                <img :src="require(`../../assets/images/user/${post.user_image}`)" id="user_image" />
               </button>
             </router-link>
-          </div>
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <div id="contentDiv">
-          <router-link :to="`/userProfile/${post.user_no}`">
-          <button id="userButton">
-            <img :src="require(`../../assets/images/user/${post.user_image}`)" id="user_image" />
-          </button>
-          </router-link>
-          <div id="userId">{{post.user_id}}</div>
-          <br />
-          <br />
-          <div v-if="post.detail === 'Init'">
-            <div class="content">{{post.post_content}}</div>
-          </div>
-          <div v-if="post.detail === 'true'">
-            <div id="detailTrue">{{post.post_content}}</div>
-            <button class="buttons" v-on:click="detailTrue(`${post.newsFeedIndex}`)">자세히보기</button>
-          </div>
-          <div v-if="post.detail === 'false'">
-            <div id="detailFalse">{{post.post_content}}</div>
-            <button class="buttons" v-on:click="detailFalse(`${post.newsFeedIndex}`)">간략히</button>
+            <div id="userId">{{post.user_id}} </div>
+            <div v-if="post.detail === 'Init'">
+              <div class="content">{{post.post_content}}</div>
+            </div>
+            <div v-if="post.detail === 'true'">
+              <div id="detailTrue">{{post.post_content}}</div>
+              <button class="buttons" v-on:click="detailTrue(`${post.newsFeedIndex}`)">자세히보기</button>
+            </div>
+            <div v-if="post.detail === 'false'">
+              <div id="detailFalse">{{post.post_content}}</div>
+              <button class="buttons" v-on:click="detailFalse(`${post.newsFeedIndex}`)">간략히</button>
+            </div>
           </div>
         </div>
       </div>
+      <div id="bottomDiv"></div>
     </div>
-    <div id="bottomDiv"></div>
   </div>
-</div>
 </template>
 <script>
 import "../../assets/css/style.css";
 import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      width: 0,
+    };  
+  },
   created() {
+    this.getIsLike();
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed(){
+    window.removeEventListener("resize", this.handleResize);
   },
   computed: {
     ...mapGetters("storeNewsFeed", ["newsFeedList", "busy"]),
-    ...mapGetters(["getLoginInfo"]),
+    ...mapGetters(["getLoginInfo"])
   },
   methods: {
+    handleResize() {
+      this.width = window.innerWidth;
+    },
+    setDetail() {
+      for (var i = 0; i < this.newsFeedList.length; i++) {
+        if (this.newsFeedList[i].detail==="false" && this.newsFeedList[i].post_content.length > this.width / 5.196) {
+          this.newsFeedList[i].detail = "false";
+        } else if(this.newsFeedList[i].post_content.length > this.width / 5.196){
+          this.newsFeedList[i].detail = "true";
+        }else{
+          this.newsFeedList[i].detail = "Init";
+        }
+      }
+    },
     ...mapActions("storeNewsFeed", [
       "getIsLike",
       "getNewsFeedList",
@@ -157,7 +185,6 @@ export default {
         this.likeDisabled(post_no, newsFeedIndex);
       }
       this.newsFeedList[newsFeedIndex].post_unlike++;
-      console.log(this.newsFeedList[newsFeedIndex].post_unlike);
       this.getUpdateUnLikes({
         postLike: this.newsFeedList[newsFeedIndex].post_unlike,
         postNo: post_no
@@ -167,7 +194,6 @@ export default {
       this.getUnLikeDisabled(post_no);
       this.newsFeedList[newsFeedIndex].unlike = false;
       this.newsFeedList[newsFeedIndex].post_unlike--;
-      console.log(this.newsFeedList[newsFeedIndex].post_unlike);
       this.getUpdateUnLikes({
         postLike: this.newsFeedList[newsFeedIndex].post_unlike,
         postNo: post_no
@@ -177,15 +203,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.buttons{
+.buttons {
   float: left;
   padding-left: 3px;
 }
 @media (min-width: 600px) {
   #out {
- width: 100%;
- text-align: center;
- }
+    width: 100%;
+    text-align: center;
+  }
   #in {
     display: inline-block;
     width: 600px;
@@ -217,6 +243,7 @@ export default {
   line-height: 3.9;
 }
 #commentDiv {
+  height: 50px;
   line-height: 3.9;
   float: left;
   padding-left: 14px;
@@ -258,7 +285,7 @@ export default {
   line-height: 2.6;
 }
 .emptySpace {
-  height: 70px;
+  height: 61px;
 }
 .txt_center {
   text-align: center;
@@ -280,7 +307,7 @@ export default {
 }
 #detailTrue {
   padding-left: 2px;
-  width: 470px;
+  width: 100%;
   font-size: 18px;
   display: inline-block;
   white-space: nowrap;
@@ -288,7 +315,6 @@ export default {
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
   white-space: normal;
   line-height: 1.2;
-  // height: 3.6em;
   text-align: left;
   word-wrap: break-word;
   display: -webkit-box;
@@ -297,7 +323,7 @@ export default {
 }
 #detailFalse {
   padding-left: 2px;
-  width: 470px;
+  width: 100%;
   font-size: 18px;
   display: inline-block;
   white-space: nowrap;
@@ -305,7 +331,6 @@ export default {
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
   white-space: normal;
   line-height: 1.2;
-  // height: 3.6em;
   text-align: left;
   word-wrap: break-word;
   display: -webkit-box;
@@ -313,7 +338,7 @@ export default {
 }
 .content {
   padding-left: 2px;
-  width: 470px;
+  width: 100%;
   font-size: 18px;
   display: inline-block;
   white-space: nowrap;
@@ -321,7 +346,6 @@ export default {
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
   white-space: normal;
   line-height: 1.2;
-  // height: 3.6em;
   text-align: left;
   word-wrap: break-word;
   display: -webkit-box;
