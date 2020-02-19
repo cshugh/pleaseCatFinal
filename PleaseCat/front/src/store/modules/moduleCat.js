@@ -11,6 +11,7 @@ export default {
         selectedCatFollowerList: [],
         userFollowingCatList: [],
         myFollowingCatList: [],
+
     },
     // mutations : 동기 처리 logic
     mutations: { // (state, rootState?)
@@ -190,6 +191,102 @@ export default {
         },
         myFollowingCatList: state => {
             return state.myFollowingCatList;
+        },
+        catSexArray:state => {
+            // console.log("making array...")
+            let maleCnt = 0,
+                femaleCnt = 0,
+                spayedMaleCnt = 0, 
+                spayedFemaleCnt = 0;
+
+            state.catList.forEach(catData => {
+                if( catData.sex ==="남") {
+                    if ( catData.neuter ){
+                        spayedMaleCnt += 1;
+                    } else{
+                        maleCnt += 1;
+                    }
+                } else if (catData.sex ==="여") {
+                    if ( catData.neuter ){
+                        spayedFemaleCnt += 1;
+                    } else{
+                        femaleCnt += 1;
+                    }
+                }
+            });
+            // console.log(maleCnt, femaleCnt, spayedMaleCnt, spayedFemaleCnt)
+            return [maleCnt,femaleCnt,spayedMaleCnt,spayedFemaleCnt]
+        },
+        catAgeArray:state => {
+            let age1 = 0,
+                age2 = 0,
+                age3 = 0,
+                age4 = 0,
+                age5 = 0,
+                age6up = 0;
+
+            state.catList.forEach(catData => {
+                if( catData.age <= 1 ){
+                    age1 += 1;
+                }else if ( catData.age <= 2 ){
+                    age2 += 1;
+                }else if ( catData.age <= 3 ){
+                    age3 += 1;
+                }else if ( catData.age <= 4 ){
+                    age4 += 1;
+                }else if ( catData.age <= 5 ){
+                    age5 += 1;
+                }else {
+                    age6up+= 1;
+                }
+            })
+            return [age1, age2, age3, age4, age5, age6up]
+        },
+        catHealthArray: state => {
+            //"건강 양호","외상 및 상처","피부병",  // 추가사항: "설사병","감염증","기타" 
+            let health1Cnt_normal = 0,
+                health2Cnt_hurt = 0,
+                health3Cnt_skin_disease = 0;
+                // health4Cnt_diarrhea = 0,
+                // health5Cnt_infectious_diseases = 0,
+                // health6Cnt_etc = 0;
+
+            state.catList.forEach(catData => {
+                if ( catData.hurt === 1  ){
+                    health2cnt_hurt += 1;
+                    if (catData.skin_disease === 1){
+                        health3Cnt_skin_disease +=1 ;
+                    }else{
+                        ;
+                    } 
+                }else{
+                    if (catData.skin_disease === 1){
+                        health3Cnt_skin_disease +=1 ;
+                    }else{
+                        health1Cnt_normal += 1;
+                    }
+                }
+                // if( catData.hurt === 0 & catData.skin_disease === 0){
+                //     health1Cnt_normal+=1;
+                // }
+                // if (catData.hurt === 1){
+                //     health2cnt_hurt += 1;
+                // }
+                // if (catData.skin_disease === 1){
+                //     health3Cnt_skin_disease +=1 ;
+                // }
+                    // if (catData.skin_disease === 1){
+                    //     health4Cnt_diarrhea +=1;
+                    // }
+                    // if (catData.skin_disease === 1){
+                    //     health5Cnt_infectious_diseases +=1;
+                    // }
+                // if (catData.skin_disease === 1){
+                //     health6Cnt_etc +=1;
+                // }                
+            })
+            return [health1Cnt_normal, health2Cnt_hurt, health3Cnt_skin_disease,]
         }
+
     }
 };
