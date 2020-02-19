@@ -225,7 +225,6 @@ export default {
         },
 
         userSexArray:state => {
-            console.log("making array...")
             let maleCnt = 0,
                 femaleCnt = 0;
 

@@ -50,7 +50,6 @@ export default {
             호출 위치 : App.vue
         */
         getCatList({ state, dispatch, commit, getters, rootGetters }) {
-            console.log("fetching...")
             axios
                 .get(`${rootGetters.getServer}/api/cat/searchAll`)
                 .then(res => {
@@ -194,7 +193,7 @@ export default {
             return state.myFollowingCatList;
         },
         catSexArray:state => {
-            console.log("making array...")
+            // console.log("making array...")
             let maleCnt = 0,
                 femaleCnt = 0,
                 spayedMaleCnt = 0, 
