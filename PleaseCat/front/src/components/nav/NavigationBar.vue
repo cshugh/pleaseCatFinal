@@ -1,10 +1,13 @@
 <template>
   <div id="navBar">
+    <div id="line1st"><br></div>
+    <div id="line2nd">
       <span id="greeting" v-if="getIsLogin">{{ this.$store.getters.getLoginInfo.user_id }} 님 환영합니다.</span>
       <span>
             <button v-if="!getIsLogin"><router-link to="/login">로그인</router-link></button>
             <button v-if="getIsLogin" v-on:click="logout">로그아웃</button>
       </span>
+    </div>
   </div>
 </template>
 
@@ -15,7 +18,6 @@ export default {
     name: "NavigationBar",
     data: () => {
       return {
-
       }
     },
     
@@ -40,10 +42,15 @@ export default {
   left:0;
   width: 100%;
   height: 60px;
-  background: #A2B0B2;
+  // background: linear-gradient(to bottom,#736776,#7E7182);
+  background: #ffd923;
   z-index:100;
-  opacity: 0.85;
-  text-align: right;
+  #line1st{
+    text-align: center;
+  }
+  #line2nd{
+    text-align: right;
+  }
   #greeting {
     margin-right: 20px;
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="addPost">
+  <div class="addPost page">
     <div class="title-selectPhoto">NEW POST</div>
 
     <div class="upload-wrap">
