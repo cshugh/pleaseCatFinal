@@ -4,7 +4,7 @@
     <div id="line2nd">
       <span id="greeting" v-if="getIsLogin">{{ this.$store.getters.getLoginInfo.user_id }} 님 환영합니다.</span>
       <span>
-            <button v-if="!getIsLogin"><router-link to="/login">로그인</router-link></button>
+            <button v-if="!getIsLogin" v-on:click="refresh"><router-link to="/login">로그인</router-link></button>
             <button v-if="getIsLogin" v-on:click="logout">로그아웃</button>
       </span>
     </div>
@@ -30,6 +30,12 @@ export default {
       logout() {
         // console.log('로그아웃');
         this.$store.dispatch('logout');
+      },
+      refresh() {
+        // console.log('로그아웃');
+      location.reload(true);
+      location.href = location.href;
+      history.go(0);
       },
     }
 }

@@ -3,7 +3,7 @@
     <div class="my-modal__dialog">
       <header class="my-modal__header">
         <span>{{title}}</span>
-        <button @click="$emit('update:visible', !visible)">Close</button>
+        <!-- <button @click="$emit('update:visible', !visible)">Close</button> -->
       </header>
       <div class="my-modal__body">
         <slot></slot>
