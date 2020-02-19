@@ -29,15 +29,7 @@
 
       </div>
 
-      <div class="writingText">
-        <textarea
-          class="textField"
-          v-model="post_content"
-          wrap="hard"
-          placeholder=" 문구 입력..."
-        ></textarea>
-        <!-- <hr noshade border="0px"  size="0.5px" color="#3da0a9"> -->
-      </div>
+      
     </div>
 
     <div class="btn-wrap">
@@ -141,6 +133,14 @@
       </div>
 
     </div>
+    <div class="writingText">
+        <textarea
+          v-model="post_content"
+          wrap="hard"
+          placeholder=" 문구 입력..."
+        ></textarea>
+        <!-- <hr noshade border="0px"  size="0.5px" color="#3da0a9"> -->
+      </div>
 
     <div class="submit-wrap">
       <p>
@@ -463,7 +463,7 @@ export default {
 }
 .addPost .title-addPost {
   margin-top: 60px;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
   font-weight: bold;
   font-size: 42px;
 }
@@ -472,7 +472,7 @@ export default {
 }
 .canvas-wrap {
   position: relative;
-  margin: 16px auto;
+  margin: -5.8px auto;
   // width: 70%;
   // padding-bottom: 70%;
   // border: solid 1px #1d2f3a;
@@ -486,19 +486,18 @@ export default {
 .file-input-div {
   // margin: 0 auto;
   position: relative;
-  width: 200px;
-  height: 50px;
+  width: 100%;
+  height: 56px;
   overflow: hidden;
 }
 .file-input-button {
-  width: 142px;
-  height: 42px;
+  width: 100%;
+  height: 56px;
   position: absolute;
   top: 0px;
   color: #1d2f3a;
-  border-radius: 8px;
 
-  background: linear-gradient(137deg, #ffdab7, #f77c99, #657af2, #c2ffc5);
+  background: linear-gradient(165deg,  #c2c8ff, #6bccb4, #6eaecc, #c2ffc5);
   background-size: 600% 600%;
   -webkit-animation: inputBtn-Animation 10s ease infinite;
   -moz-animation: inputBtn-Animation 10s ease infinite;
@@ -555,6 +554,7 @@ export default {
   right: 0px;
   top: 0px;
   opacity: 0;
+  width:100%;
 
   filter: alpha(opacity=0);
   -ms-filter: "alpha(opacity=0)";
@@ -566,15 +566,24 @@ export default {
 //   width: 100%;
 //   height: 100%;
 // }
-.textField {
-  // resize: none;
-  margin-top: 30px;
-  resize: vertical;
-  height: 252px;
-  width: 100%;
+.writingText {
+  margin-top: -5px;
+  textarea {
+    // resize: none;
+    padding: 12px 0px 12px;
+    resize: vertical;
+    height: 212px;
+    width: 100%;
+  }
+  textarea::placeholder {
+    color: rgb(81, 138, 163);
+  }
 }
 #btn-show-modal-cat {
-  border-top: solid 1px #3da0a9;
+  margin-top: 1px ;
+}
+#btn-show-modal-loc {
+  margin-top: -5px ;
 }
 #btn-show-modal-cat,
 #btn-show-modal-loc {

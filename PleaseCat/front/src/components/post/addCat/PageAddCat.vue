@@ -1,11 +1,11 @@
 <script src="js/load-image.all.min.js"></script>
 <template>
   <div class="addCat">
-    <div class="title-addCat">고양이 등록</div>
+    <div class="title-addCat">새 고양이 추가</div>
 
     <div class="reg-wrap">
       <div class="selectPhoto">
-        <p>고양이 이미지 추가</p>
+        <!-- <p>고양이 이미지 추가</p> -->
 
         <div class="canvas-wrap">
           <canvas id="previewCanvas">
@@ -45,16 +45,18 @@
               type="text"
               id="name"
               v-model="cat_name"
-              placeholder="고양이 이름을 지어주세요!!"
+              placeholder="고양이에게 이름을 지어주세요"
             >
           </div>
           <div class="basic-input-row">
             <label for="age">나이</label>
             <input
-              type="text"
+              type="number"
+              min="0"
+              max="30"
               id="age"
               v-model="age"
-              placeholder="고양이 나이"
+              placeholder="고양이 나이  ( 숫자로 입력하세요 )"
             >
           </div>
           <div class="basic-input-row">
@@ -63,37 +65,46 @@
               type="text"
               id="sex"
               v-model="sex"
-              placeholder="남자/여자"
+              placeholder="남/여"
+              maxlength="1"
             >
           </div>
 
-          <div class="writingText">
-            <div class="basic-input-row">
-              <label for="sex">상세 설명</label>
-              <textarea
-                class="textField"
-                v-model="cat_desc"
-                wrap="hard"
-                placeholder=" 상세 설명.."
-              ></textarea>
-            </div>
+          <div class="basic-input-row-desc">
+            <label for="cat_desc">상세 설명</label>
+            <textarea
+              v-model="cat_desc"
+              wrap="hard"
+              placeholder=" 상세 설명.."
+            ></textarea>
           </div>
         </div>
 
-        <div class="test">
-          <button @click="handleClickButton">추가 정보를 입력해볼까요?</button>
+        <div class="modal-extra-input">
+          <button
+            class="btn-modal-exrta-input"
+            @click="handleClickButton"
+          ><span>추가 정보</span></button>
           <!-- <app-my-modal title="This is modal" :visible.sync="visible"> -->
+
           <app-my-modal :visible.sync="visible">
+
             <div class="extra-input">
               <!-- 입력받을 정보: skin_disease, neuter, hurt, hair_color, eye_color -->
+
               <div class="extra-input-row select-input-row">
                 <label for="skin_disease">피부병</label>
-                <select v-model="skin_disease">
+                <select
+                  style="color=blue"
+                  v-model="skin_disease"
+                >
                   <option
+                    id="opt-disabled"
                     disabled
                     value
                   >피부병이 있나요?</option>
                   <option
+                    style="color=yellow"
                     v-for="opt in skinDiseaseOptions"
                     v-bind:value="opt.value"
                     :key="opt.value"
@@ -154,6 +165,8 @@
                 >
               </div>
             </div>
+            <p></p>
+
           </app-my-modal>
         </div>
       </div>
@@ -165,7 +178,7 @@
           class="btn-save"
           v-on:click="submit"
           type="submit"
-          value="등록하기"
+          value="추가하기"
         >
       </p>
     </div>
@@ -337,7 +350,7 @@ export default {
 }
 .addCat .title-addCat {
   margin-top: 60px;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
   font-weight: bold;
   font-size: 42px;
 }
@@ -346,7 +359,7 @@ export default {
 }
 .canvas-wrap {
   position: relative;
-  margin: 16px auto;
+  margin: -5.8px auto;
 
   &::after {
     content: "";
@@ -357,19 +370,19 @@ export default {
 .file-input-div {
   // margin: 0 auto;
   position: relative;
-  width: 200px;
-  height: 50px;
+  width: 100%;
+  height: 56px;
   overflow: hidden;
 }
 .file-input-button {
-  width: 142px;
-  height: 42px;
+  width: 100%;
+  height: 56px;
   position: absolute;
   top: 0px;
   color: #1d2f3a;
-  border-radius: 8px;
+  // border-radius: 8px;
 
-  background: linear-gradient(137deg, #ffdab7, #f77c99, #657af2, #c2ffc5);
+  background: linear-gradient(165deg, #c2c8ff, #6bccb4, #6eaecc, #c2ffc5);
   background-size: 600% 600%;
   -webkit-animation: inputBtn-Animation 10s ease infinite;
   -moz-animation: inputBtn-Animation 10s ease infinite;
@@ -426,73 +439,147 @@ export default {
   right: 0px;
   top: 0px;
   opacity: 0;
+  width: 100%;
 
   filter: alpha(opacity=0);
   -ms-filter: "alpha(opacity=0)";
   -khtml-opacity: 0;
   -moz-opacity: 0;
 }
-// .basic-input {
-  
-// }
-.basic-input label {
-  display: inline-block;
-  max-width: 100%;
-  height: 52px;
-  // font-weight: 550;
-}
-.basic-input input {
-  width: 82%;
-  height: 52px;
-  float: right;
-  background: 0 0; //? 이게 무슨 속성일까!
-  // border-bottom: 1px solid #3da0a9;
-  box-sizing: border-box;
-}
-#btn-show-modal-cat {
-  border-top: solid 1px #3da0a9;
-}
-#btn-show-modal-cat,
-#btn-show-modal-loc {
-  #lb-tagCat,
-  #lb-addLoc {
-    float: left;
-    text-align: left;
-    width: 30%;
-  }
-  #lb-selectedCat,
-  #lb-selectedLoc {
-    float: right;
-    text-align: right;
-    width: 70%;
-    padding-right: 5%;
-  }
-}
-.input-wrap {
-  margin-top: 20px;
-}
-.input-wrap .basic-input-row {
-  // margin-bottom: 25px;
-}
 .basic-input-row {
   width: 100%;
-  height: 52px;
+  height: 56px;
   border-bottom: solid 1px #3da0a9;
+
+  label {
+    display: inline-block;
+    line-height: 56px;
+    max-width: 100%;
+  }
+  input {
+    width: 78%;
+    height: 56px;
+    line-height: 56px;
+    float: right;
+    background: 0 0; //? 이게 무슨 속성일까!
+    box-sizing: border-box;
+    padding: 7px 8px 7px;
+  }
+  input::placeholder {
+    color: rgb(81, 138, 163);
+  }
 }
-.textField {
-  // resize: none;
-  margin-top: 30px;
-  resize: vertical;
-  // height: 252px;
-  width: 70%;
-  float: right;
+.basic-input-row-desc {
+  width: 100%;
+  height: 80px;
+  border-bottom: solid 1px #3da0a9;
+  label {
+    line-height: 80px;
+  }
+  textarea {
+    width: 78%;
+    height: 80px;
+    float: right;
+    padding: 7px 4px 7px;
+  }
+  textarea::placeholder {
+    padding: 7px 0px 7px;
+    line-height: 50px;
+    color: rgb(81, 138, 163);
+    // color: rgb(82, 124, 158);
+  }
 }
 
-.submit-wrap {
-  width: 100%;
-  height: 42px;
-  padding-right: 5%;
+.modal-extra-input {
+  // padding: 0px 0px 16px;
+  border-bottom: solid 1px #3da0a9;
 }
+.btn-modal-exrta-input {
+  width: 100%;
+  height: 56px;
+  background: rgb(247, 255, 129);
+  text-align: left;
+  span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.7s;
+  }
+  span:after {
+    content: "\00bb";
+    color: #1c312c;
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    // left: 10%;
+    left: 120%;
+    // right: -20px;
+    transition: 0.9s;
+  }
+  &:hover span {
+    // padding-right: 80%;
+    // padding-left:10%;
+    padding-left: 3%;
+  }
+  &:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+}
+
+.extra-input-row {
+  width: 100%;
+  height: 52px;
+  line-height: 52px;
+
+  label {
+    float: left;
+    max-width: 100%;
+  }
+  select {
+    float: right;
+    width: 78%;
+    height: 42px;
+    line-height: 42px;
+    margin-top: 5px;
+    padding: 0px 8px 0px;
+    border-radius: 8px;
+    border: 0.5px solid rgb(108, 184, 194);
+    color: #114044;
+    background: rgba(108, 184, 194, 0.4);
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  select::-ms-expand {
+    display: none;
+  }
+  option {
+    text-align: center;
+    color: #d3f4f7;
+    background: rgb(108, 184, 194);
+
+    &:checked,
+    &:hover {
+      background: rgb(96, 163, 172);
+      color: #fff;
+    }
+  }
+  input {
+    width: 78%;
+    height: 52px;
+    line-height: 52px;
+    float: right;
+    background: 0 0;
+    box-sizing: border-box;
+    padding: 0px 8px;
+  }
+  input::placeholder {
+    color: rgb(81, 138, 163);
+  }
+}
+
 .btn-save {
   float: right;
   width: 142px;
