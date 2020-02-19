@@ -109,7 +109,6 @@ export default new Vuex.Store({
                         dispatch('storeUser/getMyFollowingUserList', state.loginInfo.user_no)
                         dispatch('storeUser/getMyFollowedList', state.loginInfo.user_no)
                         dispatch('storeCat/getMyFollowingCatList', state.loginInfo.user_no)
-                        dispatch('storeNewsFeed/getNewsFeedList')
                         dispatch('storeNewsFeed/getIsLike')
                     } else {
                         dispatch('logout');

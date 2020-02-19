@@ -22,10 +22,6 @@
 </template>
 
 <style lang="scss" scoped>
-.closeModalBtn {
-	z-index: 9998;
-  color: #62acde;
-}
 .modal-overlay {
   display: flex;
   align-items: center;
@@ -42,9 +38,10 @@
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+  width: 100%;
 }
 .modal-container {
-  width: 300px;
+  width: 80%;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -52,13 +49,13 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  // padding-bottom: 50px;
 }
 .modal-header h3 {
   margin-top: 0;
   color: #FF339E;
 }
 .modal-body {
-  text-align: left;
   margin: 20px 0;
 }
 .modal-default-button {
@@ -74,5 +71,10 @@
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+@media (min-width: 600px) {
+  .modal-wrapper {
+    width: 600px;
+}
 }
 </style>

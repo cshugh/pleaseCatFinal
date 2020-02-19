@@ -89,7 +89,9 @@ export default {
 
 <style lang="scss" scoped>
 .login {
-  width: 350px;
+  position: absolute;
+  width: 100vw;
+  // width: 350px;
   margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 60px;

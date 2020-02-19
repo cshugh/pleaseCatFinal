@@ -6,16 +6,26 @@ public class detailPostPage {
 	private String comment_content;
 	private String comment_time;
 	private int comment_no;
+	private int user_no;
 	
 	public detailPostPage() {}
 
-	public detailPostPage(String user_id, String user_image, String comment_content, String comment_time, int comment_no) {
+	public detailPostPage(String user_id, String user_image, String comment_content, String comment_time, int comment_no, int user_no) {
 		super();
 		this.user_id = user_id;
 		this.user_image = user_image;
 		this.comment_content = comment_content;
 		this.comment_time = comment_time;
 		this.comment_no = comment_no;
+		this.user_no = user_no;
+	}
+	
+	public int getUser_no() {
+		return user_no;
+	}
+
+	public void setUser_no(int user_no) {
+		this.user_no = user_no;
 	}
 
 	public String getUser_id() {

@@ -2,7 +2,7 @@
   <div style="position: fixed;  bottom: 0;  left: 0;  right: 0; z-index:100;">
     <v-tabs
       v-model="tab"
-      background-color="black"
+      background-color="#0C9386"
       class="elevation-2"
       dark
       :centered="centered"
@@ -12,7 +12,7 @@
       :prev-icon="prevIcon ? 'mdi-arrow-left-bold-box-outline' : undefined"
       :next-icon="nextIcon ? 'mdi-arrow-right-bold-box-outline' : undefined"
       :icons-and-text="icons"
-      :height="65"
+      :height="60"
     >
       <!-- <v-tabs-slider></v-tabs-slider> -->
 
@@ -41,7 +41,7 @@ export default {
       prevIcon: false,
       nextIcon: false,
       right: false,
-      tabs: 5,
+      tabs: 6,
 
       tabs: [
         { id: 1, name: "NewsFeed", route: `/` },

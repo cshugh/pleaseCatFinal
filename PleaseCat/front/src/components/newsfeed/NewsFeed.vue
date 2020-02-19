@@ -15,17 +15,17 @@
       <div id="repeat" class="text" v-for="post in newsFeedList" :key="post.post_no">
         <div id="top">
           <div class="top" id="profileDiv">
-            <!-- <router-link v-bind:to="{name:'Home'}"> -->
+            <router-link :to="`/catProfile/${post.cat_no}`">
             <button id="profileButton">
               <img :src="require(`../../assets/images/cat/${post.cat_image}`)" id="profile" />
             </button>
-            <!-- </router-link> -->
+            </router-link>
           </div>
           <div class="top" id="cat_name">{{post.cat_name}}</div>
           <div id="time">{{post.post_time}}</div>
         </div>
         <div id="content">
-          <img :src="require(`../../assets/images/cat/${post.post_image}`)" id="img" />
+          <img :src="require(`../../assets/images/post/${post.post_image}`)" id="img" />
         </div>
         <div id="likeWrapper">
           <div v-if="post.like === true" class="HR" id="likeDisabled">
@@ -75,10 +75,11 @@
         <br />
         <br />
         <div id="contentDiv">
+          <router-link :to="`/userProfile/${post.user_no}`">
           <button id="userButton">
-            <img :src="require(`../../assets/images/cat/${post.user_image}`)" id="user_image" />
+            <img :src="require(`../../assets/images/user/${post.user_image}`)" id="user_image" />
           </button>
-          <!-- </router-link> -->
+          </router-link>
           <div id="userId">{{post.user_id}}</div>
           <br />
           <br />
@@ -106,13 +107,10 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   created() {
-    console.log(this);
-    // this.getIsLike();
-    // this.getNewsFeedList();
   },
   computed: {
     ...mapGetters("storeNewsFeed", ["newsFeedList", "busy"]),
-    ...mapGetters(["getLoginInfo"])
+    ...mapGetters(["getLoginInfo"]),
   },
   methods: {
     ...mapActions("storeNewsFeed", [

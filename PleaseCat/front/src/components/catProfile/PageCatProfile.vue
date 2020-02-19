@@ -24,7 +24,7 @@
             </div>
         </section>
     </div>
-    <div id="summaryView" class="text" v-if="(selectedCat != null)">
+    <div id="summaryView" v-if="(selectedCat != null)">
         <span class="summary">게시물<br>{{ selectedCat.count_posts }}</span>
         <span class="summary" @click="showModalFollower = true">팔로우<br>{{ selectedCatFollowerList.length }}</span>
             <modal v-if="showModalFollower" @close="showModalFollower = false">
@@ -145,12 +145,6 @@ export default {
     .emptySpace {
         height: 70px;
     }
-    .text {
-        // transition:all 0.4s ease-out;
-        // text-shadow: 4px 2px 2px black;
-        font-weight: bold;
-        color: black;
-    }
 }
 .profileView{
     padding: 2% 2% 0 2%;
@@ -159,10 +153,25 @@ export default {
     width: 90vw;
     height: 36vw;
     vertical-align: middle;
-    text-align: center;
-    background-color: #F2E6E1;
+    text-align: left;
+    background-color: #94A6AD;
     border-radius: 10px;
-    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
+    box-shadow: 0px 0px 5px 3px #728D95;
+    .text {
+        transition:all 0.4s ease-out;
+        text-shadow: 1px 1px 2px black;
+        font-weight: bold;
+        color: #fff;
+        h3 {
+            font-size: 7vw;
+        }
+        h4 {
+            font-size: 6vw;
+        }
+        h5 {
+            font-size: 4vw;
+        }
+    }
     img {
         width: 100%;
         border-radius: 100%;
@@ -201,13 +210,14 @@ export default {
     padding: 5px 0 5px 0;
     // box-sizing: border-box;
     // border: 1px solid blue;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    // border-top: 1px solid black;
+    // border-bottom: 1px solid black;
     .summary{
         display: inline-block;
+        font-weight: bold;
         width: 33.3%;
         text-align: center;
-
+        
         // box-sizing: border-box;
         // border: 1px solid red;
     }
@@ -240,7 +250,7 @@ export default {
             box-sizing: border-box;
             margin: 0.5vw;
             border-radius: 1vw;
-            box-shadow: 1px 1px 5px 1px black;
+            box-shadow: 0px 0px 5px 3px #728D95;
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;
