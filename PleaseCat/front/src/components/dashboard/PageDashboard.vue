@@ -7,6 +7,14 @@
   <!-- (2) 월별 사용자 현황 : line-chart
   : 성별 / 나이 / (접속[주 활동] 시간**)-->
 
+
+  <!-- 기타 내용 -->
+      <!-- selectOption 만들기**  v-if="selectOption === 0" -->
+
+
+<!-- 1) 현재 유저 아이디를 가져온다. -->
+<!-- 2) -->
+
   <div>
     <div id="emptySpace"></div>
 
@@ -24,14 +32,10 @@
 
       <h1>전체 고양이 데이터</h1>
 
-      <h2>{{test}}</h2>
-      <h2>Test!!!: {{test_}}</h2>
 
       <v-row>
-        <!-- <p>{{testValue}}</p> -->
         <p>전체 고양이 수 : {{ totalCatNum }}명 ||</p>
         <p>전체 유저 수 : {{ totalUserNum }}명</p>
-        <!-- {{ catSexArray }} -->
       </v-row>
 
       <v-row>
@@ -43,7 +47,6 @@
               <p>전체 고양이 성별</p>
               <div id="pie">
                 <pie-chart :data="catSexChartData" :options="chartOptions"></pie-chart>
-                <!-- <button @click="fillCatSexChartData()">getData!</button> -->
               </div>
             </div>
           </div>
@@ -97,16 +100,22 @@
         </v-col>
       </v-row>
 
-      <!-- v-if="selectOption === 0" -->
       <h1>관심 고양이 데이터</h1>
-
+      <input style="{'background-color' : 'white'}" type="text" v-model.number="selected_cat_no"/>
+    
       <v-row>
         <v-col cols="12">
+
           <div class="small">
             <bar-chart :chart-data="catRankChartData"></bar-chart>
-
             <!-- <button @click="fillData()">Randomize</button> -->
+
           </div>
+            <!-- <h3>{{ rankList }}</h3> -->
+            <!-- <h3>첫번째 랭킹 포인트: {{ rankList[0]['rankPoint'] }}</h3> -->
+            <!-- <h3>두번째 랭킹 포인트: {{ rankList[1] }}</h3>
+            <h3>세번째 랭킹 포인트: {{ rankList[2] }}</h3> -->
+            <h3>내 랭킹 포인트: ??? </h3>
 
           <h1>여백</h1>
         </v-col>
@@ -246,7 +255,7 @@ export default {
   computed: {
     //지워도 되는 테스트 코드
     ...mapState("storeCat", ["test"]),
-
+    ...mapGetters('storeUser/storeRank',['rankList',]),
     ...mapGetters(["getUserLoc"]),
     ...mapGetters("storeCat", [
       "catList",
@@ -400,24 +409,41 @@ export default {
       };
     },
     catRankChartData: function() {
+      let rankChartData = [],
+          cnt = 0
+          rankLen = 3;
+
+      for (rank in this.rankList.length){
+          cnt += 1;
+          if (cnt > rankLen) { // +1 -> 시행 , +2 -> 시행 , +3 -> 시행, +4 -> 시행, +5 -> for문 탈출.. 이되면
+              ;
+          }else{
+              rankChartData.push(rank.rank_point)
+          }
+      }
+      while (cnt <= rankLen) { // 남아있는 것들은 0으로 채우기! 내용 정리 
+          rankChartData.push(0)
+      }
+      rankChartData[rankLen] = 20
+
       return {
-        labels: ["관리자 랭킹", "2위 랭킹", "내 랭킹"],
+        labels: ["관리자 랭킹", "2위 랭킹", "3위 랭킹", "내 랭킹"], // 3위 랭킹까지 표시 가능
         datasets: [
           {
             label: "Total 랭킹 포인트",
             backgroundColor: "#f87979",
-            // data: [ 20, 30, 15, 40 ] 형식
-            data: [50, 27, 22]
+            // data: [ 20, 30, 15, 40 ] //형식
+            data: [rankChartData[0], rankChartData[1], rankChartData[2], rankChartData[3]]
           },
           {
             label: "# of (좋아요 - 싫어요)",
             backgroundColor: "#00D8FF",
-            data: [30, 17, 14]
+            data: [30, 17, 14,0]
           },
           {
             label: "포스트 쓴 날짜 수",
             backgroundColor: "#41B883",
-            data: [20, 10, 8]
+            data: [20, 10, 8,0]
           }
         ]
       };
@@ -473,10 +499,10 @@ export default {
   data() {
     return {
       // Test!
-      test_,
+      // 버튼 바인딩
+      selected_cat_no: '',
 
       // 처음 부분 :
-
       // 전체 고양이 페이지
       // 전체 고양이 수
       //"차트의 종류를 결정해주는 데이터 요소"
@@ -558,74 +584,27 @@ export default {
   },
   mounted() {
     this.fillData();
-    // console.log(totalCatNum),
-    // this.fillCatSexChartData()
 
-    var location = "서울특별시 강남구",
-      substring = "강남구";
-    if (location.indexOf(substring) !== -1) {
-      // 만약 문자가 문자열에 포함되어 있지 않으면..
-      this.test_ = "성공!";
-    } else {
-      this.test_ = "실패!";
-    }
+    // var location = "서울특별시 강남구",
+    //   substring = "강남구";
+    // if (location.indexOf(substring) !== -1) {
+    //   // 만약 문자가 문자열에 포함되어 있지 않으면..
+    //   this.test_ = "성공!";
+    // } else {
+    //   this.test_ = "실패!";
+    // }
+  },
+  watch: {
+      selected_cat_no: function(){
+        this.getRankList({cat_no: this.selected_cat_no});
+      }
   },
   methods: {
     ...mapActions("storeCat", ["getCatList"]),
     ...mapActions("storeUser", ["getUserList"]),
     ...mapActions("storePost", ["getPostList"]),
+    ...mapActions('storeUser/storeRank',['getRankList',]),
 
-    // catSexArray: function(){
-    //     let maleCnt = 0,
-    //         femaleCnt = 0,
-    //         spayedMaleCnt = 0,
-    //         spayedFemaleCnt = 0;
-
-    //     for (var catData in this.catList){
-    //         if( catData.sex ==="남") {
-    //             if ( catData.neuter ){
-    //                 spayedMaleCnt += 1;
-    //             } else{
-    //                 maleCnt += 1;
-    //             }
-    //         } else if (catData.sex ==="여") {
-    //             if ( catData.neuter ){
-    //                 spayedFemaleCnt += 1;
-    //             } else{
-    //                 femaleCnt += 1;
-    //             }
-    //         }
-    //     }
-    //     return [maleCnt,femaleCnt,spayedMaleCnt,spayedFemaleCnt]//{"maleCnt":maleCnt,"femaleCnt":femaleCnt,"spayedMaleCnt":spayedMaleCnt,"spayedFemaleCnt":spayedFemaleCnt}
-    // },
-
-    // fillCatSexChartData(){
-
-    //     catSexChartData= {
-    //         hoverBackgroundColor: "red",
-    //         hoverBorderWidth: 20,
-    //         labels: ["수컷", "암컷", "중성화 수컷", "중성화 암컷" ],
-    //         datasets: [{
-    //                 label: "전체 수컷/암컷/중성화 수컷/중성화 암컷",
-    //                 backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#028833"],
-    //                 data: [this.catSexArray[0], this.catSexArray[1], this.catSexArray[2], this.catSexArray[3]] //1,2,3,4] //
-    //             },{
-    //                 label: "일반/중성화 차이",
-    //                 backgroundColor: ["#41B883", "#E46651", ],
-    //                 data: [this.catSexArray[0] + this.catSexArray[1], this.catSexArray[2] + this.catSexArray[3]] // 2,3] //
-    //             },
-    //             ]
-    //    };
-    // },
-
-    // getTotalUserNum () {
-    //     return this.totalUserNum //#$
-    //     // this.totalUserNum =  (유저 불러와서 토탈 갯수 불러오기) length
-    // },
-    // getTotalCatNum () {
-    //     return this.totalCatNum //#$
-    //     // this.totalUserNum =  (유저 불러와서 토탈 갯수 불러오기) length
-    // },
     setOption() {
       this.chartTitle; //
       this.selectOption = 0; // : 전체
@@ -909,13 +888,15 @@ export default {
   -o-transition: all 0.3s;
   transition: all 0.3s;
   transition: all 0.3s;
-  /* &:hover {
+}
+
+.btn-convert-dashboard:hover {
                 color: #fff;
                 box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
                 color: #1D2F3A;
                 font-weight: 550;
-            } */
-}
+            }
+
 .emptySpace {
   height: 70px;
 }
