@@ -129,6 +129,7 @@ export default {
   methods: {
     handleResize() {
       this.width = window.innerWidth;
+      this.setDetail();
     },
     setDetail() {
       for (var i = 0; i < this.newsFeedList.length; i++) {
