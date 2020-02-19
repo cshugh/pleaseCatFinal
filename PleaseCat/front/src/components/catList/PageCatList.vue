@@ -1,15 +1,17 @@
 <template>
-    <div id="catList">
-        <div class="emptySpace">-Navigation Bar-</div>
-        <div><span>주변 반경</span></div>
+    <div id="catList" class="page">
+        <div>
+            <button v-show="isList" @click="isList = false"><v-icon x-large>list</v-icon></button>
+            <button v-show="!isList" @click="isList = true"><v-icon x-large>map</v-icon></button>
+        </div>
+
         <div>
             <v-row justify="space-around">
-                <v-radio-group v-model="distance" row >
-                    <v-radio color="orange" label="0m"     value="0"></v-radio>
-                    <v-radio color="orange" label="300m"   value="300"></v-radio>
-                    <v-radio color="orange" label="500m"   value="500"></v-radio>
-                    <v-radio color="orange" label="1km"  value="1000"></v-radio>
-                    <v-radio color="orange" label="10km" value="10000"></v-radio>
+                <v-radio-group v-model="distance" row>
+                    <v-radio color="grey darken-3" label="0m"     value="0"></v-radio>
+                    <v-radio color="grey darken-3" label="500m"   value="500"></v-radio>
+                    <v-radio color="grey darken-3" label="1km"  value="1000"></v-radio>
+                    <v-radio color="grey darken-3" label="10km" value="10000"></v-radio>
                 </v-radio-group>
             </v-row>
         </div>
@@ -25,8 +27,7 @@
             <input type="radio" id="d1000" value="10000" v-model="distance">
             <label for="d10000">10km</label>
         </div> -->
-        <h1><button v-if="isList" @click="isList = false">지도보기</button></h1> 
-        <h1><button v-if="!isList" @click="isList = true">목록보기</button></h1> 
+        
         <div id="mapView" v-if="!isList">
             <mapComponent v-if="catList" :pos="nearCatList" :curLoca="getUserLoc" :range="distance"/>
         </div>
@@ -43,14 +44,16 @@
                 <CatCardComponent v-for="cat in nearCatList" :key=cat.no :name=cat.cat_name :desc1="cat.sex==='남'?'♂':'♀'" :desc2=cat.cat_location :src=cat.no  />
             </transition-group>
         </div>
-        <div class="emptySpace">-Tab Bar-</div>
     </div>
 </template>
 <script>
-import mapComponent from '@/components/map/map';
+import mapComponent  from '@/components/map/map';
 import CatCardComponent from '@/components/catList/catCard/CatCard'
 import axios from 'axios'
 import { mapActions, mapMutations, mapGetters } from "vuex";
+import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
 
 export default {
     created() {
@@ -160,22 +163,23 @@ export default {
 <style lang="scss" scoped>
 #catList {
     text-align: center;
-    .emptySpace {
-        // display: block;
-        height: 100px;
-        text-align: center;
-    }
+    margin-top: 60px;
+    margin-bottom: 60px;
+    width: 100vw;
+    
     #mapView {
         display: inline-block;
-        // text-align: center;
-        width: 100vw;
-        height: 50vw;
+        width: 80vw;
+        height: 80vh;
     }
     #listView {
         display: inline-block;
         // text-align: center;
-        width: 100vw;
-        height: 50vw;
+        width: 100%;
+        // height: 50vw;
+        ul {
+           padding: 0px; 
+        }
     }
 }
 

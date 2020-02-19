@@ -1,5 +1,5 @@
 <template>
-  <div class="addPost">
+  <div class="addPost page">
     <div class="title-addPost">게시글 등록</div>
 
     <div class="upload-wrap">

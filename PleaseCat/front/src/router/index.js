@@ -12,7 +12,7 @@ import AddCat from '../components/post/addCat/PageAddCat'
 import Comment from '../components/comment/Comment'
 import PageDetailPost from '@/components/post/detailPost/PageDetailPost'
 // import PageNearMap from '@/components/catMap/PageNearMap'
-import PageNearMap from '@/components/map/PageNearMap'
+// import ModalParent from '../components/post/addPost/ModalParent'
 import PageMyProfile from '@/components/userProfile/PageMyProfile'
 import PageUserProfile from '@/components/userProfile/PageUserProfile'
 import PageDashboard from '@/components/dashboard/PageDashboard'
@@ -54,12 +54,6 @@ const routes = [
     name: 'SignUp',
     props: 101,
     component: SignUp
-  },
-  {
-    path: '/nearMap',
-    name: 'PageNearMap',
-    props: 4,
-    component: PageNearMap
   },
   {
     path: '/catList',

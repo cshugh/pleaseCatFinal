@@ -1,8 +1,8 @@
 <template>
-<div id="catProfile" v-if="selectedCat">
-    <div class="emptySpace">-Navigation Bar-</div>
+<div id="catProfile" class="page" v-if="selectedCat">
     <div id="photoView">
         <div id="cat" >
+            고양이
             <router-link :to="`/catProfile/${selectedCat.cat_no}`">
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
@@ -12,6 +12,7 @@
             </router-link>
         </div>
         <div id="man" v-if="catManager">
+            매니저
             <router-link :to="`/userProfile/${this.rankList[0].user_no}`">
             <!-- <img id="manPhoto" src="../../assets/images/man/1.jpg" alt="" > -->
             <img id="manPhoto" :src='require(`../../assets/images/man/${this.rankList[0].user_no}.jpg`)' alt="">
@@ -38,7 +39,6 @@
         <RankComponent :ranking='2' :name="'김집사'" :user_no='3' :score='97'/>
         <RankComponent :ranking='3' :name="'박집사'" :user_no='2' :score='89'/> -->
     </div>
-    <div class="emptySpace">-Tab Bar-</div>
 </div>
 </template>
 
@@ -113,6 +113,8 @@ export default {
 <style lang="scss" scoped>
 #catProfile {
     text-align: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
     .emptySpace {
         font-size: 50px;
         height: 60px;
@@ -192,6 +194,9 @@ export default {
     }
 }
 #mapView{
+    margin-left: 10vw;
+    margin-right: 10vw;
+
     width: 80vw;
     height: 80vw;
 }
