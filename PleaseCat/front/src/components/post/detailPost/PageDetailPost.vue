@@ -8,7 +8,8 @@
     <div id="paddingTop"></div>
     <div id="wrapper" class="in">
       <div v-if="this.post_image" id="content">
-        <img :src="require(`../../../assets/images/posts/${this.post_image}`)" id="img" />
+        <!-- <img :src="require(`../../../assets/images/posts/${this.post_image}`)" id="img" /> -->
+        <img :src="`/static/images/post/${this.post_image}`" id="img" />
       </div>
       <div>
         <div class="content" id="post_content">{{post_content}}</div>
@@ -24,7 +25,8 @@
             <!-- <router-link v-bind:to="{name:'Home'}"> -->
             <button id="profileButton" class="left">
               <!-- <img :src="require(`../../../assets/images/cat/${list.user_image}`)" id="profile" /> -->
-              <img :src="require(`../../../assets/images/posts/${list.user_image}`)" id="profile" />
+              <!-- <img :src="require(`../../../assets/images/posts/${list.user_image}`)" id="profile" /> -->
+              <img :src="`/static/images/post/${list.user_image}`" id="profile" />
             </button>
             <!-- </router-link> -->
           </div>
