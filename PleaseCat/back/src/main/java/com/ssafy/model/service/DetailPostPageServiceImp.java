@@ -9,6 +9,7 @@ import com.ssafy.model.dao.CommentDao;
 import com.ssafy.model.dao.DetailPostPageDao;
 import com.ssafy.model.dto.PleaseCatException;
 import com.ssafy.model.dto.comment;
+import com.ssafy.model.dto.detailPostInfo;
 import com.ssafy.model.dto.detailPostPage;
 
 
@@ -23,6 +24,16 @@ public class DetailPostPageServiceImp implements DetailPostPageService {
 	public List<detailPostPage> searchDetailPostPage(int no) {
 		try { 
 			return dao.searchDetailPostPage(no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException();
+		}
+	}
+
+	@Override
+	public detailPostInfo searchDetailPostInfo(int post_no) {
+		try { 
+			return dao.searchDetailPostInfo(post_no);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PleaseCatException();

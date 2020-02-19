@@ -55,4 +55,10 @@ public class DetailPostPageRestController {
 	public ResponseEntity<Map<String, Object>> searchDetailPostPage(@RequestParam int Post_no) throws Exception{
 		return handleSuccess(DetailPostPageService.searchDetailPostPage(Post_no));
 	}
+	
+	@ApiOperation("게시글 관리번호로 댓글 정보를 찾는다.")
+	@GetMapping("/searchDetailPostInfo/{Post_no}")
+	public ResponseEntity<Map<String, Object>> searchDetailPostInfo(@RequestParam int Post_no) throws Exception{
+		return handleSuccess(DetailPostPageService.searchDetailPostInfo(Post_no));
+	}
 }

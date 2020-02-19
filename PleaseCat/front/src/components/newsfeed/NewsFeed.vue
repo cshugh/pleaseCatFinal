@@ -79,16 +79,13 @@
           <br />
           <br />
           <br />
-          <br />
           <div id="contentDiv" class="opacityDiv">
             <router-link :to="`/userProfile/${post.user_no}`">
               <button id="userButton">
                 <img :src="require(`../../assets/images/user/${post.user_image}`)" id="user_image" />
               </button>
             </router-link>
-            <div id="userId">{{post.user_id}}</div>
-            <br />
-            <br />
+            <div id="userId">{{post.user_id}} </div>
             <div v-if="post.detail === 'Init'">
               <div class="content">{{post.post_content}}</div>
             </div>
@@ -115,13 +112,14 @@ export default {
   data() {
     return {
       width: 0,
-    };
+    };  
   },
   created() {
+    this.getIsLike();
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
-  destroyed() {
+  destroyed(){
     window.removeEventListener("resize", this.handleResize);
   },
   computed: {
@@ -131,7 +129,6 @@ export default {
   methods: {
     handleResize() {
       this.width = window.innerWidth;
-      this.setDetail();
     },
     setDetail() {
       for (var i = 0; i < this.newsFeedList.length; i++) {
@@ -246,6 +243,7 @@ export default {
   line-height: 3.9;
 }
 #commentDiv {
+  height: 50px;
   line-height: 3.9;
   float: left;
   padding-left: 14px;
@@ -287,7 +285,7 @@ export default {
   line-height: 2.6;
 }
 .emptySpace {
-  height: 50px;
+  height: 61px;
 }
 .txt_center {
   text-align: center;

@@ -41,12 +41,12 @@ export default {
             state.catList을 업데이트
             호출 위치 : storeCat/getCatList
         */
+
         pagePlus(state, payload, rootState) {
             state.page++;
         },
         
         setDetail(state, payload, rootState) {
-            console.log(payload.width);
             state.newsFeedList[payload.page].detail = "Init";
             if (state.newsFeedList[payload.page].post_content.length > payload.width/5.196){
                 state.newsFeedList[payload.page].detail = "true";

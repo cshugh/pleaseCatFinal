@@ -16,6 +16,7 @@
    	<typeAlias type ="com.ssafy.model.dto.newsFeed" 		alias ="newsFeed"/>
    	<typeAlias type ="com.ssafy.model.dto.catMap" 		alias ="catMap"/>
    	<typeAlias type ="com.ssafy.model.dto.detailPostPage" 		alias ="detailPostPage"/>
+   	<typeAlias type ="com.ssafy.model.dto.detailPostInfo" 		alias ="detailPostInfo"/>
   </typeAliases>
     
   <mappers>

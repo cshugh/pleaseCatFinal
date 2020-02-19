@@ -89,7 +89,7 @@ export default new Vuex.Store({
                     console.error(err);
                 });
         },
-        checkToken({ state, dispatch, commit, getters, rootGetters }) {
+        checkToken({ state, dispatch, commit, getters, rootGetters }, callBack) {
             // 토큰을 헤더에 포함시켜서 유저 정보를 요청
             let token = localStorage.getItem('savedToken');
             

@@ -10,13 +10,14 @@ export default {
         busy: false,
         limit: 2,
         page: 0,
-        post_image: "",
-        post_content: "",
-        
+        detailPostInfo: [],
     },
     getters: { // (state, getters, rootState, rootGetters)
         detailPostList: state => {
-            return state.detailPostList
+            return state.detailPostList;
+        },
+        detailPostInfo: state => {
+            return state.detailPostInfo;
         },
         lengthOfdetailPostList: state => {
             return state.detailPostList.length;
@@ -79,9 +80,7 @@ export default {
             state.page=0;
         },
         setDetailPostInfo(state, payload, rootState) {
-            state.post_image = payload.data.data.post_image;
-            state.post_content = payload.data.data.post_content;
-            
+            state.detailPostInfo = payload.data.data;
         },
         changeDetailPostList(state, payload, rootState) {
             state.detailPostList = state.detailPostList.concat(payload.append);
@@ -156,7 +155,7 @@ export default {
         },
         getDetailPostInfo({ state, dispatch, commit, getters, rootGetters }, post_no) {
             axios
-                .get(`${rootGetters.getServer}/api/post/searchPost?Post_no=` + post_no)
+                .get(`${rootGetters.getServer}/api/detailPostPage/searchDetailPostInfo/{Post_no}?Post_no=` + post_no)
                 .then(({ data }) => {
                     commit('setDetailPostInfo', { data: data });
                 })

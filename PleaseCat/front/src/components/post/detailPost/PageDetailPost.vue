@@ -7,14 +7,22 @@
   <div id="out">
     <div id="paddingTop"></div>
     <div id="wrapper" class="in">
-      <div v-if="this.post_image" id="content">
-        <img :src="require(`../../../assets/images/posts/${this.post_image}`)" id="img" />
+      <div v-if="this.detailPostInfo.post_image" id="content">
+        <img :src="require(`../../../assets/images/posts/${this.detailPostInfo.post_image}`)" id="img" />
+      </div>
+      <div v-if="this.detailPostInfo.user_image" id="userDiv">
+         <router-link :to="`/userProfile/${this.detailPostInfo.user_no}`">
+              <button id="userButton">
+        <img :src="require(`../../../assets/images/user/${this.detailPostInfo.user_image}`)" id="user_image" />
+              </button>
+         </router-link>
+        <div id="user_id">{{this.detailPostInfo.user_id}}</div>
       </div>
       <div id="contentDiv">
-        <div class="content" id="post_content">{{post_content}}</div>
-        <br>
+        <div class="content" id="post_content">{{this.detailPostInfo.post_content}}</div>
       </div>
-      <div
+
+      <div id="infinite"
         v-infinite-scroll="getDetailPostList2"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="limit"
@@ -39,7 +47,6 @@
           <br />
         </div>
       </div>
-      <!-- <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading> -->
     </div>
     <div class="in" id="inputComment">
       <div id="commentleft1">
@@ -57,6 +64,7 @@
         <img :src="require(`../../../assets/images/icons/icon (1).png`)" id="checkIcon" />
       </button>
     </div>
+    <div id="bottomDiv"></div>
   </div>
 </template>
 <script>
@@ -65,11 +73,10 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   created() {
-    this.getSetDetailPost();
     this.post_no = this.$route.params.post_no;
-    this.getDetailPostList({ post_no: this.post_no });
     this.getDetailPostInfo(this.post_no);
-    console.log(this);
+    this.getSetDetailPost();
+    this.getDetailPostList({ post_no: this.post_no });
   },
   data() {
     return {
@@ -82,8 +89,7 @@ export default {
       "detailPostList",
       "busy",
       "limit",
-      "post_image",
-      "post_content"
+      "detailPostInfo"
     ]),
     ...mapGetters(["getLoginInfo"])
   },
@@ -109,6 +115,27 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+#infinite{
+  background-color: white;
+}
+#userButton{
+  float: left;
+}
+#user_image{
+  padding-left: 5px;
+  width:45px;
+  border-radius: 100%;
+  float: left;
+}
+#user_id{
+  float: left;
+  line-height: 35px;
+  padding-left: 4px;
+}
+#userDiv{
+  float: left;
+  background-color: white;
+}
 #contentDiv{
   background-color: white;
   // height: 100%;
@@ -135,7 +162,7 @@ export default {
   padding-left: 20px;
 }
 #paddingTop {
-  padding-top: 50px;
+  padding-top: 60px;
 }
 #userIdSpan {
   font-weight: 700;
@@ -145,8 +172,15 @@ export default {
 }
 #comment2 {
   float: left;
-  padding-top: 50px;
+  padding-top: 20px;
   padding-left: 7px;
+}
+
+#profileDiv {
+  width: 50px;
+  float: left;
+  padding-left: 10px;
+  padding-top: 20px;
 }
 
 .left {
@@ -180,12 +214,6 @@ export default {
   right: 0;
   z-index: 100;
   padding-bottom: 70px;
-}
-#profileDiv {
-  width: 50px;
-  float: left;
-  padding-left: 10px;
-  padding-top: 50px;
 }
 // .comment {
 //   display: inline-block;
