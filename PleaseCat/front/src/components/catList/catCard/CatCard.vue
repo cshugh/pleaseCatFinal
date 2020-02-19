@@ -2,8 +2,8 @@
   <div class="card-box">
       <router-link :to="`/catProfile/${src}`">
       <div class="card" :class="{hover: isHovering}" @mouseover="isHovering=true" @mousemove="isHovering=true" @mouseout="isHovering=false">
-          <!-- <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cats/_profile/${src}.jpg`)+')'}"></div> -->
-          <div class="bg" :style="{'background-image': 'url(`/static/images/cat/${src}.jpg`)'}"></div>
+          <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cats/_profile/${src}.jpg`)+')'}"></div>
+          <!-- <div class="bg" :style="{'background-image': 'url(`/static/images/cat/${src}.jpg`)'}"></div> -->
           <div class="text name">
               <h3>{{ name }}</h3>
           </div>
@@ -51,7 +51,7 @@ export default {
     // width: 43vw;
     @media screen and (max-width: 500px) {
         width: 90%;
-        height: 30vw;
+        height: 43vw;
     }
     width: 43vw;
     height: 43vw;
@@ -60,7 +60,7 @@ export default {
     .text {
         position: absolute;
         transition:all 0.4s ease-out;
-        text-shadow: 4px 2px 2px black;
+        text-shadow: 1px 1px 4px black;
         font-weight: bold;
         color: #fff;
         h3 {
@@ -91,7 +91,7 @@ export default {
         height: 100%;
         overflow: hidden;
         background-color: #000;
-        box-shadow: 2px 2px 10px 2px black;
+        box-shadow: 0px 0px 10px 3px #728D95;
         border-radius: 30px;
         height: 100%;
         .bg {

@@ -3,19 +3,20 @@
     <div class="emptySpace">-Navigation Bar-</div>
     <div class="profileView">
         <div class="leftPart" v-if="(selectedCat != null)">
-            <!-- <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile"> -->
-            <img id="catPhoto" :src='`/static/images/cat/${ selectedCat.cat_no }.jpg`' alt="catProfile">
+            <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile">
+            <!-- <img id="catPhoto" :src='`/static/images/cat/${ selectedCat.cat_no }.jpg`' alt="catProfile"> -->
         </div>
         <div id="fakeleftPart" class="leftPart" v-if="(selectedCat === null)">
-            <!-- <img id="catPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile"> -->
-            <img id="catPhoto" src='/static/images/icon/user.png' alt="catProfile">
+            <img id="catPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
+            <!-- <img id="catPhoto" src='/static/images/icon/user.png' alt="catProfile"> -->
         </div>
         <section id="rightPart">
-            <div class="name"><h1 id="catName" class="text" v-if="(selectedCat != null)">{{ selectedCat.cat_name }}</h1></div>
-            <div id="fakename" class="name" v-if="(selectedCat === null)"><h1 id="catName" class="text">고양이</h1></div>
+            <div id="name" v-if="(selectedCat != null)"><h1 id="catName" class="text">{{ selectedCat.cat_name }}</h1></div>
+            <div id="name" v-if="(selectedCat == null)"><h1 id="catName" class="text"> 고양이 </h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
-                    <button>팔로우</button>
+                    <button v-if="!followed" @click="postAddFollow(selectedCat.cat_no)">팔로우</button>
+                    <button v-if="followed" @click="deleteFollow(selectedCat.cat_no)">언팔로우</button>
                 </span>
                 <span id="detailButton" class="btn text">
                     <router-link :to="`/catDetail/${no}`"><button>상세 정보</button></router-link>
@@ -23,17 +24,33 @@
             </div>
         </section>
     </div>
-    <div id="summaryView" class="text" v-if="(selectedCat != null)">
-        <span class="summary">게시물<br>{{ selectedCat.count_followers }}</span>
-        <span class="summary">팔로우<br>{{ selectedCat.count_likes }}</span>
-        <span class="summary">좋아요<br>{{ selectedCat.count_posts }}</span>
+    <div id="summaryView" v-if="(selectedCat != null)">
+        <span class="summary">게시물<br>{{ selectedCat.count_posts }}</span>
+        <span class="summary" @click="showModalFollower = true">팔로우<br>{{ selectedCatFollowerList.length }}</span>
+            <modal v-if="showModalFollower" @close="showModalFollower = false">
+                <div slot="header">
+                    <h3>Follower List</h3>
+                </div>
+                <div slot="body">
+                    <div class="followerList" v-for="(f, idx) in selectedCatFollowerList" :key="idx">
+                        <router-link :to="`/userProfile/${ f.user_no }`">
+                            <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <span id="followerName">{{ f.user_id }}</span>
+                        </router-link>
+                    </div>
+                </div>
+                <div slot="footer" >
+                    <button @click="showModalFollower = false"> 확인</button>
+                </div>
+            </modal>
+        <span class="summary">좋아요<br>{{ selectedCat.count_likes }}</span>
     </div>
-    <div id="photoView" v-if="(catPosts != null)">
+    <div id="photoView">
         <div id="photoList">
             <span v-for="(post, idx) in catPosts" :key="idx">
                 <router-link :to="`/detailPost/${post.post_no}`">
-                    <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> -->
-                    <span class="photo" :style="{'background-image' : url(`/static/images/post/${ post.post_image }`)}"  :alt='`${ post.post_image }`'>
+                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
+                    <!-- <span class="photo" :style="{'background-image' : url(`/static/images/post/${ post.post_image }`)}"  :alt='`${ post.post_image }`'> -->
                     </span>
                 </router-link>
             </span>
@@ -46,12 +63,17 @@
 <script>
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
+import Modal from "@/components/post/modal/Modal.vue";
 
 export default {
     name: 'catProfile',
+    components:{
+        modal: Modal,
+    },
     created() {
         this.no = this.$route.params.cat_no;
         this.getSelectedCat(this.no);
+        this.getCatFollowerList(this.no);
         this.getCatPosts(this.no);
     },
     destroyed() {
@@ -61,15 +83,27 @@ export default {
     data(){
         return{
             no: '',
+            showModalFollower: false,
         }
     },
     computed:{
         ...mapGetters('storeCat',[
-            'selectedCat',
+            'selectedCat', 'selectedCatFollowerList', 'myFollowingCatList',
+            'catList',
         ]),
         ...mapGetters('storePost',[
             'catPosts',
         ]),
+        followed: function(myFollowingCatList){
+            const cno = this.$route.params.cat_no;
+            var result = false;
+            this.myFollowingCatList.forEach(el => {
+                if(el.cat_no == cno){
+                    return result = true;
+                }
+            });
+            return result;
+        },
     },
     methods: {
         ...mapMutations('storeCat',[
@@ -79,7 +113,7 @@ export default {
             'clearCatPosts',
         ]),
         ...mapActions('storeCat',[
-            'getSelectedCat',
+            'getSelectedCat',  'getCatFollowerList', 'postAddFollow', 'deleteFollow',
         ]),
         ...mapActions('storePost',[
             'getCatPosts',
@@ -111,25 +145,33 @@ export default {
     .emptySpace {
         height: 70px;
     }
-    .text {
-        // transition:all 0.4s ease-out;
-        // text-shadow: 4px 2px 2px black;
-        font-weight: bold;
-        color: black;
-    }
 }
 .profileView{
     padding: 2% 2% 0 2%;
     position: relative;
     display: inline-block;
     width: 90vw;
-    height: 40vw;
+    height: 36vw;
     vertical-align: middle;
-    text-align: center;
-    background-color: #F2E6E1;
+    text-align: left;
+    background-color: #94A6AD;
     border-radius: 10px;
-    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
-    // border: 2px solid red;
+    box-shadow: 0px 0px 5px 3px #728D95;
+    .text {
+        transition:all 0.4s ease-out;
+        text-shadow: 1px 1px 2px black;
+        font-weight: bold;
+        color: #fff;
+        h3 {
+            font-size: 7vw;
+        }
+        h4 {
+            font-size: 6vw;
+        }
+        h5 {
+            font-size: 4vw;
+        }
+    }
     img {
         width: 100%;
         border-radius: 100%;
@@ -150,18 +192,16 @@ export default {
     #rightPart{
         position: absolute;
         left: 40%;
-        #fakename{
-            visibility: hidden;
-        }        
+        
         // box-sizing: border-box;
         // border: 1px solid red;
     }
 }
-// #profileView::after{
-//     content: "";
-//     display: block;
-//     padding-bottom: 40%;
-// }
+.profileView::after{
+    content: "";
+    display: block;
+    padding-bottom: 40%;
+}
 #summaryView{
     display: inline-block;
     font-size: 3vw;
@@ -174,11 +214,24 @@ export default {
     // border-bottom: 1px solid black;
     .summary{
         display: inline-block;
+        font-weight: bold;
         width: 33.3%;
         text-align: center;
-
+        
         // box-sizing: border-box;
         // border: 1px solid red;
+    }
+    .followerList{
+        vertical-align: center;
+        img {
+            width: 10vw;
+            border-radius: 100%;
+        }
+        img::after{
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+        }
     }
 }
 #photoView {
@@ -197,7 +250,7 @@ export default {
             box-sizing: border-box;
             margin: 0.5vw;
             border-radius: 1vw;
-            box-shadow: 1px 1px 5px 1px black;
+            box-shadow: 0px 0px 5px 3px #728D95;
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;

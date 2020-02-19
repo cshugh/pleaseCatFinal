@@ -59,10 +59,11 @@ export default {
         var coord = new kakao.maps.LatLng(locPosition.getLat(), locPosition.getLng());
         var callback = function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                vm.address = result[0].address.address_name;
+                vm.address = result[0].region_1depth_name + " " + result[0].region_2depth_name
+                vm.$emit('selectLoc-event', { X: vm.mark_x, Y: vm.mark_y, Addr:vm.address})
             }
         };
-        geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+        geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), callback);
         
         displayMarker(locPosition);
 
@@ -89,11 +90,11 @@ export default {
                 var coord = new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng());
                 var callback = function(result, status) {
                     if (status === kakao.maps.services.Status.OK) {
-                        vm.address = result[0].address.address_name;
+                        vm.address = result[0].region_1depth_name + " " + result[0].region_2depth_name;
                         vm.$emit('selectLoc-event', { X: vm.mark_x, Y: vm.mark_y, Addr:vm.address})
                     }
                 };
-                geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+                geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), callback);
             });
         }    
     },

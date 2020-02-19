@@ -29,7 +29,7 @@
         <br>마지막 밥 먹은 시간: {{selectedCat.meal_time}}
     </div>
     <div id="mapView">
-        <mapComponent v-if="postList" txt="readPost" :pos="positions" />
+        <mapComponent v-if="postList" :pos="positions" />
     </div>
     <div id="rankView" v-if="rankList">
         <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import mapComponent from '@/components/map/map'
+import mapComponent from '@/components/map/map_detail'
 import RankComponent from './view/Rank';
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";

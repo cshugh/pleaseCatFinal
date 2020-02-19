@@ -46,7 +46,7 @@ export default {
         },
         setDetail(state, payload, rootState) {
             state.newsFeedList[payload.page].detail = "Init";
-            if (state.newsFeedList[payload.page].post_content.length > 36)
+            if (state.newsFeedList[payload.page].post_content.length > 84)
                 state.newsFeedList[payload.page].detail = "true";
         },
         setNewsFeedIndex(state, payload, rootState) {
@@ -54,7 +54,6 @@ export default {
             state.newsFeedList[payload.page].newsFeedIndex = state.page;
         },
         setNewsFeedLike(state, payload, rootState) {
-            // console.log(state.likes)
             for (var i = 0; i < state.likes.length; i++) {
                 if (state.newsFeedList[payload.page].post_no == state.likes[i].post_no) {
                     state.newsFeedList[payload.page].like = true;
@@ -127,10 +126,11 @@ export default {
         getIsLike({ state, dispatch, commit, getters, rootGetters }) {
             axios.get(`${rootGetters.getServer}`+"/api/Likes/searchAllLikesOfUser?user_no="+`${rootGetters.getLoginInfo.user_no}`).then(({ data }) => {
                 state.likes = data.data;
-            }),
                 axios.get(`${rootGetters.getServer}`+"/api/Unlikes/searchAllUnLikes?user_no="+`${rootGetters.getLoginInfo.user_no}`).then(({ data }) => {
                     state.unlikes = data.data;
+                    dispatch('getNewsFeedList');
                 });
+            })
         },
         getNewsFeedList({ state, dispatch, commit, getters, rootGetters }) {
             state.busy = true;
@@ -146,8 +146,8 @@ export default {
                     } else {
                         commit('changeNewsFeedList', { append: append });
                         for (var i = 0; i < getters.limit; i++) {
-                            commit('changePostTime', { page: getters.page });
                             commit('setNewsFeedLike', { page: getters.page });
+                            commit('changePostTime', { page: getters.page });
                             commit('setNewsFeedIndex', { page: getters.page });
                             commit('setDetail', { page: getters.page });
                             commit('pagePlus');

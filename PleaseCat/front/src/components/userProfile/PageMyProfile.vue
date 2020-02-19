@@ -3,43 +3,84 @@
     <div class="emptySpace">-Navigation Bar-</div>
     <div id="profileView" v-if="(getLoginInfo != null)">
         <div id="leftPart">
-            <!-- <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile"> -->
-            <img id="userPhoto" :src='`/static/images/user/${ getLoginInfo.user_no }.jpg`' alt="catProfile">
-            <!-- <img id="userPhoto" :src='' alt="catProfile"> -->
+            <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile">
+            <!-- <img id="userPhoto" :src='`/static/images/user/${ getLoginInfo.user_no }.jpg`' alt="my Profile"> -->
         </div>
         <section id="rightPart">
             <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
             <div id="buttons">
-                <span id="followButton" class="btn text">
-                    <button id="show-modal-loc" @click="showModalFollow = true">
-                        팔로우
-                    </button>
-                    <ModalComponent id="modal" v-if="showModalFollow" @close="showModalFollow = false">
-                        <h3 slot="header">
-                            팔로우 목록
-                        </h3>
-                        <h3 slot="body">
-                            본문
-                        </h3>
-                    </ModalComponent>
-                </span>
-                <span id="detailButton" class="btn text">
-                    <router-link :to="`/catDetail/${no}`"><button>상세 정보</button></router-link>
+                <span id="modifyButton" class="btn text">
+                    <router-link :to="`/`"><button>내 정보 수정</button></router-link>
                 </span>
             </div>
         </section>
     </div>
     <div id="summaryView" class="text" v-if="(getLoginInfo != null)">
         <span class="summary">게시물<br>{{ getLoginInfo.count_posts }}</span>
-        <span class="summary">팔로우<br>{{ getLoginInfo.count_followers }}</span>
-        <span class="summary">좋아요<br>{{ getLoginInfo.count_likes }}</span>
+        <span class="summary" @click="showModalFollower = true">팔로워<br>{{ myFollowerList.length }}</span>
+            <modal v-if="showModalFollower" @close="showModalFollower = false">
+                <div slot="header">
+                    <h3>Follower List</h3>
+                </div>
+                <div slot="body">
+                    <div class="followerList" v-for="(f, idx) in myFollowerList" :key="idx">
+                        <span @click="showModalFollower = false; no = f.user_no">
+                        <router-link :to="`/userProfile/${ f.user_no }`">
+                            <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <span id="followerName">{{ f.user_id }}</span>
+                        </router-link>
+                        </span>
+                    </div>
+                </div>
+                <div slot="footer" >
+                    <button @click="showModalFollower = false"> 확인</button>
+                </div>
+            </modal>
+        <span class="summary" @click="showModalFollowingUser = true">유저 팔로잉<br>{{ myFollowingUserList.length }}</span>
+            <modal v-if="showModalFollowingUser" @close="showModalFollowingUser = false">
+                <div slot="header">
+                    <h3>User Following List</h3>
+                </div>
+                <div slot="body">
+                    <div class="followerList" v-for="(f, idx) in myFollowingUserList" :key="idx">
+                        <span @click="showModalFollowingUser = false; no = f.user_no">
+                        <router-link :to="`/userProfile/${ f.user_no }`">
+                            <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <span id="followerName">{{ f.user_id }}</span>
+                        </router-link>
+                        </span>
+                    </div>
+                </div>
+                <div slot="footer" >
+                    <button @click="showModalFollowingUser = false"> 확인</button>
+                </div>
+            </modal>
+        <span class="summary" @click="showModalFollowingCat = true">캣 팔로잉<br>{{ myFollowingCatList.length }}</span>
+            <modal v-if="showModalFollowingCat" @close="showModalFollowingCat = false">
+                <div slot="header">
+                    <h3>Cat Following List</h3>
+                </div>
+                <div slot="body">
+                    <div class="followerList" v-for="(f, idx) in myFollowingCatList" :key="idx">
+                        <span @click="showModalFollowingCat = false; no = f.cat_no">
+                            <router-link :to="`/catProfile/${ f.cat_no }`">
+                                <img id="followerPhoto" :src='require(`@/assets/images/cat/${ f.cat_no }.jpg`)' alt="followerPhoto">
+                                <span id="followerName">{{ f.cat_name }}</span>
+                            </router-link>
+                        </span>
+                    </div>
+                </div>
+                <div slot="footer" >
+                    <button @click="showModalFollowingCat = false"> 확인</button>
+                </div>
+            </modal>
     </div>
     <div id="photoView" v-if="(myPosts != null)">
         <div id="photoList">
             <span v-for="(post, idx) in myPosts" :key="idx">
-                <router-link :to="{name:''}">
-                    <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> -->
-                    <span class="photo" :style="{'background-image' : `/static/images/post/${ post.post_image }`}"  :alt='`${ post.post_image }`'>
+                <router-link :to="`/detailPost/${post.post_no}`">
+                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
+                    <!-- <span class="photo" :style="{'background-image' : `/static/images/post/${ post.post_image }`}"  :alt='`${ post.post_image }`'> -->
                     </span>
                 </router-link>
             </span>
@@ -52,23 +93,33 @@
 <script>
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
-import ModalComponent from "@/components/post/modal/Modal.vue";
+import Modal from "@/components/post/modal/Modal.vue";
 
 export default {
     name: 'myProfile',
-    components: { ModalComponent },
+    components:{
+        modal: Modal,
+    },
     data(){
         return{
-            showModalFollow: false,
             no: '',
+            showModalFollower: false,
+            showModalFollowingUser: false,
+            showModalFollowingCat: false,
         }
     },
     computed:{
-        ...mapGetters('storePost',[
-            'myPosts',
-        ]),
         ...mapGetters([
             'getLoginInfo',
+        ]),
+        ...mapGetters('storeUser',[
+            'myFollowerList', 'myFollowingUserList',
+        ]),
+        ...mapGetters('storeCat',[
+            'myFollowingCatList'
+        ]),
+        ...mapGetters('storePost',[
+            'myPosts',
         ]),
     },
 }
@@ -76,6 +127,8 @@ export default {
 
 <style lang="scss" scoped>
 #myProfile{
+    position: absolute;
+    width: 100vw;
     text-align: center;
     .btn{
         margin: 8px;
@@ -157,11 +210,23 @@ export default {
     // border-bottom: 1px solid black;
     .summary{
         display: inline-block;
-        width: 33.3%;
+        width: 25%;
         text-align: center;
 
         // box-sizing: border-box;
         // border: 1px solid red;
+    }
+    .followerList{
+        text-align: left;
+        img {
+            width: 10vw;    
+            border-radius: 100%;
+        }
+        img::after{
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+        }
     }
 }
 #photoView {

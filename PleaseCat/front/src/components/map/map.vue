@@ -8,7 +8,7 @@
 <script>
 import router from '@/router/index';
 export default {
-    props: ['txt', 'pos', 'curLoca', 'range'],
+    props: ['pos', 'curLoca', 'range'],
     /* 
         txt: 지도상 위치 클릭 시 이동할 url (ex, catProfile)
             => this.url
@@ -21,7 +21,7 @@ export default {
     */
     data() {
         return {
-            url: this.txt,
+            url: 'catProfile',
             user: this.curLoca,
             // dist: this.range,
         }
@@ -104,18 +104,11 @@ export default {
 
             for (var i = 0; i < positions.length; i ++) {
                 // 마커를 생성합니다
-                if(vm.url === 'catProfile'){
-                    var marker = new kakao.maps.Marker({
-                        map: map, // 마커를 표시할 지도
-                        position: new kakao.maps.LatLng(positions[i].pos_x, positions[i].pos_y), // 마커의 위치
-                        image: markerImages[i],
-                    });
-                } else {
-                    var marker = new kakao.maps.Marker({
-                        map: map, // 마커를 표시할 지도
-                        position: new kakao.maps.LatLng(positions[i].pos_x, positions[i].pos_y), // 마커의 위치
-                    });
-                }
+                var marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: new kakao.maps.LatLng(positions[i].pos_x, positions[i].pos_y), // 마커의 위치
+                    image: markerImages[i],
+                });
 
                 // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
                 // 이벤트 리스너로는 클로저를 만들어 등록합니다 
@@ -124,7 +117,7 @@ export default {
             }
             function makeOverListener(i) {
                 return function() {
-                    router.push(`/${vm.url}/${i}`);
+                    router.push(`/catProfile/${i}`);
                 };
             }
             // 마커가 지도 위에 표시되도록 설정합니다

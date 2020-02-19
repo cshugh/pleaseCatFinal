@@ -19,8 +19,8 @@ export default new Vuex.Store({
         storeDetailPost: moduleDetailPost,
     },
     state: {
-        // server: 'http://localhost:8080',
-        server: 'http://13.124.251.3:8080',
+        server: 'http://localhost:8080',
+        // server: 'http://13.124.251.3:8080',
         token: '',
         loginInfo: null,    // 로그인 회원 정보
         isLogin: false,     // 로그인 여부
@@ -104,8 +104,10 @@ export default new Vuex.Store({
                     var obj = eval("("+response.data.data+")");
                     if(response.data.state === 'ok'){
                         commit('changeLoginId', obj);
-                        dispatch('storePost/getUserPosts', state.loginInfo.user_no)
-                        dispatch('storeNewsFeed/getNewsFeedList')
+                        dispatch('storePost/getMyPosts', state.loginInfo.user_no)
+                        dispatch('storeUser/getMyFollowingUserList', state.loginInfo.user_no)
+                        dispatch('storeUser/getMyFollowedList', state.loginInfo.user_no)
+                        dispatch('storeCat/getMyFollowingCatList', state.loginInfo.user_no)
                         dispatch('storeNewsFeed/getIsLike')
                     } else {
                         dispatch('logout');

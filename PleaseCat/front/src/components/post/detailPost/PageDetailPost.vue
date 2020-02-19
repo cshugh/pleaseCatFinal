@@ -4,13 +4,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <template>
-  <div>
-    <div id="wrapper">
+  <div id="out">
+    <div id="paddingTop"></div>
+    <div id="wrapper" class="in">
       <div v-if="this.post_image" id="content">
         <img :src="require(`../../../assets/images/posts/${this.post_image}`)" id="img" />
       </div>
-      <div>
+      <div id="contentDiv">
         <div class="content" id="post_content">{{post_content}}</div>
+        <br><br>
       </div>
       <div
         v-infinite-scroll="getDetailPostList2"
@@ -18,24 +20,45 @@
         infinite-scroll-distance="limit"
       >
         <div id="repeat" class="text" v-for="list in detailPostList" :key="list.comment_no">
-          <div class="comment" id="profileDiv">
-            <!-- <router-link v-bind:to="{name:'Home'}"> -->
-            <button id="profileButton">
-              <img :src="require(`../../../assets/images/cat/${list.user_image}`)" id="profile" />
-            </button>
-            <!-- </router-link> -->
+          <div id="commentWrapper">
+            <div class="comment left" id="profileDiv">
+                <router-link :to="`/userProfile/${list.user_no}`">
+              <button id="profileButton" class="left">
+                <img :src="require(`../../../assets/images/user/${list.user_image}`)" id="profile" />
+              </button>
+              </router-link>
+            </div>
+            <div class="comment left" id="comment2">
+              <div>
+                <span id="userIdSpan">{{list.user_id}}</span>
+                {{list.comment_content}}
+              </div>
+              <div id="comment_time">{{list.comment_time}} 신고</div>
+            </div>
           </div>
-          <div class="comment">
-            <div>{{list.user_id}} {{list.comment_content}}</div>
-            <div>{{list.comment_time}} 신고</div>
-          </div>
+          <br />
+          <br />
+          <br />
         </div>
-        <hr />
-        <br />
       </div>
       <!-- <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading> -->
     </div>
-    <div id="inputComment">댓글 <input v-on:keyup.enter="inputComment()" v-model="comment" placeholder="댓글을 입력해주세요"><button v-on:click="inputComment()">버튼</button></div>
+    <div class="in" id="inputComment">
+      <div id="commentleft1">
+        <img :src="require(`../../../assets/images/icons/icon.png`)" id="sendIcon" />
+      </div>
+      <div>
+        <input
+          id="commentleft2"
+          v-on:keyup.enter="inputComment()"
+          v-model="comment"
+          placeholder="댓글을 입력해주세요"
+        />
+      </div>
+      <button id="commentright" v-on:click="inputComment()">
+        <img :src="require(`../../../assets/images/icons/icon (1).png`)" id="checkIcon" />
+      </button>
+    </div>
   </div>
 </template>
 <script>
@@ -52,7 +75,7 @@ export default {
   data() {
     return {
       post_no: 0,
-      comment: "",
+      comment: ""
     };
   },
   computed: {
@@ -63,7 +86,7 @@ export default {
       "post_image",
       "post_content"
     ]),
-    ...mapGetters(["getLoginInfo"]),
+    ...mapGetters(["getLoginInfo"])
   },
   methods: {
     ...mapActions("storeDetailPost", [
@@ -73,68 +96,106 @@ export default {
       "getAddComment",
       "getSetDetailPost"
     ]),
-    inputComment(){
-      this.getAddComment({ comment_content: this.comment, post_no: this.post_no, user_no: this.getLoginInfo.user_no});
+    inputComment() {
+      this.getAddComment({
+        comment_content: this.comment,
+        post_no: this.post_no,
+        user_no: this.getLoginInfo.user_no
+      });
+      location.reload(true);
+      location.href = location.href;
+      history.go(0);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+#contentDiv{
+  background-color: white;
+  height: 100%;
+}
+#checkIcon {
+  width: 100%;
+  float: left;
+}
+#sendIcon {
+  width: 100%;
+  float: left;
+}
+#commentright {
+  float: right;
+  width: 25px;
+}
+#commentleft1 {
+  float: left;
+  width: 25px;
+}
+#commentleft2 {
+  float: left;
+  width: 89%;
+  padding-left: 20px;
+}
+#paddingTop {
+  padding-top: 50px;
+}
+#userIdSpan {
+  font-weight: 700;
+}
+#comment_time {
+  float: left;
+}
+#comment2 {
+  float: left;
+  padding-top: 50px;
+  padding-left: 7px;
+}
+
+.left {
+  float: left;
+}
+#commentWrapper {
+  float: left;
+}
+@media (min-width: 600px) {
+  #out {
+    width: 100%;
+    text-align: center;
+  }
+  .in {
+    display: inline-block;
+    width: 600px;
+  }
+}
 #wrapper {
-  padding-bottom: 150px;
+  padding-bottom: 95px;
 }
 #inputComment {
+  border-top: 1px solid black;
   background-color: white;
-  width: 100%;
+  // width: 100%;
+  margin: 0 auto;
   position: fixed;
-  bottom: 40px;
+  bottom: 0px;
   left: 0;
   right: 0;
   z-index: 100;
-  padding-bottom: 100px;
-}
-button {
-  padding-top: 50px;
+  padding-bottom: 70px;
 }
 #profileDiv {
-  width: 40px;
+  width: 50px;
+  float: left;
+  padding-left: 10px;
+  padding-top: 50px;
 }
-#detailTrue {
-  font-size: 18px;
-  display: inline-block;
-  width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
-  white-space: normal;
-  line-height: 1.2;
-  text-align: left;
-  word-wrap: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-#detailFalse {
-  font-size: 18px;
-  display: inline-block;
-  width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
-  white-space: normal;
-  line-height: 1.2;
-  text-align: left;
-  word-wrap: break-word;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-}
-.comment {
-  display: inline-block;
-}
+// .comment {
+//   display: inline-block;
+// }
 .content {
+  background-color: white;
   font-size: 18px;
+  padding-left: 6.3px;
   display: inline-block;
-  width: 200px;
+  width: 470px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
@@ -146,22 +207,6 @@ button {
   // -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-#HR {
-  display: inline;
-}
-.HR {
-  display: inline;
-}
-.HRSize {
-  width: 100%;
-}
-.btnSize {
-  width: 9%;
-}
-.like {
-  font-size: 3vw;
-  display: inline;
-}
 #content {
   height: 100%;
   font-size: 0;
@@ -169,15 +214,6 @@ button {
 }
 #img {
   width: 100%;
-}
-.top {
-  font-size: 3vw;
-  display: inline;
-}
-#time {
-  height: 100%;
-  float: bottom;
-  float: right;
 }
 #repeat {
   background-color: white;
@@ -190,8 +226,5 @@ button {
 #profile {
   width: 100%;
   border-radius: 100%;
-}
-#profileButton {
-  width: 100%;
 }
 </style>

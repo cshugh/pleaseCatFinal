@@ -21,8 +21,9 @@
     </div>
     <div class="btn-wrap">
       <router-link :to="'/signUp'">
-        <button class="btn-login" v-on:click="login">로그인</button>
+        회원가입
       </router-link>
+      <button class="btn-login" v-on:click="login">로그인</button>
     </div>
   </div>
 </template>
@@ -88,7 +89,9 @@ export default {
 
 <style lang="scss" scoped>
 .login {
-  width: 350px;
+  position: absolute;
+  width: 100vw;
+  // width: 350px;
   margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 60px;
