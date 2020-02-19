@@ -7,14 +7,11 @@
   <!-- (2) 월별 사용자 현황 : line-chart
   : 성별 / 나이 / (접속[주 활동] 시간**)-->
 
-
   <!-- 기타 내용 -->
       <!-- selectOption 만들기**  v-if="selectOption === 0" -->
 
-
 <!-- 1) 현재 유저 아이디를 가져온다. -->
 <!-- 2) -->
-
   <div>
     <div id="emptySpace"></div>
 
@@ -32,14 +29,13 @@
 
       <h1>전체 고양이 데이터</h1>
 
-
       <v-row>
         <p>전체 고양이 수 : {{ totalCatNum }}명 ||</p>
         <p>전체 유저 수 : {{ totalUserNum }}명</p>
       </v-row>
 
       <v-row>
-        <v-col cols="3">
+        <v-col cols="4">
           <!-- <p>전체 고양이 성별</p> -->
           <!-- <pie-chart :data="{'xBlueberry': 44, 'Strawberry': 23}"></pie-chart> -->
           <div v-if="catSexArray.length > 0">
@@ -52,9 +48,24 @@
           </div>
         </v-col>
 
+        <v-col cols="4">
+          <!-- <p>전체 고양이 성별</p> -->
+          <!-- <pie-chart :data="{'xBlueberry': 44, 'Strawberry': 23}"></pie-chart> -->
+          <div v-if="catSexArray.length > 0">
+            <div class="small">
+              <p>전체 고양이 중성화 비율</p>
+              <div id="pie">
+                <pie-chart :data="catNeuterChartData" :options="chartOptions"></pie-chart>
+              </div>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+      
+      <v-row>
         <!-- <p>전체 고양이 나이</p> -->
         <!-- 목적: 주요 고양이 통계, 관리용 -->
-        <v-col cols="3">
+        <v-col cols="4">
           <div class="small">
             <p>전체 고양이 나이</p>
             <div id="pie">
@@ -65,7 +76,7 @@
 
         <!-- <p>전체 고양이 건강</p> -->
         <!-- 목적: 주요 고양이 통계, 관리용 -->
-        <v-col cols="3">
+        <v-col cols="4">
           <div class="small">
             <p>전체 고양이 건강</p>
             <div id="pie">
@@ -81,7 +92,7 @@
 
       <h1>전체 사용자 데이터</h1>
       <v-row>
-        <v-col cols="3">
+        <v-col cols="4">
           <p>전체 사용자 성별</p>
           <div class="small">
             <div id="pie">
@@ -90,7 +101,7 @@
           </div>
         </v-col>
 
-        <v-col cols="3">
+        <v-col cols="4">
           <p>전체 사용자 나이</p>
           <div class="small">
             <div id="pie">
@@ -102,27 +113,34 @@
 
       <h1>관심 고양이 데이터</h1>
       <input style="{'background-color' : 'white'}" type="text" v-model.number="selected_cat_no"/>
-    
       <v-row>
-        <v-col cols="12">
+        <v-col cols="6">
 
           <div class="small">
-            <bar-chart :chart-data="catRankChartData"></bar-chart>
-            <!-- <button @click="fillData()">Randomize</button> -->
-
+            <bar-chart v-if="rankList != null" :chart-data="catRankChartData"></bar-chart>
           </div>
-            <!-- <h3>{{ rankList }}</h3> -->
+          <div v-if="rankList">
+            <h3>{{ rankList }}</h3>
+            <h3>{{ rankList.length }}</h3>
             <!-- <h3>첫번째 랭킹 포인트: {{ rankList[0]['rankPoint'] }}</h3> -->
-            <!-- <h3>두번째 랭킹 포인트: {{ rankList[1] }}</h3>
-            <h3>세번째 랭킹 포인트: {{ rankList[2] }}</h3> -->
+            <h3>두번째 랭킹 포인트: {{ rankList[1] }}</h3>
+            <h3>세번째 랭킹 포인트: {{ rankList[2] }}</h3>
             <h3>내 랭킹 포인트: ??? </h3>
-
+        </div>
           <h1>여백</h1>
         </v-col>
+
+        <v-col cols="6">
+            <div class="small">
+                <bar-chart :chart-data="followCatHealthChartData"></bar-chart>
+            </div>
+        </v-col>
+
       </v-row>
       <!--                     width="800px"
                     height="300px"
       -->
+
       <!-- <h1> 전체(25개구 : 중성화 여부, 상처여부)/구별 데이터 </h1> -->
       <!-- datacollection_neut -->
       <!-- <h1> 전체(25개구 : 중성화 여부)/구별 데이터 </h1>
@@ -229,8 +247,6 @@
             </div>
         </v-col>
       </v-row>-->
-
-      <!-- 서울 전체 고양이 건강 상태 / 내 지역 고양이 건강 상태 -->
     </v-container>
   </div>
 </template>
@@ -242,7 +258,6 @@ import DoughnutChart from "./js/DoughnutChart";
 import HorizontalBarChart from "./js/HorizontalBarChart";
 import { mapActions, mapMutations, mapGetters, mapState } from "vuex";
 import PieChart from "./js/PieChart.js";
-// import PieChart from "./PieChart.js";
 
 export default {
   components: {
@@ -261,7 +276,9 @@ export default {
       "catList",
       "catSexArray",
       "catAgeArray",
-      "catHealthArray"
+      "catHealthArray",
+      "followCatHealthArray",
+      'myFollowingCatList'
     ]),
     ...mapGetters("storeUser", ["userList", "userSexArray", "userAgeArray"]),
     totalCatNum: function() {
@@ -287,7 +304,24 @@ export default {
             ] //1,2,3,4] //
           },
           {
-            label: "일반/중성화 차이",
+            label: "일반/중성화 비율",
+            backgroundColor: ["#41B883", "#E46651"],
+            data: [
+              this.catSexArray[0] + this.catSexArray[1],
+              this.catSexArray[2] + this.catSexArray[3]
+            ] // 2,3] //
+          }
+        ]
+      };
+    },
+    catNeuterChartData: function() {
+      return {
+        hoverBackgroundColor: "red",
+        hoverBorderWidth: 20,
+        labels: ["일반", "중성화"],
+        datasets: [
+          {
+            label: "일반/중성화 비율",
             backgroundColor: ["#41B883", "#E46651"],
             data: [
               this.catSexArray[0] + this.catSexArray[1],
@@ -334,7 +368,7 @@ export default {
       return {
         hoverBackgroundColor: "red",
         hoverBorderWidth: 20,
-        labels: ["건강 양호", "피부병", "감염증"], //,"설사병","외상 및 상처","기타"
+        labels: ["건강 양호", "외상 및 상처", "피부병"], //,"설사병","감염증","기타"
         datasets: [
           {
             label: "전체 고양이 건강",
@@ -353,6 +387,24 @@ export default {
         ]
       };
     },
+    followCatHealthChartData: function() {
+      return {
+        labels: ["건강 점수", "외상 및 상처", "피부병"], //,"설사병","감염증","기타"
+        datasets: [
+          {
+            label: "전체 고양이 건강",
+            backgroundColor: ["#41B883", "#E46651", "#00D8FF"], //"#00FFDA", "#00D9FF", "#0C88E8"],
+            data: [
+                // [healthScore, unhealthScore1, unhealthScore2]
+              followCatHealthArray[0],
+              followCatHealthArray[1],
+              followCatHealthArray[2],
+            ]
+          }
+        ]
+      };
+    },
+
     // 전체 사용자 페이지
     // 전체 유저 수
     // totalUserNum: 10,
@@ -408,46 +460,61 @@ export default {
         ]
       };
     },
-    catRankChartData: function() {
-      let rankChartData = [],
-          cnt = 0
-          rankLen = 3;
+    catRankChartData: function(rankList) {
+        let rankChartData = [0,0,0,0],
+            cnt = 0;
+        let rankLen = 3;
+        if (this.rankList != null){
+            rankChartData = [];
+            this.rankList.forEach(rank => {
+                cnt += 1;
+                if (cnt > rankLen) { // +1 -> 시행 , +2 -> 시행 , +3 -> 시행, +4 -> 시행, +5 -> for문 탈출.. 이되면
+                    ;
+                }else{
+                    rankChartData.push(rank.rank_point)
+                }
+            });
+        }
+        while (cnt < rankLen) { // 남아있는 것들은 0으로 채우기! 내용 정리 
+            cnt += 1;
+            rankChartData.push(0)
+        }
 
-      for (rank in this.rankList.length){
-          cnt += 1;
-          if (cnt > rankLen) { // +1 -> 시행 , +2 -> 시행 , +3 -> 시행, +4 -> 시행, +5 -> for문 탈출.. 이되면
-              ;
-          }else{
-              rankChartData.push(rank.rank_point)
-          }
-      }
-      while (cnt <= rankLen) { // 남아있는 것들은 0으로 채우기! 내용 정리 
-          rankChartData.push(0)
-      }
-      rankChartData[rankLen] = 20
+        if (true){ // 내 데이터가 있으면 넣고 아니면 0 #$##$
+            rankChartData.push(0)
+        }else{
+            rankChartData.push(0)
+        }
 
-      return {
-        labels: ["관리자 랭킹", "2위 랭킹", "3위 랭킹", "내 랭킹"], // 3위 랭킹까지 표시 가능
-        datasets: [
-          {
-            label: "Total 랭킹 포인트",
-            backgroundColor: "#f87979",
-            // data: [ 20, 30, 15, 40 ] //형식
-            data: [rankChartData[0], rankChartData[1], rankChartData[2], rankChartData[3]]
-          },
-          {
-            label: "# of (좋아요 - 싫어요)",
-            backgroundColor: "#00D8FF",
-            data: [30, 17, 14,0]
-          },
-          {
-            label: "포스트 쓴 날짜 수",
-            backgroundColor: "#41B883",
-            data: [20, 10, 8,0]
-          }
-        ]
-      };
-    }
+        return {
+            labels: ["관리자 랭킹", "2위 랭킹", "3위 랭킹", "내 랭킹"], // 3위 랭킹까지 표시 가능
+            datasets: [
+            {
+                label: "Total 랭킹 포인트",
+                backgroundColor: "#f87979",
+                // data: rankChartData //형식
+                data: [rankChartData[0], rankChartData[1], rankChartData[2], rankChartData[3]]
+                // data: [1,2,3,4]
+            },
+            // {
+            //     label: "# of (좋아요 - 싫어요)",
+            //     backgroundColor: "#00D8FF",
+            //     data: [30, 17, 14,0]
+            // },
+            // {
+            //     label: "포스트 쓴 날짜 수",
+            //     backgroundColor: "#41B883",
+            //     data: [20, 10, 8, 0]
+            // }
+            ]
+        };
+      }
+
+//////////////////////////////////
+//followCatHealthChartData
+//////////////////////////////////
+
+
     // testValue: function(){
 
     // this.catList.forEach(cat => {
@@ -478,29 +545,12 @@ export default {
     //     }
     // });
 
-    //     return catList;
-    // },
-
-    // maleCnt: function(){
-    //     let cnt;
-    //     iff( catData.sex ==="남") {
-    //         if ( catData.neuter ){
-    //             spayedMaleCnt += 1;
-    //     },
-    // femaleCnt: function(){
-    // },
-    // spayedMaleCnt: function(){
-
-    // },
-    // spayedFemaleCnt: function(){
-
-    // },
   },
   data() {
     return {
       // Test!
       // 버튼 바인딩
-      selected_cat_no: '',
+      selected_cat_no: '', // 기본 값은 1로 두고, 밑에서 바꿔준다.
 
       // 처음 부분 :
       // 전체 고양이 페이지
@@ -539,29 +589,6 @@ export default {
           // }
         ]
       },
-      chartData2: {
-        hoverBackgroundColor: "blue",
-        hoverBorderWidth: 10,
-        //"지역별 전체 고양이 수(비율)", "성별(수컷/암컷/중성화고양이 수(중성화수컷/중성화암컷))", "일반/중성화 수(비율)",
-        labels: ["건강양호", "피부병", "절단상"],
-        datasets: [
-          {
-            label: "시/도별",
-            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#028833"],
-            data: [1, 10, 5, 30]
-          },
-          {
-            label: "동별",
-            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#028833"],
-            data: [1, 10, 5, 15]
-          },
-          {
-            label: "읍별",
-            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#028833"],
-            data: [100, 10, 5, 35]
-          }
-        ]
-      },
 
       // Vuetify 부분
       alignmentsAvailable: ["start", "center", "end", "baseline", "stretch"],
@@ -581,6 +608,7 @@ export default {
     this.getCatList();
     this.getUserList();
     this.getPostList();
+    this.getMyFollowingCatList();
   },
   mounted() {
     this.fillData();
@@ -597,10 +625,12 @@ export default {
   watch: {
       selected_cat_no: function(){
         this.getRankList({cat_no: this.selected_cat_no});
+        this.getPostList({cat_no: this.selected_cat_no});
+        this.getSelectedCat({cat_no: this.selected_cat_no});
       }
   },
   methods: {
-    ...mapActions("storeCat", ["getCatList"]),
+    ...mapActions("storeCat", ["getCatList", "getSelectedCat",'getMyFollowingCatList']),
     ...mapActions("storeUser", ["getUserList"]),
     ...mapActions("storePost", ["getPostList"]),
     ...mapActions('storeUser/storeRank',['getRankList',]),

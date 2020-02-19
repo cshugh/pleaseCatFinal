@@ -129,7 +129,7 @@ export default {
         },
         getMyFollowingCatList({ dispatch, commit, getters, rootGetters },data){
             axios
-                .get(`${rootGetters.getServer}/api/FollwoingCat/searchFollowedCat?follower_no=${data}`)
+                .get(`${rootGetters.getServer}/api/FollwoingCat/searchFollowedCat?follower_no=${rootGetters.getLoginInfo.user_no}`)
                 .then(res => {
                     // handle success
                     var followerArray = res.data.data;
@@ -250,7 +250,6 @@ export default {
                 // health4Cnt_diarrhea = 0,
                 // health5Cnt_infectious_diseases = 0,
                 // health6Cnt_etc = 0;
-
             state.catList.forEach(catData => {
                 if ( catData.hurt === 1  ){
                     health2cnt_hurt += 1;
@@ -286,7 +285,14 @@ export default {
                 // }                
             })
             return [health1Cnt_normal, health2Cnt_hurt, health3Cnt_skin_disease,]
-        }
+        },
+        followCatHealthArray: state => {
+            unhealthScore1 = state.selectedCat.skin_disease;
+            unhealthScore2 = state.selectedCat.hurt;
+            let healthScore = 2;
+            healthScore = healthScore - unhealthScore1 - unhealthScore2;
+            return [healthScore, unhealthScore1, unhealthScore2]
+        },
 
     }
 };
