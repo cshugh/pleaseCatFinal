@@ -37,7 +37,7 @@
         <div class="input-wrap">
           <!-- 입력받을 정보: name, email, id, pw, image, desc -->
           <div class="input-row">
-            <label for="id">ID</label>
+            <label for="id">닉네임</label>
             <input
               type="text"
               id="id"
@@ -46,7 +46,7 @@
             />
           </div>
           <div class="input-row">
-            <label for="password">PW</label>
+            <label for="password">비밀번호</label>
             <input
               type="password"
               id="password"
@@ -55,7 +55,7 @@
             />
           </div>
           <div class="input-row">
-            <label for="email">Email</label>
+            <label for="email">E-mail</label>
             <input
               type="email"
               id="email"
@@ -253,26 +253,33 @@ export default {
   -khtml-opacity: 0;
   -moz-opacity: 0;
 }
-// .signup label {
-//   display: inline-block;
-//   max-width: 100%;
-//   margin-bottom: 5px;
-//   font-weight: 700;
-// }
-// .signup input {
-//   width: 82%;
-//   float: right;
-//   background: 0 0; //? 이게 무슨 속성일까!
-//   border: 1px solid rgb(250, 206, 231);
-//   border-radius: 6px;
-//   box-sizing: border-box;
-//   color: rgb(248, 44, 163);
-//   font-size: 14px;
-//   padding: 7px 8px 7px;
-// }
-// .input-wrap .input-row {
-//   margin-bottom: 25px;
-// }
+.input-wrap {
+  padding-bottom: 16px;
+}
+
+.input-row {
+  width: 100%;
+  height: 56px;
+  border-bottom: solid 1px #3da0a9;
+
+  label {
+    display: inline-block;
+    line-height: 56px;
+    max-width: 100%;
+  }
+  input {
+    width: 78%;
+    height: 56px;
+    line-height: 56px;
+    float: right;
+    background: 0 0; //? 이게 무슨 속성일까!
+    box-sizing: border-box;
+    padding: 7px 8px 7px;
+  }
+  input::placeholder {
+    color: rgb(81, 138, 163);
+  }
+}
 
 .btn-signup {
   float: right;
