@@ -128,7 +128,7 @@ public class UserServiceImp implements UserService {
 					String ext =  oName.substring(oName.lastIndexOf('.')+1);
 	
 					//db에 저장될 post의 images에 값을 만들어줌 (파일 불러올 루트)
-					User.setUser_image("user/"+userDao.findNextUserNo()+"."+ext);
+					User.setUser_image(userDao.findNextUserNo()+"."+ext);
 	
 					//저장루트 설정 (드라이브 위치부터 하나하나 잡아줘야함)
 					//String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";

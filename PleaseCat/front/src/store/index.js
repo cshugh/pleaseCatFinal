@@ -80,9 +80,13 @@ export default new Vuex.Store({
                     // always executed
                 });
         },
-        postSignUp({ state, dispatch, commit, getters, rootGetters }, data) {
+        postSignUp({ state, dispatch, commit, getters, rootGetters }, fd) {
             axios
-                .post(`${getters.getServer}/api/user/insert`, data)
+                .post(`${getters.getServer}/api/user/insert`, fd,{
+                    headers: {
+                      "Content-Type": "multipart/form-data"
+                    }
+                  })
                 .then((res) => {
                     console.log(res);
                 })
