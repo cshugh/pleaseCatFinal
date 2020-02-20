@@ -51,7 +51,7 @@
             <span v-for="(post, idx) in catPosts" :key="idx">
                 <router-link :to="`/detailPost/${post.post_no}`">
                     <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> -->
-                    <span class="photo" :style="{'background-image' : url(`/static/images/post/${ post.post_image }`)}"  :alt='`${ post.post_image }`'>
+                    <span class="photo" :style="{'background-image' : `url('/static/images/post/${ post.post_image }')`}"  :alt='`${ post.post_image }`'>
                     </span>
                 </router-link>
             </span>
@@ -99,7 +99,7 @@ export default {
             var result = false;
             this.myFollowingCatList.forEach(el => {
                 if(el.cat_no == cno){
-                    return result = true;
+                    result = true;
                 }
             });
             return result;
