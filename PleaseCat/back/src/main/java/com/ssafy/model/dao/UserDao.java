@@ -16,5 +16,6 @@ public interface UserDao {
 	public void deleteUser(int no);
 	public List<user> searchAllUser();
 	public user searchUserEmail(String user_email);
+	public int findNextUserNo();
 
 }

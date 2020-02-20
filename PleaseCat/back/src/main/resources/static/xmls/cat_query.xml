@@ -7,7 +7,7 @@
 	<insert id ="insertCat" parameterType="cat">
 	insert into CAT(cat_name,cat_image,age,sex,reg_date,meal_time,skin_disease,
 					cat_location, cat_manager, neuter, cat_desc, hurt,
-					hair_color, eye_color) 
+					hair_color, eye_color, cat_x, cat_y) 
 				values(  <!-- INT로 써줘서 오류 났었음 INTEGER해줘야함 -->
 					  #{cat_name:VARCHAR}
 					  ,#{cat_image:VARCHAR}
@@ -22,7 +22,9 @@
 					  ,#{cat_desc:VARCHAR}
 					  ,#{hurt:INTEGER}
 					  ,#{hair_color:VARCHAR}
-					  ,#{eye_color:VARCHAR})			
+					  ,#{eye_color:VARCHAR}			
+					  ,#{cat_x:DOUBLE}
+					  ,#{cat_y:DOUBLE})
 	</insert>
 	
 	<update id ="updateMealTime" parameterType="cat">
@@ -67,7 +69,7 @@
     </delete>
     
     <select id = "findNextCatNo" resultType="int">
-    	select max(cat_no)+1 from cat
+    	select max(cat_no)+1 from CAT
     </select>
     
 </mapper>
