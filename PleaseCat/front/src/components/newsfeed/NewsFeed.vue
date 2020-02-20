@@ -55,7 +55,7 @@
                 class="btnSize"
               >
                 <!-- <img :src="require('../../assets/images/icons/broken-heart_1.png')" class="HRSize" /> -->
-                <img :src="require('/static/images/icon/broken-heart_1.png')" class="HRSize" />
+                <img :src="'/static/images/icon/broken-heart_1.png'" class="HRSize" />
               </button>
             </div>
             <div v-if="post.unlike === false" class="HR">
