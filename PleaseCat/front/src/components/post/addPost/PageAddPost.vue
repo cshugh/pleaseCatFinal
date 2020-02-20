@@ -101,14 +101,14 @@
               :key=nc.no
             >
               <div class="btn-circle-border">
-                <img
-                  class="btn-circle"
-                  :src='require(`@/assets/images/cats/_profile/${ nc.no }.jpg`)'
-                />
                 <!-- <img
                   class="btn-circle"
-                  :src='`/static/images/cat/${ nc.no }.jpg`'
+                  :src='require(`@/assets/images/cats/_profile/${ nc.no }.jpg`)'
                 /> -->
+                <img
+                  class="btn-circle"
+                  :src='`/static/images/cat/${ nc.no }.jpg`'
+                />
               </div>
               <p style="margin-top:4px">{{ nc.cat_name }}</p>
             </button>
