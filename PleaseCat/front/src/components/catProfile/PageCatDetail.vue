@@ -138,106 +138,101 @@ export default {
 #catBobImg {
   margin-top: -8px;
   width: 42px;
-  #catProfile {
-    text-align: center;
-    margin-top: 60px;
-    margin-bottom: 60px;
-    .emptySpace {
-      font-size: 50px;
-      height: 60px;
-      // margin: 5px;
-    }
+}
+#catProfile {
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+#updateTime {
+  float: right;
+  width: 42px;
+}
+#catProfile {
+  text-align: center;
+  .emptySpace {
+    font-size: 50px;
+    height: 60px;
+    // margin: 5px;
   }
-  #updateTime {
-    float: right;
-    width: 42px;
+}
+#photoView {
+  padding: 10px;
+  display: inline-block;
+  width: 90%;
+  text-align: center;
+  // background-color: grey;
+  * {
+    vertical-align: middle;
   }
-  #catProfile {
-    text-align: center;
-    .emptySpace {
-      font-size: 50px;
-      height: 60px;
-      // margin: 5px;
-    }
+  img {
+    width: 100%;
+    border-radius: 100%;
   }
-  #photoView {
-    padding: 10px;
-    display: inline-block;
-    width: 90%;
-    text-align: center;
-    // background-color: grey;
-    * {
-      vertical-align: middle;
-    }
-    img {
-      width: 100%;
-      border-radius: 100%;
-    }
-    img::after {
-      content: "";
-      display: block;
-      padding-bottom: 100%;
-    }
-    h1 {
-      font-size: 7vw;
-    }
-    #cat {
-      width: 30%;
-      position: absolute;
-      left: 30px;
-      // box-sizing: border-box;
-      // border: 1px solid red;
-    }
-    #man {
-      width: 30%;
-      position: absolute;
-      right: 30px;
-      // box-sizing: border-box;
-      // border: 1px solid blue;
-    }
-  }
-  #photoView::after {
+  img::after {
     content: "";
     display: block;
-    padding-bottom: 50%;
+    padding-bottom: 100%;
   }
-  .text {
-    // transition:all 0.4s ease-out;
-    // text-shadow: 4px 2px 2px black;
-    font-weight: bold;
-    // color: #fff;
+  h1 {
+    font-size: 7vw;
   }
-  #descView {
+  #cat {
+    width: 30%;
+    position: absolute;
+    left: 30px;
+    // box-sizing: border-box;
+    // border: 1px solid red;
+  }
+  #man {
+    width: 30%;
+    position: absolute;
+    right: 30px;
+    // box-sizing: border-box;
+    // border: 1px solid blue;
+  }
+}
+#photoView::after {
+  content: "";
+  display: block;
+  padding-bottom: 50%;
+}
+.text {
+  // transition:all 0.4s ease-out;
+  // text-shadow: 4px 2px 2px black;
+  font-weight: bold;
+  // color: #fff;
+}
+#descView {
+  display: inline-block;
+  width: 90%;
+  text-align: left;
+  // background-color: grey;
+  padding: 10px;
+  font-size: 4vw;
+  margin-bottom: 1vw;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+#rankView {
+  // border: 1px solid black;
+  #rankIcon {
     display: inline-block;
-    width: 90%;
-    text-align: left;
-    // background-color: grey;
-    padding: 10px;
-    font-size: 4vw;
-    margin-bottom: 1vw;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-  }
-  #rankView {
+    width: 30vw;
+    height: 30vw;
+    background-size: 100%;
     // border: 1px solid black;
-    #rankIcon {
-      display: inline-block;
-      width: 30vw;
-      height: 30vw;
-      background-size: 100%;
-      // border: 1px solid black;
-      // padding: 0px;
-    }
-    .circle {
-      border-radius: 100%;
-    }
+    // padding: 0px;
   }
-  #mapView {
-    margin-left: 10vw;
-    margin-right: 10vw;
+  .circle {
+    border-radius: 100%;
+  }
+}
+#mapView {
+  margin-left: 10vw;
+  margin-right: 10vw;
 
-    width: 80vw;
-    height: 80vw;
-  }
+  width: 80vw;
+  height: 80vw;
 }
 </style>
