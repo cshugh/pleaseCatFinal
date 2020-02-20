@@ -228,13 +228,13 @@ export default {
 
             state.catList.forEach(catData => {
                 if( catData.sex ==="남") {
-                    if ( catData.neuter ){
+                    if ( catData.neuter === 1 ){
                         spayedMaleCnt += 1;
                     } else{
                         maleCnt += 1;
                     }
                 } else if (catData.sex ==="여") {
-                    if ( catData.neuter ){
+                    if ( catData.neuter === 1 ){
                         spayedFemaleCnt += 1;
                     } else{
                         femaleCnt += 1;

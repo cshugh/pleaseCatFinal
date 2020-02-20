@@ -1,6 +1,6 @@
 
 <template>
-  <!-- 대쉬보드 페이지 - 전체 part : 관리자용 계획 -->
+  <!-- 대쉬보드 페이지 - 전체 part - 유저 데이터 : 관리자용 계획 -->
 
   <!-- (1) 고양이 현황 페이지 월별 고양이 등록자 현황 : line-chart -->
   <!-- (2) 월별 사용자 현황 : line-chart
@@ -11,44 +11,116 @@
 
 <!-- 1) 현재 유저 아이디를 가져온다. -->
 <!-- 2) -->
-  <div>
-    <div id="emptySpace"></div>
+<div id='page-alignment'>
+  <div id='dashboard' class="page">
+    <div class="emptySpace">-Navigation Bar-</div>
 
-    <h1>고양이를 부탁캣</h1>
-    <div>
-      <!-- {{this.catList}} -->
-      <!-- 전체 등록된 고양이 수 -->
-      <!-- 전체(25개구 : 중성화 여부, 상처여부)/구별 데이터를 불러오는 코드이다. -->
+
+      <div class="dashboardView" >
+
+        <div>
+          <h1>고양이를 부탁캣 대쉬보드</h1>
+        </div>
+     </div>
     </div>
+  
+  <!-- 고양이를 선택하는 모달 부분 가져오기 #$#1 -->
+    <div class="btn-wrap">
+      <div class="modal selectCat">
+
+        <!-- id="btn-show-modal-cat" -->
+        <!-- class="btn-convert-dashboard" -->
+        <button
+          class="btn-convert-dashboard"
+          @click=" showModalSelectCat = true"
+        >
+          <div id="lb-tagCat">내 팔로우 고양이 선택</div>
+          <!-- selectedCat 을 selected_cat_no 로 변경! #$#2 -->
+          <div id="lb-selectedCat">{{selectedCat.cat_name}}고양이 번호:{{ selected_cat_no }}</div>
+          <div style="clear:both:"></div>
+        </button>
+
+        <modal
+          v-if="showModalSelectCat"
+          @close="showModalSelectCat = false"
+        >
+          <h3
+            slot="header"
+            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
+          >찾는 고양이가 있나요?</h3>
+
+          <div slot="footer">
+
+            <button
+              class="btn-selectCat"
+              v-for="nc in myFollowingCatList"
+              @click="tagCat(`${nc.cat_no}`), showModalSelectCat = false"
+              :key=nc.cat_no
+              
+            >
+              <div class="btn-circle-border">
+                <img
+                  class="btn-circle"
+                  :src='require(`@/assets/images/cats/_profile/${ nc.cat_no }.jpg`)'
+                />
+                <!-- <img
+                  class="btn-circle"
+                  :src='`/static/images/cat/${ nc.no }.jpg`'
+                /> -->
+              </div>
+              <p style="margin-top:4px">{{ nc.cat_name }}</p>
+            </button>
+          </div>
+
+          <div
+            slot="footer"
+            class="modal-footer-addCat"
+          >
+            <!-- <button @click="showModalSelectCat = false"> 확인</button> -->
+            이 중에 고양이가 없나요?
+            <router-link :to="'/addcat'">
+              <button
+                class="btn-addNewCat"
+                @click="showModalSelectCat = false"
+              > 고양이 추가</button>
+              <p></p>
+            </router-link>
+          </div>
+
+        </modal>
+      </div>
+    
 
     <!-- 1. 버튼 클릭 UI -->
     <!-- 구별 데이터 구분을 위해 입력하는 곳 -->
-    <v-container fluid>
-      
-      <button class="btn-convert-dashboard">관심 고양이 보드</button>
-      <v-row>
+
+      <!-- <v-row>
         <v-col cols="12">
           <p>myFollowingCatList</p>
           {{myFollowingCatList}}
         </v-col>
-       
-      </v-row>
+      </v-row>       
+      <button class="btn-convert-dashboard">관심 고양이 보드</button>
+      -->
+  </div>
+  
+    <v-container fluid>
       <h1>관심 고양이 데이터</h1>
       <input style="{'background-color' : 'white'}" type="text" v-model.number="selected_cat_no"/>
       <v-row>
         <v-col cols="12">
           <p>내 팔로우 고양이 관리 랭킹 데이터</p>
           <div class="small">
-            <bar-chart v-if="rankList != null" :chart-data="catRankChartData"></bar-chart>
+            <bar-chart v-if="selectedCat != null" :chart-data="catRankChartData"></bar-chart>
           </div>
-          <div v-if="rankList">
+          
+          <!-- <div v-if="rankList">
             <h3>{{ rankList }}</h3>
             <h3>{{ rankList.length }}</h3>
-            <!-- <h3>첫번째 랭킹 포인트: {{ rankList[0]['rankPoint'] }}</h3> -->
             <h3>두번째 랭킹 포인트: {{ rankList[1] }}</h3>
             <h3>세번째 랭킹 포인트: {{ rankList[2] }}</h3>
             <h3>내 랭킹 포인트: ??? </h3>
-        </div>
+          </div> -->
 
         </v-col>
       </v-row>
@@ -58,11 +130,10 @@
           
                 <p>내 팔로우 고양이 건강 데이터</p>
             <div class="small">
-                <bar-chart v-if="selectedCat != null"  :chart-data="followCatHealthChartData"></bar-chart>
+              <!-- && (rankList != null) -->
+                <bar-chart v-if="selectedCat!=null" :chart-data="followCatHealthChartData"></bar-chart>
             </div>
         </v-col>
-        <h1>여백</h1>
-        <h1>여백</h1>
       </v-row>
 
 
@@ -130,9 +201,9 @@
 
       <!-- 시간별 등록 고양이 수 -->
       <!-- 목적 : 사업 관리용 -->
-      <!--  -->
-      <h1>전체 사용자 데이터</h1>
-      <v-row>
+      <!-- v-if="selected_cat_no==1" -->
+      <v-row >
+        <h1>전체 사용자 데이터</h1>
         <v-col cols="12">
           <p>전체 사용자 성별</p>
           <div class="small">
@@ -262,11 +333,17 @@
             </div>
         </v-col>
       </v-row>-->
+
     </v-container>
+
   </div>
 </template>
 
 <script>
+//**** import ****/
+  // 모달 부분
+import Modal from "@/components/post/modal/ModalAddPost.vue";
+  // 차트 부분
 import LineChart from "./js/LineChart.js";
 import BarChart from "./js/BarChart.js";
 import DoughnutChart from "./js/DoughnutChart";
@@ -276,6 +353,8 @@ import PieChart from "./js/PieChart.js";
 
 export default {
   components: {
+    Modal: Modal,
+
     LineChart,
     BarChart,
     DoughnutChart,
@@ -283,7 +362,6 @@ export default {
     PieChart
   },
   computed: {
-    //지워도 되는 테스트 코드
     ...mapState("storeCat", ["test"]),
     ...mapGetters('storeUser/storeRank',['rankList',]),
     ...mapGetters(["getUserLoc"]),
@@ -420,7 +498,8 @@ export default {
           {
             label: "전체 사용자 성별",
             backgroundColor: ["#41B883", "#E46651"],
-            data: [this.userSexArray[0], this.userSexArray[1]]
+            data: [4, 6]
+            // data: [this.userSexArray[0], this.userSexArray[1]]
           }
           // {
           //     label: "우리 지역 사용자 성별",
@@ -447,13 +526,21 @@ export default {
               "#0C88E8"
             ],
             data: [
-              this.userAgeArray[0],
-              this.userAgeArray[1],
-              this.userAgeArray[2],
-              this.userAgeArray[3],
-              this.userAgeArray[4],
-              this.userAgeArray[5]
+              1,
+              2,
+              4,
+              1,
+              1,
+              1
             ]
+            // data: [
+            //   this.userAgeArray[0],
+            //   this.userAgeArray[1],
+            //   this.userAgeArray[2],
+            //   this.userAgeArray[3],
+            //   this.userAgeArray[4],
+            //   this.userAgeArray[5]
+            // ]
           }
           // {
           //     label: "내 지역 고양이 나이",
@@ -513,12 +600,29 @@ export default {
         };
       },
     followCatHealthChartData: function() {
-      let checkNeuter=0;
+      let 
+          totalHealthScore=0,
+          checkNeuter=0,
+          unhealthScore_hurt=0,
+          unhealthScore_skin_disease=0;
+      
       if (this.selectedCat.neuter === 1){
         checkNeuter = 1
       }else{
         checkNeuter = 0; 
+      } 
+      if (this.selectedCat.hurt === 1){
+        unhealthScore_hurt = 1
+      }else{
+        unhealthScore_hurt = 0; 
       }
+      if (this.selectedCat.skin_disease === 1){
+        unhealthScore_skin_disease = 1
+      }else{
+        unhealthScore_skin_disease = 0; 
+      }
+      totalHealthScore=2-unhealthScore_hurt-unhealthScore_skin_disease + checkNeuter
+
       return {
         labels: ["건강 점수", "외상 및 상처", "피부병", '중성화여부'], //,"설사병","감염증","기타"
         datasets: [
@@ -526,9 +630,9 @@ export default {
             label: "전체 고양이 건강",
             backgroundColor: ["#41B883", "#E46651", "#00D8FF", '#00FFDA'], //"#00FFDA", "#00D9FF", "#0C88E8"],
             data: [
-                    2-this.selectedCat.hurt-this.selectedCat.skin_disease + checkNeuter,
-                    -this.selectedCat.hurt,
-                    -this.selectedCat.skin_disease,
+                    totalHealthScore,
+                    -unhealthScore_hurt,
+                    -unhealthScore_skin_disease,
                     checkNeuter 
                   ]
           }
@@ -540,7 +644,11 @@ export default {
     return {
       // Test!
       // 버튼 바인딩
-      selected_cat_no: 1, // 기본 값은 1로 두고 -> 기본값은 내 follow 고양이 1번으로 두고, 밑에서 바꿔준다.
+      selected_cat_no: '', // 기본 값은 1로 두고 -> 기본값은 내 follow 고양이 1번으로 두고, 밑에서 바꿔준다.
+
+
+  // 고양이 선택 버튼&모달 부분 변수
+      showModalSelectCat: false,
 
       // 처음 부분 :
       // 전체 고양이 페이지
@@ -625,12 +733,135 @@ export default {
     ...mapActions("storeUser", ["getUserList"]),
     ...mapActions("storePost", ["getPostList"]),
     ...mapActions('storeUser/storeRank',['getRankList',]),
+    tagCat(no) {
+      // 선택한 고양이 값 받아오기
+      this.selected_cat_no = no;
+      // console.log("cat_no: " + no + ", cat_name: " + name + "  선택!!")
+    },
   }
 };
 </script>
 
-<style>
-.btn-convert-dashboard {
+<style lang="scss" scoped>
+/* 전체 정렬 부분 */ 
+.page-alignment {
+
+}
+
+
+/* 모달 부분 */
+#btn-show-modal-cat {
+  border-top: solid 1px #3da0a9;
+}
+#btn-show-modal-cat,
+#btn-show-modal-loc {
+  width: 100%;
+  height: 52px;
+  border-bottom: solid 1px #3da0a9;
+  &:hover {
+    color: #1d2f3a;
+    font-weight: 550;
+  }
+  #lb-tagCat{
+    float: left;
+    text-align: left;
+    width: 30%;
+  }
+  #lb-addLoc {
+    float: left;
+    text-align: left;
+    width: 30%;
+  }
+  #lb-selectedCat,
+  #lb-selectedLoc {
+    float: right;
+    text-align: right;
+    width: 70%;
+    padding-right: 5%;
+  }
+}
+.btn-selectCat {
+  font-size: 12px;
+  text-align: center;
+  margin: 10px 6px 0 6px;
+
+  transition-duration: 0.3s;
+  transition-property: transform;
+  &:hover {
+    color: #1d2f3a;
+    font-weight: 550;
+  }
+}
+.btn-circle-border {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1.5px solid rgb(255, 182, 48);
+  // box-shadow: 5px 5px 20px rgb(211, 211, 211);
+  -webkit-box-shadow: 11px 10px 22px 0px rgba(92, 88, 78, 0.48);
+  -moz-box-shadow: 11px 10px 22px 0px rgba(148, 141, 118, 0.48);
+  box-shadow: 5px 5px 12px 0px rgba(148, 141, 118, 0.48);
+
+  transition-duration: 0.3s;
+  transition-property: transform;
+  &:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+    font-size: 10.9px;
+  }
+}
+.btn-circle {
+  text-align: center;
+  margin-top: 2.5px;
+  // margin-top: 4px;
+  width: 56px;
+  height: 56px;
+  line-height: 28px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #f2709c center 100% no-repeat; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #ff9472,
+    #f2709c
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #ff9472,
+    #f2709c
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.modal-footer-addCat {
+  font-size: 13px;
+  margin: 14px 6px 0 4.5px;
+  padding-bottom: 6px;
+}
+.btn-addNewCat {
+  float: right;
+  color: #1d2f3a;
+  font-weight: 550;
+}
+.modal-footer-regLoc {
+  margin: 14px 6px 0 0px;
+}
+.btn-regLoc {
+  color: #1d2f3a;
+  font-weight: 550;
+}
+
+.submit-wrap {
+  width: 100%;
+  height: 42px;
+  padding-right: 5%;
+}
+.writingText {
+  border: 1px solid #3396F4;
+}
+.btn-upload {
   float: right;
   width: 142px;
   height: 42px;
@@ -643,18 +874,94 @@ export default {
   -o-transition: all 0.3s;
   transition: all 0.3s;
   transition: all 0.3s;
+
+  &:hover {
+    color: #fff;
+    box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
+    // color: #1d2f3a;
+    // font-weight: 550;
+  }
 }
 
-.btn-convert-dashboard:hover {
-                color: #fff;
-                box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
-                color: #1D2F3A;
-                font-weight: 550;
-            }
 
-.emptySpace {
-  height: 70px;
+
+
+// 대쉬보드 페이지 기본 SCS
+#dashboard{
+    text-align: center;
+    .btn{
+        margin: 8px;
+    }
+    button {
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+        color: #262626;
+        background-color: white;
+        font-size: 2.7vw;
+        padding: 3px 12px 3px 12px;
+        font-size: 2.7vw;
+        padding: 3px 12px 3px 12px;
+        box-shadow: 0px 0px 4px 0px black;
+    }
+    h1{
+        font-size: 7vw;
+    }
+    .emptySpace {
+        height: 70px;
+    }
 }
+
+    // 모달 이외의 버튼 부분
+.btn-convert-dashboard {
+  float: left;
+  width: 242px;
+  height: 42px;
+  border-radius: 8px;
+  background: #3da0a9;
+  color: #113538;
+  text-align: center;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  transition: all 0.3s;
+  &:hover {
+            color: #fff;
+            box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
+            color: #1D2F3A;
+            font-weight: 550;
+          }
+}
+
+// dashboard 전체 View 부분
+.dashboardView{
+    padding: 2% 2% 0 2%;
+    position: relative;
+    display: inline-block;
+    width: 90vw;
+    height: 36vw;
+    vertical-align: middle;
+    text-align: left;
+    background-color: #ffe923;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
+    .text {
+        transition:all 0.4s ease-out;
+        font-weight: bold;
+        color: #000000;
+        h3 {
+            font-size: 7vw;
+        }
+        h4 {
+            font-size: 6vw;
+        }
+        h5 {
+            font-size: 4vw;
+        }
+    }
+}
+
+
 .big {
   max-width: 85%;
   margin: 20px auto;
