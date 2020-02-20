@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.model.dto.alarm;
 import com.ssafy.model.dto.user;
 
 public interface UserService  {
@@ -16,4 +17,6 @@ public interface UserService  {
 	public String login(user User);
 	public String checkToken(String token);
 	public int findNextUserNo();
+	public List<alarm> searchAlarm(int user_no);
+	public String readAlarm(int post_no);
 }

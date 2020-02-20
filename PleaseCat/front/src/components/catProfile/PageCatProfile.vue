@@ -88,8 +88,7 @@ export default {
     },
     computed:{
         ...mapGetters('storeCat',[
-            'selectedCat', 'selectedCatFollowerList', 'myFollowingCatList',
-            'catList',
+            'selectedCat', 'selectedCatFollowerList', 'myFollowingCatList', 'catList',
         ]),
         ...mapGetters('storePost',[
             'catPosts',
@@ -106,14 +105,11 @@ export default {
         },
     },
     methods: {
-        ...mapMutations('storeCat',[
-            'clearSelectedCat',
-        ]),
         ...mapMutations('storePost',[
             'clearCatPosts',
         ]),
         ...mapActions('storeCat',[
-            'getSelectedCat',  'getCatFollowerList', 'postAddFollow', 'deleteFollow',
+            'getSelectedCat',  'getCatFollowerList', 'postAddFollow', 'deleteFollow', 'clearSelectedCat', 'getCatList',
         ]),
         ...mapActions('storePost',[
             'getCatPosts',

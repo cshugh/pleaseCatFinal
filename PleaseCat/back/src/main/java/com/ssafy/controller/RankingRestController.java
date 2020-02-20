@@ -58,6 +58,11 @@ public class RankingRestController {
 	public ResponseEntity<Map<String, Object>> searchRankingCat(@RequestParam int cat_no) throws Exception{
 		return handleSuccess(rankingService.searchRankingCat(cat_no));
 	}
+	@ApiOperation("고양이에 해당하는 나의 ranking")
+	@GetMapping("/searchMyRank")
+	public ResponseEntity<Map<String, Object>> searchMyRank(@RequestParam int cat_no, @RequestParam int user_no) throws Exception{
+		return handleSuccess(rankingService.searchMyRank(cat_no, user_no));
+	}
 
 	
 	@ApiOperation("new Ranking")

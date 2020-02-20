@@ -27,6 +27,7 @@ export default new Vuex.Store({
         isLogin: false,     // 로그인 여부
         userLoc: {lat: 1, lng:1 },      // 유저 현재 위치
         dist: 1000,        // '근처' 의 기준이 될 meter 단위 반경
+        newAlarm: [],
     },
     getters: {
         getServer: state => { return state.server },
@@ -34,7 +35,8 @@ export default new Vuex.Store({
         getLoginInfo: state => { return state.loginInfo },
         getIsLogin: state => { return state.isLogin },
         getUserLoc: state => { return state.userLoc },
-        getDist: state => { return state.dist }
+        getDist: state => { return state.dist },
+        newAlarm: state => { return state.newAlarm},
     },
     mutations: {
         changeToken(state, payload) {
@@ -55,6 +57,15 @@ export default new Vuex.Store({
         },
         changeDist(state, payload){
             state.dist = payload;
+        },
+        changeNewAlarm(state, payload){
+            state.newAlarm = payload;
+        },
+        deleteAlarm(state, payload){
+            var k = payload;
+            var tmp1 = state.newAlarm.slice(0,k);
+            var tmp2 = state.newAlarm.slice(k+1,state.newAlarm.length);
+            state.newAlarm = tmp1.concat(tmp2);
         }
     },
     actions: {
@@ -114,6 +125,7 @@ export default new Vuex.Store({
                         dispatch('storeUser/getMyFollowedList', state.loginInfo.user_no)
                         dispatch('storeCat/getMyFollowingCatList', state.loginInfo.user_no)
                         dispatch('storeNewsFeed/getIsLike')
+                        dispatch('getNewAlarm')
                     } else {
                         dispatch('logout');
                     }
@@ -134,7 +146,33 @@ export default new Vuex.Store({
                         commit('changeUserLoc', { lat: lat, lng: lon });
                 });
             }
-        }
+        },
+        getNewAlarm({ state, dispatch, commit, getters, rootGetters }){
+            axios
+                .get(`${getters.getServer}/api/user/searchAlarm?user_no=${getters.getLoginInfo.user_no}`)
+                .then(res => {
+                    if(res.data.state === 'ok'){
+                        const list = res.data.data;
+                        commit('changeNewAlarm', list);
+                    } else {
+                        commit('changeNewAlarm', []);
+                    }
+                    // console.log(obj);
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        },
+        readAlarm({ state, dispatch, commit, getters, rootGetters }, data){
+            axios
+                .get(`${getters.getServer}/api/user/readAlarm?post_no=${data}`)
+                .then(res => {
+                    
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        },
     },
 })
 
