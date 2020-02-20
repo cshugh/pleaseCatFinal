@@ -106,11 +106,14 @@ export default {
         },
     },
     methods: {
+        ...mapMutations('storeCat',[
+            'clearSelectedCat',
+        ]),
         ...mapMutations('storePost',[
             'clearCatPosts',
         ]),
         ...mapActions('storeCat',[
-            'getSelectedCat',  'getCatFollowerList', 'postAddFollow', 'deleteFollow', 'clearSelectedCat', 'getCatList',
+            'getSelectedCat',  'getCatFollowerList', 'postAddFollow', 'deleteFollow',
         ]),
         ...mapActions('storePost',[
             'getCatPosts',
