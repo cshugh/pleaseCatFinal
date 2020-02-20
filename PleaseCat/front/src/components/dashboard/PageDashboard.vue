@@ -11,124 +11,132 @@
 
 <!-- 1) 현재 유저 아이디를 가져온다. -->
 <!-- 2) -->
-<div id='page-alignment'>
-  <div id='dashboard' class="page">
-    <div class="emptySpace">-Navigation Bar-</div>
 
 
-      <div class="dashboardView" >
 
-        <div>
-          <h1>고양이를 부탁캣 대쉬보드</h1>
-        </div>
-     </div>
-    </div>
-  
-  <!-- 고양이를 선택하는 모달 부분 가져오기 #$#1 -->
-    <div class="btn-wrap">
-      <div class="modal selectCat">
 
-        <!-- id="btn-show-modal-cat" -->
-        <!-- class="btn-convert-dashboard" -->
-        <button
-          class="btn-convert-dashboard"
-          @click=" showModalSelectCat = true"
-        >
-          <div id="lb-tagCat">내 팔로우 고양이 선택</div>
-          <!-- selectedCat 을 selected_cat_no 로 변경! #$#2 -->
-          <div id="lb-selectedCat">{{selectedCat.cat_name}}고양이 번호:{{ selected_cat_no }}</div>
-          <div style="clear:both:"></div>
-        </button>
+<!-- <div id='page-alignment'> -->
+<div id='myProfile'>
 
-        <modal
-          v-if="showModalSelectCat"
-          @close="showModalSelectCat = false"
-        >
-          <h3
-            slot="header"
-            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
-          >찾는 고양이가 있나요?</h3>
+<!-- v-if="(getLoginInfo != null)" -->
 
-          <div slot="footer">
 
-            <button
-              class="btn-selectCat"
-              v-for="nc in myFollowingCatList"
-              @click="tagCat(`${nc.cat_no}`), showModalSelectCat = false"
-              :key=nc.cat_no
-              
-            >
-              <div class="btn-circle-border">
-                <img
-                  class="btn-circle"
-                  :src='require(`@/assets/images/cats/_profile/${ nc.cat_no }.jpg`)'
-                />
-                <!-- <img
-                  class="btn-circle"
-                  :src='`/static/images/cat/${ nc.no }.jpg`'
-                /> -->
-              </div>
-              <p style="margin-top:4px">{{ nc.cat_name }}</p>
-            </button>
-          </div>
 
-          <div
-            slot="footer"
-            class="modal-footer-addCat"
-          >
-            <!-- <button @click="showModalSelectCat = false"> 확인</button> -->
-            이 중에 고양이가 없나요?
-            <router-link :to="'/addcat'">
-              <button
-                class="btn-addNewCat"
-                @click="showModalSelectCat = false"
-              > 고양이 추가</button>
-              <p></p>
-            </router-link>
-          </div>
-
-        </modal>
+  <div class="profileView">
+    <div id="profileView" >
+      <div id="leftPart">
+          <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile">
+          <!-- <img id="userPhoto" :src='`/static/images/user/${ getLoginInfo.user_no }.jpg`' alt="my Profile"> -->
       </div>
-    
+      <section id="rightPart">
+          <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
+          <div id="buttons">
+              <span id="modifyButton" class="btn text">
+                   <!-- 고양이를 선택하는 모달 부분 가져오기 #$#1 -->
+          <div class="btn-wrap">
+            <div class="modal selectCat">
 
-    <!-- 1. 버튼 클릭 UI -->
-    <!-- 구별 데이터 구분을 위해 입력하는 곳 -->
+              <!-- id="btn-show-modal-cat" -->
+              <!-- class="btn-convert-dashboard" -->
+              <button
+                id="btn-convert-dashboard"
+                @click=" showModalSelectCat = true"
+              >
+                <div id="lb-tagCat">#내가 팔로우한 고양이</div>
+                  <div  style="float:center">고양이 선택</div>
+                <!-- selectedCat 을 selected_cat_no 로 변경! #$#2 -->
+                <div id="lb-selectedCat">고양이 이름: {{selectedCat.cat_name}}</div>
+                <div style="clear:both:"></div>
+              </button>
 
-      <!-- <v-row>
-        <v-col cols="12">
-          <p>myFollowingCatList</p>
-          {{myFollowingCatList}}
-        </v-col>
-      </v-row>       
-      <button class="btn-convert-dashboard">관심 고양이 보드</button>
-      -->
+              <modal
+                v-if="showModalSelectCat"
+                @close="showModalSelectCat = false"
+              >
+                <h3
+                  slot="header"
+                  style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
+                >찾는 고양이가 있나요?</h3>
+
+                <div slot="footer">
+
+                  <button
+                    class="btn-selectCat"
+                    v-for="nc in myFollowingCatList"
+                    @click="tagCat(`${nc.cat_no}`), showModalSelectCat = false"
+                    :key=nc.cat_no
+                  >
+                    <div class="btn-circle-border">
+                      <img
+                        class="btn-circle"
+                        :src='require(`@/assets/images/cats/_profile/${ nc.cat_no }.jpg`)'
+                      />
+                      <!-- <img
+                        class="btn-circle"
+                        :src='`/static/images/cat/${ nc.no }.jpg`'
+                      /> -->
+                    </div>
+                    <p style="margin-top:4px">{{ nc.cat_name }}</p>
+                  </button>
+                </div>
+
+                <div
+                  slot="footer"
+                  class="modal-footer-addCat"
+                >
+                  <!-- <button @click="showModalSelectCat = false"> 확인</button> -->
+                  이 중에 고양이가 없나요?
+                  <router-link :to="'/addcat'">
+                    <button
+                      class="btn-addNewCat"
+                      @click="showModalSelectCat = false"
+                    > 고양이 추가</button>
+                    <p></p>
+                  </router-link>
+                </div>
+
+              </modal>
+
+            </div>
+          
+
+          <!-- 1. 버튼 클릭 UI -->
+          <!-- 구별 데이터 구분을 위해 입력하는 곳 -->
+
+            <!-- <v-row>
+              <v-col cols="12">
+                <p>myFollowingCatList</p>
+                {{myFollowingCatList}}
+              </v-col>
+            </v-row>       
+            <button class="btn-convert-dashboard">관심 고양이 보드</button>
+            -->
+        </div>
+            <p class="main-content">전체 고양이 수: {{ totalCatNum }}명</p>
+            <p class="main-content">전체 유저 수: {{ totalUserNum }}명</p>
+              </span>
+          </div>
+      </section>
+    </div>
   </div>
-  
+
     <v-container fluid>
-      <h1>관심 고양이 데이터</h1>
+    <div class="dashboard-chart">
+      <p class="main-title">관심 고양이 데이터</p>
       <input style="{'background-color' : 'white'}" type="text" v-model.number="selected_cat_no"/>
       <v-row>
         <v-col cols="12">
-          <p>내 팔로우 고양이 관리 랭킹 데이터</p>
+          <p class="sub-title">내 팔로우 고양이 관리 랭킹 데이터</p>
           <div class="small">
             <bar-chart v-if="selectedCat != null" :chart-data="catRankChartData"></bar-chart>
           </div>
-          
-          <!-- <div v-if="rankList">
-            <h3>{{ rankList }}</h3>
-            <h3>{{ rankList.length }}</h3>
-            <h3>두번째 랭킹 포인트: {{ rankList[1] }}</h3>
-            <h3>세번째 랭킹 포인트: {{ rankList[2] }}</h3>
-            <h3>내 랭킹 포인트: ??? </h3>
-          </div> -->
-
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="12">
           
-                <p>내 팔로우 고양이 건강 데이터</p>
+            <p class="sub-title">내 팔로우 고양이 건강 데이터</p>
             <div class="small">
               <!-- && (rankList != null) -->
                 <bar-chart v-if="selectedCat!=null" :chart-data="followCatHealthChartData"></bar-chart>
@@ -138,20 +146,14 @@
 
 
 
-      <h1>전체 고양이 데이터</h1>
-
-      <v-row>
-        <p>전체 고양이 수 : {{ totalCatNum }}명 ||</p>
-        <p>전체 유저 수 : {{ totalUserNum }}명</p>
-      </v-row>
-
+      <p class="main-title">전체 고양이 데이터</p>
       <v-row>
         <v-col cols="12">
           <!-- <p>전체 고양이 성별</p> -->
           <!-- <pie-chart :data="{'xBlueberry': 44, 'Strawberry': 23}"></pie-chart> -->
           <div v-if="catSexArray.length > 0">
             <div class="small">
-              <p>전체 고양이 성별</p>
+              <p class="sub-title">전체 고양이 성별</p>
               <div id="pie">
                 <pie-chart :data="catSexChartData" :options="chartOptions"></pie-chart>
               </div>
@@ -165,7 +167,7 @@
           <!-- <pie-chart :data="{'xBlueberry': 44, 'Strawberry': 23}"></pie-chart> -->
           <div v-if="catSexArray.length > 0">
             <div class="small">
-              <p>전체 고양이 중성화 비율</p>
+              <p class="sub-title">전체 고양이 중성화 비율</p>
               <div id="pie">
                 <pie-chart :data="catNeuterChartData" :options="chartOptions"></pie-chart>
               </div>
@@ -179,7 +181,7 @@
         <!-- 목적: 주요 고양이 통계, 관리용 -->
         <v-col cols="12">
           <div class="small">
-            <p>전체 고양이 나이</p>
+            <p class="sub-title">전체 고양이 나이</p>
             <div id="pie">
               <pie-chart :data="catAgeChartData" :options="chartOptions"></pie-chart>
             </div>
@@ -187,11 +189,11 @@
         </v-col>
       </v-row>
       <v-row>
-        <!-- <p>전체 고양이 건강</p> -->
+        <!-- 전체 고양이 건강 -->
         <!-- 목적: 주요 고양이 통계, 관리용 -->
         <v-col cols="12">
           <div class="small">
-            <p>전체 고양이 건강</p>
+            <p class="sub-title">전체 고양이 건강</p>
             <div id="pie">
               <pie-chart :data="catHealthChartData" :options="chartOptions"></pie-chart>
             </div>
@@ -202,10 +204,10 @@
       <!-- 시간별 등록 고양이 수 -->
       <!-- 목적 : 사업 관리용 -->
       <!-- v-if="selected_cat_no==1" -->
+      <p class="main-title">전체 사용자 데이터</p>
       <v-row >
-        <h1>전체 사용자 데이터</h1>
         <v-col cols="12">
-          <p>전체 사용자 성별</p>
+          <p class="sub-title">전체 사용자 성별</p>
           <div class="small">
             <div id="pie">
               <pie-chart :data="userSexChartData" :options="chartOptions"></pie-chart>
@@ -214,7 +216,7 @@
         </v-col>
 
         <v-col cols="12">
-          <p>전체 사용자 나이</p>
+          <p class="sub-title">전체 사용자 나이</p>
           <div class="small">
             <div id="pie">
               <pie-chart :data="userAgeChartData" :options="chartOptions"></pie-chart>
@@ -333,7 +335,7 @@
             </div>
         </v-col>
       </v-row>-->
-
+    </div>
     </v-container>
 
   </div>
@@ -362,6 +364,7 @@ export default {
     PieChart
   },
   computed: {
+    ...mapGetters(['getLoginInfo',]),
     ...mapState("storeCat", ["test"]),
     ...mapGetters('storeUser/storeRank',['rankList',]),
     ...mapGetters(["getUserLoc"]),
@@ -745,13 +748,127 @@ export default {
 <style lang="scss" scoped>
 /* 전체 정렬 부분 */ 
 .page-alignment {
-
+  text-align: center;
+  .text {
+          transition:all 0.4s ease-out;
+          font-weight: bold;
+          color: #000000;
+          h3 {
+              font-size: 7vw;
+          }
+          h4 {
+              font-size: 6vw;
+          }
+          h5 {
+              font-size: 4vw;
+          }
+    }
 }
 
+/* 헤더부분 */
+#myProfile{
+    position: absolute;
+    width: 100vw;
+    text-align: center;
+    margin-top: 65px;
+    margin-bottom: 65px;
+    .btn{
+        margin: 8px;
+    }
+    // button {
+    //     border: 1px solid #dbdbdb;
+    //     border-radius: 3px;
+    //     color: #262626;
+    //     background-color: white;
+    //     font-size: 2.7vw;
+    //     padding: 3px 12px 3px 12px;
+    //     box-shadow: 0px 0px 4px 0px black;
+    // }
+    h1{
+        font-size: 7vw;
+    }
+    .emptySpace {
+        height: 70px;
+    }
+    .text {
+        // transition:all 0.4s ease-out;
+        // text-shadow: 4px 2px 2px black;
+        font-weight: bold;
+        color: black;
+    }
+}
+#profileView{
+    padding: 2% 2% 0 2%;
+    position: relative;
+    display: inline-block;
+    width: 90%;
+    vertical-align: middle;
+    text-align: left;
+    background-color: #C1C6CC;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
+    
+    img {
+        width: 100%;
+        border-radius: 100%;
+    }
+    img::after{
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+    #leftPart{
+        width: 30%;
+        position: absolute;
+        left: 5%;
+        
+        // box-sizing: border-box;
+        // border: 1px solid red;
+    }
+    #rightPart{
+        position: absolute;
+        left: 40%;
+        height: 30%;
+        
+        // box-sizing: border-box;
+        // border: 1px solid red;
+    }
+}
+#profileView::after{
+    content: "";
+    display: block;
+    padding-bottom: 40%;
+}
 
+// 모달 안의 고양이 선택! 버튼 부분
+  #btn-convert-dashboard {
+    font-weight: bold;
+    font-size: 2vw;
+    text-align: center;
+    width: 100%;
+    float: center;
+    height: 10%;
+    border-radius: 8px;
+    background: #3396F4;
+    color: #FFFFFF;    
+    text-align: center;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    transition: all 0.3s;
+    &:hover {
+              color: #FFFFFF;  
+              box-shadow: 300px 0 0 0 rgba(243, 245, 216, 0.1) inset;
+              // color: #1D2F3A;
+              font-weight: 550;
+            }
+  }
 /* 모달 부분 */
 #btn-show-modal-cat {
   border-top: solid 1px #3da0a9;
+  
+  
 }
 #btn-show-modal-cat,
 #btn-show-modal-loc {
@@ -763,9 +880,14 @@ export default {
     font-weight: 550;
   }
   #lb-tagCat{
+    font-weight: bold;
+    color: #000000;
+    h3 {
+        font-size: 1vw;
+    }
     float: left;
     text-align: left;
-    width: 30%;
+    width: 40%;
   }
   #lb-addLoc {
     float: left;
@@ -883,13 +1005,24 @@ export default {
   }
 }
 
-// 대쉬보드 페이지 기본 SCSS
-#dashboard{
-    text-align: center;
-    .btn{
-        margin: 8px;
-    }
-    button {
+.main-content{
+  font-size: 2vw;
+  font-weight: bold;
+}
+.main-title{
+  font-size: 4vw;
+  font-weight: bold;
+}
+
+.sub-title{
+  font-size: 3vw;
+  font-weight: bold;
+}
+
+
+#dashboard-chart{
+  
+    h3{
         border: 1px solid #dbdbdb;
         border-radius: 3px;
         color: #262626;
@@ -899,65 +1032,9 @@ export default {
         font-size: 2.7vw;
         padding: 3px 12px 3px 12px;
         box-shadow: 0px 0px 4px 0px black;
-    }
-    h1{
-        font-size: 7vw;
-    }
-    .emptySpace {
-        height: 70px;
+        font-size: 4vw;
     }
 }
-
-    // 모달 이외의 버튼 부분
-.btn-convert-dashboard {
-  float: center;
-  width: 242px;
-  height: 42px;
-  border-radius: 8px;
-  background: #3da0a9;
-  color: #113538;
-  text-align: center;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-  transition: all 0.3s;
-  &:hover {
-            color: #fff;
-            box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
-            color: #1D2F3A;
-            font-weight: 550;
-          }
-}
-
-// dashboard 전체 View 부분
-.dashboardView{
-    padding: 2% 2% 0 2%;
-    position: relative;
-    display: inline-block;
-    width: 90vw;
-    height: 36vw;
-    vertical-align: middle;
-    text-align: left;
-    background-color: #ffe923;
-    border-radius: 10px;
-    box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
-    .text {
-        transition:all 0.4s ease-out;
-        font-weight: bold;
-        color: #000000;
-        h3 {
-            font-size: 7vw;
-        }
-        h4 {
-            font-size: 6vw;
-        }
-        h5 {
-            font-size: 4vw;
-        }
-    }
-}
-
 
 .big {
   max-width: 85%;
