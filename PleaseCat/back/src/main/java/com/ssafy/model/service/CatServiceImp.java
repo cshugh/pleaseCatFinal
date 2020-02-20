@@ -60,7 +60,7 @@ public class CatServiceImp implements CatService {
 				//String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
 
 				//저정루트뒤에 불러오는 루트를 붙여줘서 저장함
-				File dest = new File(dir+"\\"+Cat.getCat_image());
+				File dest = new File(dir+"\\cat\\"+Cat.getCat_image());
 				
 				//이미지를 우리가 만든 dest이미지로 transfer
 				catImg.transferTo(dest);
