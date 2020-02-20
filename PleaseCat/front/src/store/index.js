@@ -5,6 +5,7 @@ import moduleCat from './modules/moduleCat'
 import moduleUser from './modules/moduleUser'
 import modulePost from './modules/modulePost'
 import moduleNewsFeed from './modules/moduleNewsFeed'
+// import moduleDashboard from '.modules/modulDashboard'
 import router from '@/router/index'
 import moduleDetailPost from './modules/moduleDetailPost'
 

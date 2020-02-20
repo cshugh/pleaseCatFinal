@@ -12,6 +12,9 @@ export default {
         userFollowingCatList: [],
         myFollowingCatList: [],
 
+        catSexArray: [],
+        catAgeArray: [],
+        catHealthArray: [],
     },
     // mutations : 동기 처리 logic
     mutations: { // (state, rootState?)
@@ -252,7 +255,7 @@ export default {
                 // health6Cnt_etc = 0;
             state.catList.forEach(catData => {
                 if ( catData.hurt === 1  ){
-                    health2cnt_hurt += 1;
+                    health2Cnt_hurt += 1;
                     if (catData.skin_disease === 1){
                         health3Cnt_skin_disease +=1 ;
                     }else{
@@ -286,13 +289,5 @@ export default {
             })
             return [health1Cnt_normal, health2Cnt_hurt, health3Cnt_skin_disease,]
         },
-        followCatHealthArray: state => {
-            unhealthScore1 = state.selectedCat.skin_disease;
-            unhealthScore2 = state.selectedCat.hurt;
-            let healthScore = 2;
-            healthScore = healthScore - unhealthScore1 - unhealthScore2;
-            return [healthScore, unhealthScore1, unhealthScore2]
-        },
-
     }
 };
