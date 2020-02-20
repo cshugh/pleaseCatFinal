@@ -1,6 +1,7 @@
 <template>
   <div id="navBar">
-    <div id="line1st"><v-icon @click="alarmView = !alarmView">notifications_active</v-icon> <span id="alarmNum">{{ newAlarm.length }}</span></div>
+    <div id="line1st" v-if="(getIsLogin)"><v-icon>notifications_none</v-icon></div>
+    <div id="line1st" v-if="(getIsLogin && newAlarm.length > 0)"><v-icon @click="alarmView = !alarmView">notifications_active</v-icon> <span id="alarmNum">{{ newAlarm.length }}</span></div>
     <div id="line2nd">
       <span id="greeting" v-if="getIsLogin">{{ this.$store.getters.getLoginInfo.user_id }} 님 환영합니다.</span>
       <span>
@@ -89,7 +90,7 @@ export default {
     background-color: rgb(189, 188, 188);
     top: 60px;
     .msg{
-      width: 30vw;
+      width: 50vw;
     }
   }
 }
