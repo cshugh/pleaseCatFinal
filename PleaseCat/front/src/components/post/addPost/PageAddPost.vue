@@ -531,8 +531,8 @@ export default {
 .addPost .title-addPost {
   margin-top: 60px;
   margin-bottom: 32px;
-  font-weight: bold;
-  font-size: 42px;
+  font-weight: 500;
+  font-size: 28px;
 }
 #previewCanvas {
   width: 100%;
@@ -777,14 +777,9 @@ export default {
 
 @media (min-width: 600px) {
   .addPost {
-    width: 60vw;
-    margin-left: 20vw;
-    margin-right: 20vw;
-    margin-top: 10px;
-    margin-bottom: 60px;
-    // padding-top: 100px;
-    padding-top: 10px;
-    padding-bottom: 125px;
+    width: 600px;
+    margin-left: calc((100vw - 600px) / 2);
+    margin-right: calc((100vw - 600px) / 2);
   }
   #previewCanvas {
     width: 60vw;

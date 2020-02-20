@@ -299,7 +299,7 @@ export default {
         return false;
       }
       if (this.cat_name == "") {
-        alert("고양이에게 이름을 지어주세요. 😺");
+        alert("고양이에게 이름을 지어주세요. 😺 \고양이 이름은 필수입니다.");
         return false;
       }
 
@@ -309,7 +309,6 @@ export default {
       fd.append("cat_location", this.cat_location);
       fd.append("catImg", this.catImg);
 
-      // fd.append("cat_no", this.cat_no);
       fd.append("cat_manager", this.getLoginInfo.user_no);
       fd.append(
         "reg_date",
@@ -346,6 +345,7 @@ export default {
           console.log(res);
           if (res.data.state == "ok") {
             console.log("cat 저장 성공");
+            this.$router.replace('/addpost');
           } else {
             console.log("cat 등록 실패");
           }
@@ -374,8 +374,8 @@ export default {
 .addCat .title-addCat {
   margin-top: 60px;
   margin-bottom: 32px;
-  font-weight: bold;
-  font-size: 42px;
+  font-weight: 500;
+  font-size: 28px;
 }
 #previewCanvas {
   width: 100%;
@@ -627,9 +627,9 @@ export default {
 
 @media (min-width: 600px) {
   .addCat {
-    width: 60vw;
-    margin-left: 20vw;
-    margin-right: 20vw;
+    width: 600px;
+    margin-left: calc((100vw - 600px) / 2);
+    margin-right: calc((100vw - 600px) / 2);
   }
   #previewCanvas {
     width: 60vw;
