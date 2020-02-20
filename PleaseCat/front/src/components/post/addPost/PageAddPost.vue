@@ -97,7 +97,7 @@
             <button
               class="btn-selectCat"
               v-for="nc in nearCatList"
-              @click="tagCat(`${nc.no}`, `${nc.name}`), showModalSelectCat = false "
+              @click="tagCat(`${nc.no}`, `${nc.cat_name}`), showModalSelectCat = false "
               :key=nc.no
             >
               <div class="btn-circle-border">
@@ -110,7 +110,7 @@
                   :src='`/static/images/cat/${ nc.no }.jpg`'
                 /> -->
               </div>
-              <p style="margin-top:4px">{{ nc.name }}</p>
+              <p style="margin-top:4px">{{ nc.cat_name }}</p>
             </button>
           </div>
 
