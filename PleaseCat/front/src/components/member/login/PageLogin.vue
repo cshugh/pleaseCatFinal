@@ -90,14 +90,15 @@ export default {
 <style lang="scss" scoped>
 .login {
   position: absolute;
-  width: 100vw;
+  width: 60vw;
+  margin-left: 20vw;
+  margin-right: 20vw;
   // width: 350px;
-  margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 60px;
   margin-bottom: 60px;
   // padding-top: 100px;
-  padding-top: 10px;
-  padding-bottom: 125px;
+  // padding-top: 10px;
+  // padding-bottom: 125px;
 }
 .login .title-login{
   margin-top: 60px;

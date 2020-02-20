@@ -28,6 +28,18 @@ const routes = [
   },
   {
     path: '/',
+    name: 'Login',
+    props: 100,
+    component: Login
+  },
+  {
+    path: '/signUp',
+    name: 'SignUp',
+    props: 101,
+    component: SignUp
+  },
+  {
+    path: '/newsfeed',
     name: 'NewsFeed',
     props: 1,
     component: NewsFeed
@@ -42,18 +54,6 @@ const routes = [
     name: 'DetailPost',
     props: 10,
     component: PageDetailPost
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    props: 100,
-    component: Login
-  },
-  {
-    path: '/signUp',
-    name: 'SignUp',
-    props: 101,
-    component: SignUp
   },
   {
     path: '/catList',

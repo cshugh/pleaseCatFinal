@@ -70,7 +70,7 @@ export default new Vuex.Store({
                     let token = res.data.data;
                     localStorage.setItem('savedToken', token);
                     dispatch('checkToken');
-                    router.push("/");
+                    router.push("/newsfeed");
                 })
                 .catch(err => {
                     // handle error
@@ -85,6 +85,9 @@ export default new Vuex.Store({
                 .post(`${getters.getServer}/api/user/insert`, data)
                 .then((res) => {
                     console.log(res);
+                    if(res.data.state === 'fail'){
+                        router.push('/signUp');
+                    }
                 })
                 .catch((err) => {
                     console.error(err);

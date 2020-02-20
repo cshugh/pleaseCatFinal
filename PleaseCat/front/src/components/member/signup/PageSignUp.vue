@@ -5,20 +5,16 @@
     <div class="input-wrap">
       <!-- 입력받을 정보: name, email, id, pw, image, desc -->
       <div class="input-row">
-        <label for="id">ID</label>
-        <input type="text" id="id" v-model="user_id" placeholder="아이디를 입력하세요" />
+        <label for="email">Email</label>
+        <input type="email" id="email" v-model="user_email" placeholder="이메일을 입력하세요" />
       </div>
       <div class="input-row">
         <label for="password">PW</label>
         <input type="password" id="password" v-model="user_pw" placeholder="비밀번호를 입력하세요" />
       </div>
       <div class="input-row">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="user_email" placeholder="이메일을 입력하세요" />
-      </div>
-      <div class="input-row">
-        <label for="name">Name</label>
-        <input type="name" id="name" v-model="user_name" placeholder="이름을 입력하세요" />
+        <label for="id">Nickname</label>
+        <input type="text" id="id" v-model="user_id" placeholder="닉네임을 입력하세요" />
       </div>
     </div>
     <div class="btn-wrap">
@@ -37,13 +33,11 @@ export default {
       user_id: "",
       user_pw: "",
       user_email: "",
-      user_name: "",
 
       error: {
         user_id: false,
         user_pw: false,
         user_email: false,
-        user_name: false
       }
     };
   },
@@ -56,12 +50,11 @@ export default {
     ]),
     
     signup() {
-      let { user_id, user_pw, user_email, user_name } = this;
+      let { user_id, user_pw, user_email } = this;
       let data = {
         user_id,
         user_pw,
         user_email,
-        user_name,
       };
       this.postSignUp(data);
 
@@ -88,14 +81,11 @@ export default {
 <style lang="scss" scoped>
 .signup {
   position: absolute;
-  width: 90vw;
-  // width: 350px;
-  margin: 0 auto;
-  margin-top: 10px;
+  width: 60vw;
+  margin-left: 20vw;
+  margin-right: 20vw;
+  margin-top: 60px;
   margin-bottom: 60px;
-  // padding-top: 100px;
-  padding-top: 10px;
-  padding-bottom: 125px;
 }
 .signup .title-signup {
   margin-top: 60px;
