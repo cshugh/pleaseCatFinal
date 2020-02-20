@@ -6,7 +6,8 @@
 <template>
   <div>
     <div id="content">
-      <img :src="require(`../../assets/images/cat/${post_image}`)" id="img" />
+      <!-- <img :src="require(`../../assets/images/cat/${post_image}`)" id="img" /> -->
+      <img :src="`/static/images/post/${post_image}`" id="img" />
     </div>
     <div>
       <div class="content" id="post_content">{{post_content}}</div>
@@ -20,7 +21,8 @@
           <div class="comment" id="profileDiv">
             <!-- <router-link v-bind:to="{name:'Home'}"> -->
             <button id="profileButton">
-              <img :src="require(`../../assets/images/cat/1.jpg`)" id="profile" />
+              <!-- <img :src="require(`../../assets/images/cat/1.jpg`)" id="profile" /> -->
+              <img :src="`/static/images/cat/1.jpg`" id="profile" />
             </button>
             <!-- </router-link> -->
           </div>

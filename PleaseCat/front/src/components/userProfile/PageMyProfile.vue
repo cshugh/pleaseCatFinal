@@ -2,8 +2,8 @@
 <div id="myProfile" class="page">
     <div id="profileView" v-if="(getLoginInfo != null)">
         <div id="leftPart">
-            <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile">
-            <!-- <img id="userPhoto" :src='`/static/images/user/${ getLoginInfo.user_no }.jpg`' alt="my Profile"> -->
+            <!-- <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile"> -->
+            <img id="userPhoto" :src='`/static/images/user/${ getLoginInfo.user_no }.jpg`' alt="my Profile">
         </div>
         <section id="rightPart">
             <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
@@ -25,7 +25,8 @@
                     <div class="followerList" v-for="(f, idx) in myFollowerList" :key="idx">
                         <span @click="showModalFollower = false; no = f.user_no">
                         <router-link :to="`/userProfile/${ f.user_no }`">
-                            <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <!-- <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto"> -->
+                            <img id="followerPhoto" :src='`/static/images/user/${ f.user_no }.jpg`' alt="followerPhoto">
                             <span id="followerName">{{ f.user_id }}</span>
                         </router-link>
                         </span>
@@ -44,7 +45,8 @@
                     <div class="followerList" v-for="(f, idx) in myFollowingUserList" :key="idx">
                         <span @click="showModalFollowingUser = false; no = f.user_no">
                         <router-link :to="`/userProfile/${ f.user_no }`">
-                            <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <!-- <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_image }`)' alt="followerPhoto"> -->
+                            <img id="followerPhoto" :src='`/static/images/user/${ f.user_image }`' alt="followerPhoto">
                             <span id="followerName">{{ f.user_id }}</span>
                         </router-link>
                         </span>
@@ -63,7 +65,8 @@
                     <div class="followerList" v-for="(f, idx) in myFollowingCatList" :key="idx">
                         <span @click="showModalFollowingCat = false; no = f.cat_no">
                             <router-link :to="`/catProfile/${ f.cat_no }`">
-                                <img id="followerPhoto" :src='require(`@/assets/images/cat/${ f.cat_no }.jpg`)' alt="followerPhoto">
+                                <!-- <img id="followerPhoto" :src='require(`@/assets/images/cat/${ f.cat_image }`)' alt="followerPhoto"> -->
+                                <img id="followerPhoto" :src='`/static/images/cat/${ f.cat_image }`' alt="followerPhoto">
                                 <span id="followerName">{{ f.cat_name }}</span>
                             </router-link>
                         </span>
@@ -78,8 +81,8 @@
         <div id="photoList">
             <span v-for="(post, idx) in myPosts" :key="idx">
                 <router-link :to="`/detailPost/${post.post_no}`">
-                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
-                    <!-- <span class="photo" :style="{'background-image' : `/static/images/post/${ post.post_image }`}"  :alt='`${ post.post_image }`'> -->
+                    <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> -->
+                    <span class="photo" :style="{'background-image' :`url('/static/images/post/${ post.post_image }')`}"  :alt='`${ post.post_image }`'>
                     </span>
                 </router-link>
             </span>
@@ -118,7 +121,7 @@ export default {
         ]),
         ...mapGetters('storePost',[
             'myPosts',
-        ]),
+        ]), 
     },
 }
 </script>

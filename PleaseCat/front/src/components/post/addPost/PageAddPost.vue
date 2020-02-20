@@ -98,14 +98,13 @@
               class="btn-selectCat"
               v-for="nc in nearCatList"
               @click="tagCat(`${nc.no}`, `${nc.cat_name}`), showModalSelectCat = false "
-              :key=nc.no
+              :key="nc.no"
             >
               <div class="btn-circle-border">
+                <!-- <img class="btn-circle" :src='require(`@/assets/images/cats/_profile/${ nc.no }.jpg`)' -->
+                <img class="btn-circle" :src='`/static/images/cat/${ nc.cat_image }`'
+                />
                 <!-- <img
-                  class="btn-circle"
-                  :src='require(`@/assets/images/cats/_profile/${ nc.no }.jpg`)'
-                /> -->
-                <img
                   class="btn-circle"
                   :src='`/static/images/cat/${ nc.no }.jpg`'
                 />

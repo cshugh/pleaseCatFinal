@@ -57,7 +57,6 @@ export default {
     this.getCatList();
     this.getUserList();
     this.getPostList();
-    this.getNewAlarm();
   },
   components: {
     // HelloWorld
@@ -66,7 +65,7 @@ export default {
   },
   methods: {
       ...mapActions([
-          'findUserLoc', 'getNewAlarm',
+          'findUserLoc',
       ]),
       ...mapActions('storeCat',[
           'getCatList',

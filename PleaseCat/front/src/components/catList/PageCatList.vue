@@ -4,13 +4,18 @@
             <button v-show="isList" @click="isList = false"><v-icon x-large>list</v-icon></button>
             <button v-show="!isList" @click="isList = true"><v-icon x-large>map</v-icon></button>
         </div>
+        <div>
+            <span v-show="isList" @click="isList = false">목록</span>
+            <span v-show="!isList" @click="isList = true">지도</span>
+        </div>
 
         <div>
             <v-row justify="space-around">
                 <v-radio-group v-model="distance" row>
-                    <v-radio color="grey darken-3" label="0m"     value="0"></v-radio>
+                    <h4 v-bind:style="{'margin-right': '3vw'}">내 주변 : </h4>
                     <v-radio color="grey darken-3" label="500m"   value="500"></v-radio>
                     <v-radio color="grey darken-3" label="1km"  value="1000"></v-radio>
+                    <v-radio color="grey darken-3" label="3km"  value="3000"></v-radio>
                     <v-radio color="grey darken-3" label="10km" value="10000"></v-radio>
                 </v-radio-group>
             </v-row>
@@ -41,7 +46,7 @@
                 v-on:enter="enter"
                 v-on:leave="leave"
             >
-                <CatCardComponent v-for="cat in nearCatList" :key=cat.no :name=cat.cat_name :desc1="cat.sex==='남'?'♂':'♀'" :desc2=cat.cat_location :src=cat.no  />
+                <CatCardComponent v-for="cat in nearCatList" :key=cat.no :name=cat.cat_name :desc1="cat.sex==null?'?':(cat.sex==='남'?'♂':'♀')" :desc2=cat.cat_location :src=cat.no  />
             </transition-group>
         </div>
     </div>
@@ -62,7 +67,7 @@ export default {
     data() {
         return {
             isList: true,
-            distance: 1000,
+            distance: 0,
       }
     },
     components: {
