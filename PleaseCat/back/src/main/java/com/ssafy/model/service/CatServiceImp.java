@@ -53,7 +53,7 @@ public class CatServiceImp implements CatService {
 				String ext =  oName.substring(oName.lastIndexOf('.')+1);
 
 				//db에 저장될 cat의 images에 값을 만들어줌 (파일 불러올 루트)
-				Cat.setCat_image("cat/"+dao.findNextCatNo()+"."+ext);
+				Cat.setCat_image(dao.findNextCatNo()+"."+ext);
 
 				//저장루트 설정 (드라이브 위치부터 하나하나 잡아줘야함)
 				//String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";

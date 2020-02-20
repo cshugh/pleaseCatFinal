@@ -308,7 +308,7 @@ export default {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude
             };
-            alert(
+            console.log(
               "위도 : " +
                 position.coords.latitude +
                 ", 경도: " +
@@ -319,15 +319,15 @@ export default {
           function(err) {
             console.log("error");
             if (err.code == 1) {
-              alert("Error: Access is denied!");
+              console.log("Error: Access is denied!");
             } else if (err.code == 2) {
-              alert("Error: Position is unavailable!");
+              console.log("Error: Position is unavailable!");
             }
           },
           { timeout: 30000, enableHighAccuracy: true, maximumAge: 75000 }
         );
       } else {
-        alert("이 브라우저는 Geolocation을 지원하지 않음.");
+        console.log("이 브라우저는 Geolocation을 지원하지 않음.");
       }
     },
     fileSelect() {
@@ -519,9 +519,9 @@ export default {
 <style lang="scss" scoped>
 .addPost {
   // position: absolute;
-  width: 60vw;
-  margin-left: 20vw;
-  margin-right: 20vw;
+  width: 90vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
   margin-top: 10px;
   margin-bottom: 60px;
   // padding-top: 100px;
@@ -635,10 +635,10 @@ export default {
 // }
 .writingText {
   margin-top: -5px;
+  border-bottom: solid 1px #3da0a9;
   textarea {
-    // resize: none;
+    resize: none;
     padding: 12px 0px 12px;
-    resize: vertical;
     height: 212px;
     width: 100%;
   }
@@ -753,9 +753,6 @@ export default {
   height: 42px;
   padding-right: 5%;
 }
-.writingText {
-  border: 1px solid #3396F4;
-}
 .btn-upload {
   float: right;
   width: 142px;
@@ -790,14 +787,14 @@ export default {
     padding-bottom: 125px;
   }
   #previewCanvas {
-    width: 600px;
+    width: 60vw;
   }
   .selectPhoto {
     float: none;
     width: auto;
   }
   .writingText {
-    border: 1px solid #3396F4;
+    // border: 1px solid #3396F4;
     float: none;
     width: auto;
   }

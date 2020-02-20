@@ -212,12 +212,12 @@ export default {
       sex: "",
       cat_desc: "",
 
-      skin_disease: "",
-      neuter: "",
-      hurt: "",
+      skin_disease: "3",
+      neuter: "3",
+      hurt: "3",
       hair_color: "",
       eye_color: "",
-      
+
       cat_x: "",
       cat_y: "",
       cat_location: "",
@@ -225,19 +225,19 @@ export default {
 
       // uploadImage: '',
 
-      /* 피부병 Yes: 1, No: 0, 모름: -1  */
+      /* 피부병 Yes: 1, No: 2, 모름: 3  */
       skinDiseaseOptions: [
         { value: 1, text: "네 피부병이 있습니다." },
         { value: 2, text: "아니요 피부병이 없습니다." },
         { value: 3, text: "모르겠습니다." }
       ],
-      /* 중성화 Yes: 1, No: 0, 모름: -1 */
+      /* 중성화 Yes: 1, No: 2, 모름: 3 */
       neuterOptions: [
         { value: 1, text: "네 중성화 수술을 했습니다." },
         { value: 2, text: "아니요 중성화 수술을 하지 않았습니다." },
         { value: 3, text: "모르겠습니다." }
       ],
-      /* 상처 Yes: 1, No: 0, 모름: -1 */
+      /* 상처 Yes: 1, No: 2, 모름: 3 */
       hurtOptions: [
         { value: 1, text: "네 상처가 있습니다." },
         { value: 2, text: "아니요 상처가 없습니다." },
@@ -250,9 +250,9 @@ export default {
     this.cat_x = this.$route.params.X;
     this.cat_y = this.$route.params.Y;
     this.cat_location = this.$route.params.Loc;
-    console.log(this.cat_x)
-    console.log(this.cat_y)
-    console.log(this.cat_location)
+    console.log(this.cat_x);
+    console.log(this.cat_y);
+    console.log(this.cat_location);
   },
   methods: {
     handleClickButton() {
@@ -260,7 +260,6 @@ export default {
     },
     fileSelect: function(event) {
       // console.log(this.$refs);
-      this.catImg = this.$refs.catProfileImage.files[0];
       // console.log(this.catImg);
 
       /*
@@ -293,6 +292,17 @@ export default {
       reader.readAsDataURL(event.target.files[0]);
     },
     submit() {
+
+      this.catImg = this.$refs.catProfileImage.files[0];
+      if (this.catImg == null) {
+        alert("고양이 사진이 없습니다. 😿 \n프로필 사진은 필수입니다.");
+        return false;
+      }
+      if (this.cat_name == "") {
+        alert("고양이에게 이름을 지어주세요. 😺");
+        return false;
+      }
+
       const fd = new FormData();
       fd.append("cat_x", this.cat_x);
       fd.append("cat_y", this.cat_y);
@@ -307,7 +317,9 @@ export default {
       );
 
       fd.append("cat_name", this.cat_name);
-      fd.append("age", this.age);
+      if (this.age != "") {
+        fd.append("age", this.age);
+      }
       fd.append("sex", this.sex);
       fd.append("cat_desc", this.cat_desc);
 
@@ -349,11 +361,13 @@ export default {
 
 <style lang="scss" scoped>
 .addCat {
-  width: 100%;
-  margin: 0 auto;
+  // width: 100%;
+  width: 90vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  // margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 60px;
-  // padding-top: 100px;
   padding-top: 10px;
   padding-bottom: 125px;
 }
@@ -613,10 +627,12 @@ export default {
 
 @media (min-width: 600px) {
   .addCat {
-    width: 600px;
+    width: 60vw;
+    margin-left: 20vw;
+    margin-right: 20vw;
   }
   #previewCanvas {
-    width: 600px;
+    width: 60vw;
   }
   .selectPhoto {
     float: none;
