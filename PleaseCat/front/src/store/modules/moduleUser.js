@@ -245,7 +245,6 @@ export default {
         myFollowingCatList: state => {
             return state.myFollowingCatList;
         },
-
         userSexArray:state => {
             let maleCnt = 0,
                 femaleCnt = 0;

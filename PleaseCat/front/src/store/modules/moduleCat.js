@@ -12,6 +12,10 @@ export default {
         userFollowingCatList: [],
         myFollowingCatList: [],
         catDetail: null,
+
+        catSexArray: [],
+        catAgeArray: [],
+        catHealthArray: [],
     },
     // mutations : 동기 처리 logic
     mutations: { // (state, rootState?)
@@ -212,7 +216,7 @@ export default {
         },
         getMyFollowingCatList({ dispatch, commit, getters, rootGetters }, data) {
             axios
-                .get(`${rootGetters.getServer}/api/FollwoingCat/searchFollowedCat?follower_no=${data}`)
+                .get(`${rootGetters.getServer}/api/FollwoingCat/searchFollowedCat?follower_no=${rootGetters.getLoginInfo.user_no}`)
                 .then(res => {
                     // handle success
                     var followerArray = res.data.data;
@@ -286,14 +290,15 @@ export default {
                 spayedFemaleCnt = 0;
 
             state.catList.forEach(catData => {
-                if (catData.sex === "남") {
-                    if (catData.neuter) {
+                if( catData.sex ==="남") {
+                    if ( catData.neuter === 1 ){
                         spayedMaleCnt += 1;
                     } else {
                         maleCnt += 1;
                     }
-                } else if (catData.sex === "여") {
-                    if (catData.neuter) {
+
+                } else if (catData.sex ==="여") {
+                    if ( catData.neuter === 1 ){
                         spayedFemaleCnt += 1;
                     } else {
                         femaleCnt += 1;
@@ -333,16 +338,15 @@ export default {
             let health1Cnt_normal = 0,
                 health2Cnt_hurt = 0,
                 health3Cnt_skin_disease = 0;
-            // health4Cnt_diarrhea = 0,
-            // health5Cnt_infectious_diseases = 0,
-            // health6Cnt_etc = 0;
-
+                // health4Cnt_diarrhea = 0,
+                // health5Cnt_infectious_diseases = 0,
+                // health6Cnt_etc = 0;
             state.catList.forEach(catData => {
-                if (catData.hurt === 1) {
-                    health2cnt_hurt += 1;
-                    if (catData.skin_disease === 1) {
-                        health3Cnt_skin_disease += 1;
-                    } else {
+                if ( catData.hurt === 1  ){
+                    health2Cnt_hurt += 1;
+                    if (catData.skin_disease === 1){
+                        health3Cnt_skin_disease +=1 ;
+                    }else{
                         ;
                     }
                 } else {
@@ -372,7 +376,6 @@ export default {
                 // }                
             })
             return [health1Cnt_normal, health2Cnt_hurt, health3Cnt_skin_disease,]
-        }
-
+        },
     }
 };
