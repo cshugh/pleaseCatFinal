@@ -29,76 +29,9 @@
 
       </div>
 
-      <div class="writingText">
-        <textarea
-          class="textField"
-          v-model="post_content"
-          wrap="hard"
-          placeholder=" 문구 입력..."
-        ></textarea>
-        <!-- <hr noshade border="0px"  size="0.5px" color="#3da0a9"> -->
-      </div>
     </div>
 
     <div class="btn-wrap">
-      <div class="modal selectCat">
-
-        <button
-          id="btn-show-modal-cat"
-          @click=" showModalSelectCat = true"
-        >
-          <div id="lb-tagCat">#고양이 태그</div>
-          <div id="lb-selectedCat">{{ selectedCat }}</div>
-          <div style="clear:both:"></div>
-        </button>
-
-        <modal
-          v-if="showModalSelectCat"
-          @close="showModalSelectCat = false"
-        >
-          <h3
-            slot="header"
-            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
-          >찾는 고양이가 있나요?</h3>
-
-          <div slot="footer">
-
-            <button
-              class="btn-selectCat"
-              v-for="nc in nearCatList"
-              @click="tagCat(`${nc.cat_no}`, `${nc.cat_name}`), showModalSelectCat = false "
-              :key="nc.cat_no"
-            >
-              <div class="btn-circle-border">
-                <!-- <img class="btn-circle" :src='require(`@/assets/images/cats/_profile/${ nc.no }.jpg`)' -->
-                <img class="btn-circle" :src='`/static/images/cat/${ nc.cat_image }`'
-                />
-                <!-- <img
-                  class="btn-circle"
-                  :src='`/static/images/cat/${ nc.no }.jpg`'
-                /> -->
-              </div>
-              <p style="margin-top:4px">{{ nc.cat_name }}</p>
-            </button>
-          </div>
-
-          <div
-            slot="footer"
-            class="modal-footer-addCat"
-          >
-            <!-- <button @click="showModalSelectCat = false"> 확인</button> -->
-            이 중에 고양이가 없나요?
-            <router-link :to="'/addcat'">
-              <button
-                class="btn-addNewCat"
-                @click="showModalSelectCat = false"
-              > 고양이 추가</button>
-              <p></p>
-            </router-link>
-          </div>
-
-        </modal>
-      </div>
 
       <div class="modal selectLoc">
         <button
@@ -139,6 +72,73 @@
         </modal>
       </div>
 
+      <div class="modal selectCat">
+
+        <button
+          id="btn-show-modal-cat"
+          @click=" showModalSelectCat = true"
+        >
+          <div id="lb-tagCat">#고양이 태그</div>
+          <div id="lb-selectedCat">{{ selectedCat }}</div>
+          <div style="clear:both:"></div>
+        </button>
+
+        <modal
+          v-if="showModalSelectCat"
+          @close="showModalSelectCat = false"
+        >
+          <h3
+            slot="header"
+            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
+          >찾는 고양이가 있나요?</h3>
+
+          <div slot="footer">
+
+            <button
+              class="btn-selectCat"
+              v-for="nc in nearCatList"
+              @click="tagCat(`${nc.no}`, `${nc.cat_name}`), showModalSelectCat = false "
+              :key="nc.no"
+            >
+              <div class="btn-circle-border">
+                <!-- <img class="btn-circle" :src='require(`@/assets/images/cats/_profile/${ nc.no }.jpg`)' -->
+                <img class="btn-circle" :src='`/static/images/cat/${ nc.cat_image }`'
+                />
+                <!-- <img
+                  class="btn-circle"
+                  :src='`/static/images/cat/${ nc.no }.jpg`'
+                /> -->
+              </div>
+              <p style="margin-top:4px">{{ nc.cat_name }}</p>
+            </button>
+          </div>
+
+          <div
+            slot="footer"
+            class="modal-footer-addCat"
+          >
+            <!-- <button @click="showModalSelectCat = false"> 확인</button> -->
+            이 중에 고양이가 없나요?
+            <!-- <router-link :to="'/addcat'"> -->
+              <button
+                class="btn-addNewCat"
+                @click="showModalSelectCat = false , pushAddCat()"
+              > 고양이 추가</button>
+              <p></p>
+            <!-- </router-link> -->
+          </div>
+
+        </modal>
+      </div>
+
+    </div>
+    <div class="writingText">
+      <textarea
+        v-model="post_content"
+        wrap="hard"
+        placeholder=" 문구 입력..."
+      ></textarea>
+      <!-- <hr noshade border="0px"  size="0.5px" color="#3da0a9"> -->
     </div>
 
     <div class="submit-wrap">
@@ -307,7 +307,7 @@ export default {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude
             };
-            alert(
+            console.log(
               "위도 : " +
                 position.coords.latitude +
                 ", 경도: " +
@@ -318,15 +318,15 @@ export default {
           function(err) {
             console.log("error");
             if (err.code == 1) {
-              alert("Error: Access is denied!");
+              console.log("Error: Access is denied!");
             } else if (err.code == 2) {
-              alert("Error: Position is unavailable!");
+              console.log("Error: Position is unavailable!");
             }
           },
           { timeout: 30000, enableHighAccuracy: true, maximumAge: 75000 }
         );
       } else {
-        alert("이 브라우저는 Geolocation을 지원하지 않음.");
+        console.log("이 브라우저는 Geolocation을 지원하지 않음.");
       }
     },
     fileSelect() {
@@ -437,6 +437,21 @@ export default {
       this.selectedCat = name;
       // console.log("cat_no: " + no + ", cat_name: " + name + "  선택!!")
     },
+    pushAddCat() {
+      
+      if (this.post_location == "") {
+        alert("위치를 추가하세요. 😺 \n위치를 추가하면 근처 고양이 목록을 불러옵니다.");
+        return false;
+      }
+      else {
+        this.$router.push({
+          name: 'AddCat' ,
+          params: { X: this.gpsX , Y: this.gpsY, Loc: this.post_location}
+        })
+        
+      }
+
+    },
     submit() {
       // postImage에 사진 등록
       // file 태그애 Vue 인스턴스로 접근하기 위해 $refs 속성을 사용함.
@@ -444,15 +459,15 @@ export default {
 
       // 사진, 위치, 고양이 없으면 게시글 등록 불가 => 동작 test 후 alert로 바꾸기
       if (this.postImage == null) {
-        console.log("고양이 사진 없음");
+        alert("고양이 사진이 없습니다. 😿");
         return false;
       }
       if (this.post_location == "") {
-        console.log("위치를 추가해주세요!");
+        alert("위치를 추가하세요. 😺");
         return false;
       }
       if (this.cat_no == "") {
-        console.log("고양이를 태그해주세요!");
+        alert("고양이를 태그하세요. 😺");
         return false;
       }
 
@@ -503,9 +518,9 @@ export default {
 <style lang="scss" scoped>
 .addPost {
   // position: absolute;
-  width: 60vw;
-  margin-left: 20vw;
-  margin-right: 20vw;
+  width: 90vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
   margin-top: 10px;
   margin-bottom: 60px;
   // padding-top: 100px;
@@ -514,16 +529,16 @@ export default {
 }
 .addPost .title-addPost {
   margin-top: 60px;
-  margin-bottom: 40px;
-  font-weight: bold;
-  font-size: 42px;
+  margin-bottom: 32px;
+  font-weight: 500;
+  font-size: 28px;
 }
 #previewCanvas {
   width: 100%;
 }
 .canvas-wrap {
   position: relative;
-  margin: 16px auto;
+  margin: -5.8px auto;
   // width: 70%;
   // padding-bottom: 70%;
   // border: solid 1px #1d2f3a;
@@ -537,19 +552,18 @@ export default {
 .file-input-div {
   // margin: 0 auto;
   position: relative;
-  width: 200px;
-  height: 50px;
+  width: 100%;
+  height: 56px;
   overflow: hidden;
 }
 .file-input-button {
-  width: 142px;
-  height: 42px;
+  width: 100%;
+  height: 56px;
   position: absolute;
   top: 0px;
   color: #1d2f3a;
-  border-radius: 8px;
 
-  background: linear-gradient(137deg, #ffdab7, #f77c99, #657af2, #c2ffc5);
+  background: linear-gradient(165deg, #c2c8ff, #6bccb4, #6eaecc, #c2ffc5);
   background-size: 600% 600%;
   -webkit-animation: inputBtn-Animation 10s ease infinite;
   -moz-animation: inputBtn-Animation 10s ease infinite;
@@ -606,6 +620,7 @@ export default {
   right: 0px;
   top: 0px;
   opacity: 0;
+  width: 100%;
 
   filter: alpha(opacity=0);
   -ms-filter: "alpha(opacity=0)";
@@ -617,15 +632,24 @@ export default {
 //   width: 100%;
 //   height: 100%;
 // }
-.textField {
-  // resize: none;
-  margin-top: 30px;
-  resize: vertical;
-  height: 252px;
-  width: 100%;
+.writingText {
+  margin-top: -5px;
+  border-bottom: solid 1px #3da0a9;
+  textarea {
+    resize: none;
+    padding: 12px 0px 12px;
+    height: 212px;
+    width: 100%;
+  }
+  textarea::placeholder {
+    color: rgb(81, 138, 163);
+  }
 }
 #btn-show-modal-cat {
-  border-top: solid 1px #3da0a9;
+  margin-top: -5px;
+}
+#btn-show-modal-loc {
+  margin-top: 1px;
 }
 #btn-show-modal-cat,
 #btn-show-modal-loc {
@@ -728,9 +752,6 @@ export default {
   height: 42px;
   padding-right: 5%;
 }
-.writingText {
-  border: 1px solid #3396F4;
-}
 .btn-upload {
   float: right;
   width: 142px;
@@ -755,24 +776,19 @@ export default {
 
 @media (min-width: 600px) {
   .addPost {
-    width: 60vw;
-    margin-left: 20vw;
-    margin-right: 20vw;
-    margin-top: 10px;
-    margin-bottom: 60px;
-    // padding-top: 100px;
-    padding-top: 10px;
-    padding-bottom: 125px;
+    width: 600px;
+    margin-left: calc((100vw - 600px) / 2);
+    margin-right: calc((100vw - 600px) / 2);
   }
   #previewCanvas {
-    width: 600px;
+    width: 60vw;
   }
   .selectPhoto {
     float: none;
     width: auto;
   }
   .writingText {
-    border: 1px solid #3396F4;
+    // border: 1px solid #3396F4;
     float: none;
     width: auto;
   }

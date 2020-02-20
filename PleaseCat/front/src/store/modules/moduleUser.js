@@ -8,15 +8,22 @@ export default {
             namespaced: true,
             state: {
                 rankList: null,
+                myRank: null,
             },
             getters: {
                 rankList: (state) => {
                     return state.rankList;
                 },
+                myRank: (state) => {
+                    return state.myRank;
+                },
             },
             mutations: {
                 changeRankList: (state, payload) => {
                     state.rankList = payload.data;
+                },
+                changeMyRank: (state, payload) => {
+                    state.myRank = payload.data;
                 },
             },
             actions: {
@@ -27,6 +34,21 @@ export default {
                     .then(res => {
                         // handle success
                         commit('changeRankList', res.data);
+                    })
+                    .catch(err => {
+                        // handle error
+                    })
+                    .then(() => {
+                        // always executed
+                    });
+                },
+                getMyRank({ dispatch, commit, getters, rootGetters }, data){
+                    axios
+                    .get(`${rootGetters.getServer}/api/Ranking/searchMyRank?cat_no=${data.cat_no}&user_no=${rootGetters.getLoginInfo.user_no}`)
+                    // .get(`${rootGetters.getServer}/api/cat/searchCat?Cat_no=${data.cat_no}`)
+                    .then(res => {
+                        // handle success
+                        commit('changeMyRank', res.data);
                     })
                     .catch(err => {
                         // handle error
@@ -223,7 +245,6 @@ export default {
         myFollowingCatList: state => {
             return state.myFollowingCatList;
         },
-
         userSexArray:state => {
             let maleCnt = 0,
                 femaleCnt = 0;

@@ -80,7 +80,7 @@ const routes = [
     component: PageCatDetail
   },
   {
-    path: '/addCat',
+    path: '/addcat',
     name: 'AddCat',
     component: AddCat
   },

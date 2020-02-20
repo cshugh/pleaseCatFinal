@@ -54,8 +54,8 @@ public class UserRestController {
 	
 	@ApiOperation("새로운 유저 정보를 입력한다.")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insertUser(MultipartFile catImg, @RequestBody user User) throws Exception{
-		userService.insertUser(catImg,User);
+	public ResponseEntity<Map<String, Object>> insertUser(@RequestBody MultipartFile userImg,  user User) throws Exception{
+		userService.insertUser(userImg,User);
 		return handleSuccess("유저 등록 완료");
 	}
 	
@@ -103,4 +103,21 @@ public class UserRestController {
 		return handleSuccess(userService.checkToken(token));
 	}
 	
+	@ApiOperation("새로 저장하려는 고양이의 user_no를 찾는다.")
+	@GetMapping("/findUserNo")
+	public ResponseEntity<Map<String, Object>> findNextUserNo() throws Exception{
+		return handleSuccess(userService.findNextUserNo());
+	}
+	
+	@ApiOperation("새로운 알림 사항을 확인한다.")
+	@GetMapping("/searchAlarm")
+	public ResponseEntity<Map<String, Object>> searchAlarm(@RequestParam int user_no) throws Exception{
+		return handleSuccess(userService.searchAlarm(user_no));
+	}
+	
+	@ApiOperation("새로운 알림 사항을 확인한다.")
+	@GetMapping("/readAlarm")
+	public ResponseEntity<Map<String, Object>> readAlarm(@RequestParam int post_no) throws Exception{
+		return handleSuccess(userService.readAlarm(post_no));
+	}	
 }

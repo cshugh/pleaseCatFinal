@@ -37,4 +37,8 @@
     <select id = "searchAllUser" resultType="user">
     	select * from USER
     </select>
+    
+    <select id = "findNextUserNo" resultType="int">
+    	select max(user_no)+1 from USER
+    </select>
 </mapper>

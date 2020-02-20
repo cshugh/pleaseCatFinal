@@ -22,6 +22,15 @@
 		ORDER BY rank_point DESC
 		LIMIT 3;
 	</select>
+	
+	<select id="searchMyRank" parameterType="int"
+		resultType="ranking">
+		SELECT u.user_no, SUM(p.post_like-p.post_unlike) AS
+		rank_point, u.user_image, u.user_id
+		FROM POST p, USER u
+		WHERE cat_no=#{cat_no} AND u.user_no=#{user_no}
+		ORDER BY rank_point DESC
+	</select>
 
 	<insert id="insertRanking" parameterType="hashmap">
 		insert into

@@ -89,6 +89,13 @@ export default {
       comment: ""
     };
   },
+  watch: {
+    post_no: function(newNo) {
+      this.getDetailPostInfo(newNo);
+      this.getSetDetailPost();
+      this.getDetailPostList({ post_no: newNo });
+    },
+  },
   computed: {
     ...mapGetters("storeDetailPost", [
       "detailPostList",
