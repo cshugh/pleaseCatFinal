@@ -12,7 +12,7 @@
             <h1 id="catName" class="text">{{catDetail.cat_name}}</h1>
             </router-link>
         </div>
-        <div id="man" v-if="catManager">
+        <div id="man" v-if="catManager != null">
             매니저
             <router-link :to="`/userProfile/${this.rankList[0].user_no}`">
             <!-- <img id="manPhoto" :src='require(`../../assets/images/man/${catManager.user_no}.jpg`)' alt=""> -->
@@ -63,7 +63,7 @@ import axios from "axios";
 import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
-    name: 'catProfile',
+    name: 'catDetail',
     created() {
         this.no = this.$route.params.cat_no;
         this.getSelectedCat(this.no);
@@ -93,11 +93,16 @@ export default {
             'rankList',
         ]),
         catManager: function() {
-            userList.forEach(el => {
+            var tmp = '';
+            this.userList.forEach(el => {
+              console.log(el.user_no);
               if(el.user_no === this.catDetail.cat_manager){
-                return el;
+                console.log("찾음")
+                console.log(el);
+                tmp = el;
               }
             });
+            return tmp;
         },
         positions: function() {
             let array = [];
