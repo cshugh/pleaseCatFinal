@@ -90,7 +90,10 @@ export default {
     background-color: rgb(189, 188, 188);
     top: 60px;
     .msg{
-      width: 50vw;
+      width: 70vw;
+      padding: 1vw;
+      box-sizing: border-box;
+      border: 1px solid black;
     }
   }
 }
