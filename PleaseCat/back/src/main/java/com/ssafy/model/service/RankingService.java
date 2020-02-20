@@ -12,5 +12,6 @@ public interface RankingService {
 	public void insertRanking(int cat_no, int user_no);
 	public void updateRanking(int cat_no, int user_no, int rank_point);
 	public void deleteRanking(int cat_no, int user_no);
+	public ranking searchMyRank(int cat_no, int user_no);
 
 }

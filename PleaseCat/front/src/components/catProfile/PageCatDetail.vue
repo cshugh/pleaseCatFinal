@@ -43,7 +43,7 @@
       <br />
       마지막 밥 먹은 시간: {{selectedCat.meal_time}}
       <span id="updateTime">
-        <button v-onclick="catBob()">
+        <button v-on:click="catBob()">
           <img id="catBobImg" :src="require(`../../assets/images/icons/catBob.png`)" />
         </button>
       </span>
@@ -127,9 +127,14 @@ export default {
   },
   methods: {
     catBob() {
-      console.log("누름");
+      if(confirm("밥 시간을 업데이트 하시겠습니까?😽")){
+          this.getSetMealTime(this.selectedCat.cat_no);
+          console.log("catBob임")
+          this.getCatList();
+      }
     },
-    ...mapActions("storeUser/storeRank", ["getRankList"])
+    ...mapActions("storeUser/storeRank", ["getRankList"]),
+    ...mapActions("storeCat", ["getSetMealTime", "getCatList"])
   }
 };
 </script>

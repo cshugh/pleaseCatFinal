@@ -42,7 +42,7 @@
 	<select id = "searchPost" parameterType="int" resultType="post">
     	select * from POST where post_no=#{no}
     </select>
-   
+    
     <select id = "searchPostUser" parameterType="int" resultType="post">
     	select * from POST where user_no=#{no}
     </select>

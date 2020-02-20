@@ -16,4 +16,5 @@ public interface CatDao {
 	public void updateCat(cat cat);
 	public void deleteCat(int no);
 	public int findNextCatNo();
+	public void updateMealTime(cat Cat);
 }
