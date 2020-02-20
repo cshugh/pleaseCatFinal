@@ -49,7 +49,7 @@
         >
           <h3
             slot="header"
-            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
+            style="margin-top:6px; font-weight: 550;"
           >핀을 움직여 위치를 선택하세요</h3>
 
           <div slot="footer">
@@ -89,7 +89,7 @@
         >
           <h3
             slot="header"
-            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
+            style="margin-top:6px; font-weight: 550;"
           >찾는 고양이가 있나요?</h3>
 
           <div slot="footer">
@@ -101,14 +101,14 @@
               :key=nc.no
             >
               <div class="btn-circle-border">
-                <img
-                  class="btn-circle"
-                  :src='require(`@/assets/images/cats/_profile/${ nc.no }.jpg`)'
-                />
                 <!-- <img
                   class="btn-circle"
-                  :src='`/static/images/cat/${ nc.no }.jpg`'
+                  :src='require(`@/assets/images/cats/_profile/${ nc.no }.jpg`)'
                 /> -->
+                <img
+                  class="btn-circle"
+                  :src='`/static/images/cat/${ nc.no }.jpg`'
+                />
               </div>
               <p style="margin-top:4px">{{ nc.cat_name }}</p>
             </button>
@@ -562,10 +562,10 @@ export default {
   height: 56px;
   position: absolute;
   top: 0px;
-  color: #1d2f3a;
+  color: #1d3e6e;
 
-  background: linear-gradient(165deg, #c2c8ff, #6bccb4, #6eaecc, #c2ffc5);
-  background-size: 600% 600%;
+  background: linear-gradient(135deg, #b1f6ff, #7aafeb, #48bdeb, #f4ff5c, #fde34d);
+  background-size: 500% 500%;
   -webkit-animation: inputBtn-Animation 10s ease infinite;
   -moz-animation: inputBtn-Animation 10s ease infinite;
   -o-animation: inputBtn-Animation 10s ease infinite;
@@ -635,7 +635,7 @@ export default {
 // }
 .writingText {
   margin-top: -5px;
-  border-bottom: solid 1px #3da0a9;
+  border-bottom: solid 1px rgba(49, 137, 209, 0.308);
   textarea {
     resize: none;
     padding: 12px 0px 12px;
@@ -643,7 +643,7 @@ export default {
     width: 100%;
   }
   textarea::placeholder {
-    color: rgb(81, 138, 163);
+    color: #2d57966e;
   }
 }
 #btn-show-modal-cat {
@@ -656,9 +656,9 @@ export default {
 #btn-show-modal-loc {
   width: 100%;
   height: 52px;
-  border-bottom: solid 1px #3da0a9;
+  border-bottom: solid 1px rgba(49, 137, 209, 0.308);
   &:hover {
-    color: #1d2f3a;
+    color: #1d3e6e;
     font-weight: 550;
   }
   #lb-tagCat,
@@ -683,7 +683,7 @@ export default {
   transition-duration: 0.3s;
   transition-property: transform;
   &:hover {
-    color: #1d2f3a;
+    color: #1d3e6e;
     font-weight: 550;
   }
 }
@@ -692,7 +692,7 @@ export default {
   height: 64px;
   overflow: hidden;
   border-radius: 50%;
-  border: 1.5px solid rgb(255, 182, 48);
+  border: 1.5px solid rgba(255, 207, 48, 0.925);
   // box-shadow: 5px 5px 20px rgb(211, 211, 211);
   -webkit-box-shadow: 11px 10px 22px 0px rgba(92, 88, 78, 0.48);
   -moz-box-shadow: 11px 10px 22px 0px rgba(148, 141, 118, 0.48);
@@ -718,16 +718,16 @@ export default {
   line-height: 28px;
   overflow: hidden;
   border-radius: 50%;
-  background: #f2709c center 100% no-repeat; /* fallback for old browsers */
+  background: #fdff8e center 100% no-repeat; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to top,
-    #ff9472,
-    #f2709c
+    #ffb672,
+    #f0f270
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to top,
-    #ff9472,
-    #f2709c
+    #ffc272,
+    #fdff8e
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .modal-footer-addCat {
@@ -737,29 +737,28 @@ export default {
 }
 .btn-addNewCat {
   float: right;
-  color: #1d2f3a;
+  color: rgb(51, 136, 248);
   font-weight: 550;
 }
 .modal-footer-regLoc {
   margin: 14px 6px 0 0px;
 }
 .btn-regLoc {
-  color: #1d2f3a;
+  color: #1b488b;
   font-weight: 550;
 }
 
 .submit-wrap {
   width: 100%;
   height: 42px;
-  padding-right: 5%;
 }
 .btn-upload {
   float: right;
   width: 142px;
   height: 42px;
   border-radius: 8px;
-  background: #3da0a9;
-  color: #113538;
+  background: #83d0fd;
+  color: #1d3e6e;
   text-align: center;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
@@ -769,7 +768,7 @@ export default {
 
   &:hover {
     color: #fff;
-    box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
+    box-shadow: 148px 0 0 0 rgba(12, 132, 230, 0.493) inset;
     // color: #1d2f3a;
     // font-weight: 550;
   }
@@ -780,9 +779,6 @@ export default {
     width: 600px;
     margin-left: calc((100vw - 600px) / 2);
     margin-right: calc((100vw - 600px) / 2);
-  }
-  #previewCanvas {
-    width: 60vw;
   }
   .selectPhoto {
     float: none;

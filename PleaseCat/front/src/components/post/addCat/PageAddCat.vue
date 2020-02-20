@@ -402,11 +402,11 @@ export default {
   height: 56px;
   position: absolute;
   top: 0px;
-  color: #1d2f3a;
+  color: #1d3e6e;
   // border-radius: 8px;
 
-  background: linear-gradient(165deg, #c2c8ff, #6bccb4, #6eaecc, #c2ffc5);
-  background-size: 600% 600%;
+  background: linear-gradient(135deg, #b1f6ff, #7aafeb, #48bdeb, #f4ff5c, #fde34d);
+  background-size: 500% 500%;
   -webkit-animation: inputBtn-Animation 10s ease infinite;
   -moz-animation: inputBtn-Animation 10s ease infinite;
   -o-animation: inputBtn-Animation 10s ease infinite;
@@ -472,7 +472,7 @@ export default {
 .basic-input-row {
   width: 100%;
   height: 56px;
-  border-bottom: solid 1px #3da0a9;
+  border-bottom: solid 1px rgba(49, 137, 209, 0.308);
 
   label {
     display: inline-block;
@@ -484,18 +484,18 @@ export default {
     height: 56px;
     line-height: 56px;
     float: right;
-    background: 0 0; //? 이게 무슨 속성일까!
+    background: 0 0;
     box-sizing: border-box;
     padding: 7px 8px 7px;
   }
   input::placeholder {
-    color: rgb(81, 138, 163);
+    color: #2d57966e;
   }
 }
 .basic-input-row-desc {
   width: 100%;
   height: 80px;
-  border-bottom: solid 1px #3da0a9;
+  border-bottom: solid 1px rgba(49, 137, 209, 0.308);
   label {
     line-height: 80px;
   }
@@ -508,14 +508,14 @@ export default {
   textarea::placeholder {
     padding: 7px 0px 7px;
     line-height: 50px;
-    color: rgb(81, 138, 163);
+    color: #2d57966e;
     // color: rgb(82, 124, 158);
   }
 }
 
 .modal-extra-input {
   // padding: 0px 0px 16px;
-  border-bottom: solid 1px #3da0a9;
+  border-bottom: solid 1px rgba(49, 137, 209, 0.308);
 }
 .btn-modal-exrta-input {
   width: 100%;
@@ -530,7 +530,7 @@ export default {
   }
   span:after {
     content: "\00bb";
-    color: #1c312c;
+    color: #1d3e6e;
     position: absolute;
     opacity: 0;
     top: 0;
@@ -567,9 +567,9 @@ export default {
     margin-top: 5px;
     padding: 0px 8px 0px;
     border-radius: 8px;
-    border: 0.5px solid rgb(108, 184, 194);
-    color: #114044;
-    background: rgba(108, 184, 194, 0.4);
+    border: 0.5px solid rgba(49, 137, 209, 0.308);
+    color: #1d3e6e;
+    // background: rgba(245, 232, 112, 0.308);
 
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -580,12 +580,12 @@ export default {
   }
   option {
     text-align: center;
-    color: #d3f4f7;
-    background: rgb(108, 184, 194);
+    color: #1d3e6e;
+    background: rgba(255, 249, 160, 0.582);
 
     &:checked,
     &:hover {
-      background: rgb(96, 163, 172);
+      background: #83d0fd;
       color: #fff;
     }
   }
@@ -599,7 +599,7 @@ export default {
     padding: 0px 8px;
   }
   input::placeholder {
-    color: rgb(81, 138, 163);
+    color: #2d57966e;
   }
 }
 
@@ -608,8 +608,8 @@ export default {
   width: 142px;
   height: 42px;
   border-radius: 8px;
-  background: #3da0a9;
-  color: #113538;
+  background: #83d0fd;
+  color: #1d3e6e;
   text-align: center;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
@@ -619,7 +619,7 @@ export default {
 
   &:hover {
     color: #fff;
-    box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
+    box-shadow: 148px 0 0 0 rgba(12, 132, 230, 0.493) inset;
     // color: #1d2f3a;
     // font-weight: 550;
   }
@@ -630,9 +630,6 @@ export default {
     width: 600px;
     margin-left: calc((100vw - 600px) / 2);
     margin-right: calc((100vw - 600px) / 2);
-  }
-  #previewCanvas {
-    width: 60vw;
   }
   .selectPhoto {
     float: none;
