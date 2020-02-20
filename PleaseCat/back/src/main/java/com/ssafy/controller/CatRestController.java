@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.model.dto.cat;
+import com.ssafy.model.dto.post;
 import com.ssafy.model.service.CatService;
 
 import io.swagger.annotations.ApiOperation;
@@ -83,4 +84,16 @@ public class CatRestController {
 		return handleSuccess("고양이 정보 수정완료");
 	}
 	
+	@ApiOperation("새로 저장하려는 고양이의 cat_no를 찾는다.")
+	@GetMapping("/findCatNo")
+	public ResponseEntity<Map<String, Object>> findNextCatNo() throws Exception{
+		return handleSuccess(catService.findNextCatNo());
+	}
+	
+	@ApiOperation("밥 시간 수정")
+	@PutMapping("/updateMealTime")
+	public ResponseEntity<Map<String, Object>> updateMealTime(@RequestBody cat Cat) throws Exception{
+		catService.updateMealTime(Cat);
+		return handleSuccess("고양이 정보 수정완료");
+	}
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.model.dao.DetailPostPageDao">
+	<select id="searchDetailPostPage" parameterType="int"
+		resultType="DetailPostPage">
+		SELECT u.user_id, u.user_image, c.comment_content,
+		TIMESTAMPDIFF(minute,
+		c.comment_time, NOW()) AS comment_time,
+		c.comment_no, u.user_no
+		FROM USER u, COMMENT c
+		WHERE u.user_no=c.user_no
+		and c.post_no=#{no}
+		ORDER BY c.comment_time DESC;
+	</select>
+	<select id="searchDetailPostInfo" parameterType="int"
+		resultType="detailPostInfo">
+		SELECT p.post_image, p.post_content, u.user_id, u.user_image, u.user_no
+		from POST p, USER u
+		WHERE p.user_no = u.user_no AND p.post_no=#{post_no};
+	</select>
+</mapper>

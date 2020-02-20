@@ -1,12 +1,17 @@
 <template>
-  <div class="login text">
+  <div class="login text page">
     <div class="title-login">
-      Login
+      로그인
     </div>
     <div class="input-wrap">
       <div class="input-row">
-        <label for="id">ID</label>
-        <input type="text" v-model="user_email " id="id" placeholder="이메일을 입력하세요." />
+        <label for="id">Email</label>
+        <input
+          type="text"
+          v-model="user_email "
+          id="id"
+          placeholder="이메일을 입력하세요."
+        />
       </div>
       <div class="input-row">
         <label for="password">비밀번호</label>
@@ -20,8 +25,13 @@
       </div>
     </div>
     <div class="btn-wrap">
-      <router-link :to="'/signUp'">가입하기</router-link>
-      <button class="btn-login" v-on:click="login">로그인</button>
+      <router-link :to="'/signUp'">
+        계정 만들기
+      </router-link>
+      <button
+        class="btn-login"
+        v-on:click="login"
+      >로그인</button>
     </div>
   </div>
 </template>
@@ -44,42 +54,17 @@ export default {
       pwChecked: false
     };
   },
-  created() {
-    },
+  created() {},
   methods: {
-    ...mapActions([
-        'postLogin',
-    ]),
+    ...mapActions(["postLogin"]),
     login() {
       // id, pw가 DB에 존재하는지 확인
       let { user_email, user_pw } = this;
       let data = {
         user_email,
-        user_pw,
+        user_pw
       };
       this.postLogin(data);
-      
-      // UserApi.requestLogin(
-      //   data,
-      //   res => {
-      //     if (res.status == 200) {
-      //       if (res.data.state == "ok") {
-      //       console.log('로그인 성공');
-      //       console.log(res);
-      //         //성공
-      //         this.$router.push("/");
-      //       } else {
-      //         //실패
-      //       }
-      //     }
-      //   },
-      //   error => {
-      //     //요청이 끝나면 버튼 활성화
-      //     // console.log("리턴")
-      //     console.log("서버 에러 입니다");
-      //     this.isSubmit = true;
-      //   }
-      // );
     }
   }
 };
@@ -87,19 +72,22 @@ export default {
 
 <style lang="scss" scoped>
 .login {
-  width: 350px;
-  margin: 0 auto;
+  position: absolute;
+  width: 75vw;
+  margin-left: 10vw;
+  margin-right: 15vw;
+  // width: 350px;
+  // margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 60px;
-  // padding-top: 100px;
   padding-top: 10px;
   padding-bottom: 125px;
 }
-.login .title-login{
+.login .title-login {
   margin-top: 60px;
   margin-bottom: 40px;
-  font-weight: bold;
-  font-size: 42px;                         
+  font-weight: 500;
+  font-size: 28px;
 }
 .login label {
   display: inline-block;
@@ -125,10 +113,12 @@ export default {
   margin-bottom: 25px;
   color: rgb(248, 51, 160);
 }
-.btn-wrap a:link {  //href 속성이 있고 아직 클릭하지 않은 a태그의 색 
+.btn-wrap a:link {
+  //href 속성이 있고 아직 클릭하지 않은 a태그의 색
   color: rgb(248, 51, 160);
 }
-.btn-wrap a:visited { //href 속성이 있고 클릭한 a태그의 색
+.btn-wrap a:visited {
+  //href 속성이 있고 클릭한 a태그의 색
   color: rgb(248, 51, 160);
 }
 .btn-wrap .btn-login {
@@ -147,5 +137,13 @@ export default {
   float: right;
   // margin-left: 80%;
   cursor: pointer;
+}
+
+@media (min-width: 600px) {
+  .login {
+    width: 400px;
+    margin-left: calc((100vw - 400px)/2);
+    margin-right: calc((100vw - 400px)/2);
+  }
 }
 </style>

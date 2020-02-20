@@ -42,7 +42,7 @@
 	<select id = "searchPost" parameterType="int" resultType="post">
     	select * from POST where post_no=#{no}
     </select>
-   
+    
     <select id = "searchPostUser" parameterType="int" resultType="post">
     	select * from POST where user_no=#{no}
     </select>
@@ -52,8 +52,17 @@
     </select>
     
     <select id = "searchAllPost" resultType="post">
-    	select * from POST 
+    	select * from POST
+    	order by post_time DESC;
     </select>
 
+	<select id = "findNextPostNo" resultType="int">
+    	select max(post_no)+1 from POST
+    </select>
     
+	<update id ="readAlarm" parameterType="int">
+		UPDATE POST 
+		SET post_unlike=#{post_unlike}
+		WHERE post_no=#{post_no};
+	</update>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.model.dao.CatDao;
 import com.ssafy.model.dto.PleaseCatException;
 import com.ssafy.model.dto.cat;
+import com.ssafy.model.dto.post;
 
 
 @Service
@@ -53,13 +54,13 @@ public class CatServiceImp implements CatService {
 				String ext =  oName.substring(oName.lastIndexOf('.')+1);
 
 				//db에 저장될 cat의 images에 값을 만들어줌 (파일 불러올 루트)
-				Cat.setCat_image("cat/"+Cat.getCat_no()+"."+ext);
+				Cat.setCat_image(dao.findNextCatNo()+"."+ext);
 
 				//저장루트 설정 (드라이브 위치부터 하나하나 잡아줘야함)
 				//String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
 
 				//저정루트뒤에 불러오는 루트를 붙여줘서 저장함
-				File dest = new File(dir+"\\"+Cat.getCat_image());
+				File dest = new File(dir+"\\cat\\"+Cat.getCat_image());
 				
 				//이미지를 우리가 만든 dest이미지로 transfer
 				catImg.transferTo(dest);
@@ -81,6 +82,18 @@ public class CatServiceImp implements CatService {
 				searchCat(Cat.getCat_no());
 				dao.updateCat(Cat);
 				System.out.println("고양이 업데이트 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException();
+		}
+	}
+	
+	//밥 시간 수정
+	public void updateMealTime(cat Cat) {
+		try {
+			searchCat(Cat.getCat_no());
+			dao.updateMealTime(Cat);
+			System.out.println("밥 시간 수정 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PleaseCatException();
@@ -111,5 +124,18 @@ public class CatServiceImp implements CatService {
 			throw new PleaseCatException("고양이 전체 목록을 불러오는데 실패했습니다.");
 		}
 	}
+	
+	//새로 저장 할 고양이의 cat_no를 구함
+	@Override
+	public int findNextCatNo() {
+		try { 
+			return dao.findNextCatNo();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException("새로 저장 할 고양이의 cat_no를 찾아오는데 실패했습니다.");
+		}
+	}
+
+
 
 }
