@@ -29,10 +29,49 @@
 
       </div>
 
-      
     </div>
 
     <div class="btn-wrap">
+
+      <div class="modal selectLoc">
+        <button
+          id="btn-show-modal-loc"
+          @click="showModalRegLocation = true"
+        >
+          <div id="lb-addLoc">위치 추가</div>
+          <div id="lb-selectedLoc">{{ post_location }}</div>
+          <div style="clear:both:"></div>
+        </button>
+
+        <modal
+          v-if="showModalRegLocation"
+          @close="showModalRegLocation = false"
+        >
+          <h3
+            slot="header"
+            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
+          >핀을 움직여 위치를 선택하세요</h3>
+
+          <div slot="footer">
+            <!-- 지도 component 추가 -->
+            <div id="mapCpnt">
+              <mapComponent v-on:selectLoc-event="receiveLoc"></mapComponent>
+            </div>
+
+          </div>
+          <div
+            slot="footer"
+            class="modal-footer-regLoc"
+          >
+            <button
+              class="btn-regLoc"
+              @click="showModalRegLocation = false"
+            > 확인</button>
+            <p></p>
+          </div>
+        </modal>
+      </div>
+
       <div class="modal selectCat">
 
         <button
@@ -81,66 +120,27 @@
           >
             <!-- <button @click="showModalSelectCat = false"> 확인</button> -->
             이 중에 고양이가 없나요?
-            <router-link :to="'/addcat'">
+            <!-- <router-link :to="'/addcat'"> -->
               <button
                 class="btn-addNewCat"
-                @click="showModalSelectCat = false"
+                @click="showModalSelectCat = false , pushAddCat()"
               > 고양이 추가</button>
               <p></p>
-            </router-link>
+            <!-- </router-link> -->
           </div>
 
-        </modal>
-      </div>
-
-      <div class="modal selectLoc">
-        <button
-          id="btn-show-modal-loc"
-          @click="showModalRegLocation = true"
-        >
-          <div id="lb-addLoc">위치 추가</div>
-          <div id="lb-selectedLoc">{{ post_location }}</div>
-          <div style="clear:both:"></div>
-        </button>
-
-        <modal
-          v-if="showModalRegLocation"
-          @close="showModalRegLocation = false"
-        >
-          <h3
-            slot="header"
-            style="margin-top:6px; color: #1d2f3a; font-weight: 550;"
-          >핀을 움직여 위치를 선택하세요</h3>
-
-          <div slot="footer">
-            <!-- 지도 component 추가 -->
-            <div id="mapCpnt">
-              <mapComponent v-on:selectLoc-event="receiveLoc"></mapComponent>
-            </div>
-
-          </div>
-          <div
-            slot="footer"
-            class="modal-footer-regLoc"
-          >
-            <button
-              class="btn-regLoc"
-              @click="showModalRegLocation = false"
-            > 확인</button>
-            <p></p>
-          </div>
         </modal>
       </div>
 
     </div>
     <div class="writingText">
-        <textarea
-          v-model="post_content"
-          wrap="hard"
-          placeholder=" 문구 입력..."
-        ></textarea>
-        <!-- <hr noshade border="0px"  size="0.5px" color="#3da0a9"> -->
-      </div>
+      <textarea
+        v-model="post_content"
+        wrap="hard"
+        placeholder=" 문구 입력..."
+      ></textarea>
+      <!-- <hr noshade border="0px"  size="0.5px" color="#3da0a9"> -->
+    </div>
 
     <div class="submit-wrap">
       <p>
@@ -386,6 +386,21 @@ export default {
       this.selectedCat = name;
       // console.log("cat_no: " + no + ", cat_name: " + name + "  선택!!")
     },
+    pushAddCat() {
+      
+      if (this.post_location == "") {
+        alert("위치를 추가하세요. 😺 \n위치를 추가하면 근처 고양이 목록을 불러옵니다.");
+        return false;
+      }
+      else {
+        this.$router.push({
+          name: 'AddCat' ,
+          params: { X: this.gpsX , Y: this.gpsY, Loc: this.post_location}
+        })
+        
+      }
+
+    },
     submit() {
       // postImage에 사진 등록
       // file 태그애 Vue 인스턴스로 접근하기 위해 $refs 속성을 사용함.
@@ -393,15 +408,15 @@ export default {
 
       // 사진, 위치, 고양이 없으면 게시글 등록 불가 => 동작 test 후 alert로 바꾸기
       if (this.postImage == null) {
-        console.log("고양이 사진 없음");
+        alert("고양이 사진이 없습니다. 😿");
         return false;
       }
       if (this.post_location == "") {
-        console.log("위치를 추가해주세요!");
+        alert("위치를 추가하세요. 😺");
         return false;
       }
       if (this.cat_no == "") {
-        console.log("고양이를 태그해주세요!");
+        alert("고양이를 태그하세요. 😺");
         return false;
       }
 
@@ -497,7 +512,7 @@ export default {
   top: 0px;
   color: #1d2f3a;
 
-  background: linear-gradient(165deg,  #c2c8ff, #6bccb4, #6eaecc, #c2ffc5);
+  background: linear-gradient(165deg, #c2c8ff, #6bccb4, #6eaecc, #c2ffc5);
   background-size: 600% 600%;
   -webkit-animation: inputBtn-Animation 10s ease infinite;
   -moz-animation: inputBtn-Animation 10s ease infinite;
@@ -554,7 +569,7 @@ export default {
   right: 0px;
   top: 0px;
   opacity: 0;
-  width:100%;
+  width: 100%;
 
   filter: alpha(opacity=0);
   -ms-filter: "alpha(opacity=0)";
@@ -580,10 +595,10 @@ export default {
   }
 }
 #btn-show-modal-cat {
-  margin-top: 1px ;
+  margin-top: -5px;
 }
 #btn-show-modal-loc {
-  margin-top: -5px ;
+  margin-top: 1px;
 }
 #btn-show-modal-cat,
 #btn-show-modal-loc {

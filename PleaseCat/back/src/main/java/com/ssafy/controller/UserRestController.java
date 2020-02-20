@@ -103,4 +103,9 @@ public class UserRestController {
 		return handleSuccess(userService.checkToken(token));
 	}
 	
+	@ApiOperation("새로 저장하려는 고양이의 user_no를 찾는다.")
+	@GetMapping("/findUserNo")
+	public ResponseEntity<Map<String, Object>> findNextUserNo() throws Exception{
+		return handleSuccess(userService.findNextUserNo());
+	}
 }

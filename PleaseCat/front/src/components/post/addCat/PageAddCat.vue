@@ -217,10 +217,11 @@ export default {
       hurt: "",
       hair_color: "",
       eye_color: "",
-
+      
+      cat_x: "",
+      cat_y: "",
       cat_location: "",
       catImg: "",
-      resizedImage: "",
 
       // uploadImage: '',
 
@@ -246,6 +247,12 @@ export default {
   },
   created() {
     this.server = this.$store.state.server;
+    this.cat_x = this.$route.params.X;
+    this.cat_y = this.$route.params.Y;
+    this.cat_location = this.$route.params.Loc;
+    console.log(this.cat_x)
+    console.log(this.cat_y)
+    console.log(this.cat_location)
   },
   methods: {
     handleClickButton() {
@@ -287,10 +294,12 @@ export default {
     },
     submit() {
       const fd = new FormData();
+      fd.append("cat_x", this.cat_x);
+      fd.append("cat_y", this.cat_y);
       fd.append("cat_location", this.cat_location);
       fd.append("catImg", this.catImg);
 
-      fd.append("cat_no", this.cat_no);
+      // fd.append("cat_no", this.cat_no);
       fd.append("cat_manager", this.getLoginInfo.user_no);
       fd.append(
         "reg_date",
@@ -322,9 +331,9 @@ export default {
         })
         .then(res => {
           console.log("200");
+          console.log(res);
           if (res.data.state == "ok") {
             console.log("cat 저장 성공");
-            console.log(res);
           } else {
             console.log("cat 등록 실패");
           }
@@ -497,7 +506,7 @@ export default {
 .btn-modal-exrta-input {
   width: 100%;
   height: 56px;
-  background: rgb(247, 255, 129);
+  // background: rgb(247, 255, 129);
   text-align: left;
   span {
     cursor: pointer;

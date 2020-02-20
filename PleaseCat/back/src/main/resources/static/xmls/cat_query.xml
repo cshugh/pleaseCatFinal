@@ -55,7 +55,7 @@
     </delete>
     
     <select id = "findNextCatNo" resultType="int">
-    	select max(cat_no)+1 from cat
+    	select max(cat_no)+1 from CAT
     </select>
     
 </mapper>

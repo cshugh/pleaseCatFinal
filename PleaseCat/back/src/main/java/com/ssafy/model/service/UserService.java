@@ -15,4 +15,5 @@ public interface UserService  {
 	public user searchUserEmail(String user_email);
 	public String login(user User);
 	public String checkToken(String token);
+	public int findNextUserNo();
 }
