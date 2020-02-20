@@ -60,6 +60,8 @@
 .modal-body {
   text-align: left;
   margin: 20px 0;
+  max-height: 50vh; 
+  overflow-y: auto;
 }
 .modal-default-button {
   float: right;

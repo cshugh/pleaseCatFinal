@@ -1,5 +1,5 @@
 <template>
-  <div class="addPost">
+  <div class="addPost page">
     <div class="title-addPost">게시글 등록</div>
 
     <div class="upload-wrap">
@@ -65,7 +65,7 @@
 
             <button
               class="btn-selectCat"
-              v-for="nc in nearCats"
+              v-for="nc in nearCatList"
               @click="tagCat(`${nc.no}`, `${nc.name}`), showModalSelectCat = false "
               :key=nc.no
             >
@@ -171,7 +171,60 @@ export default {
     InfiniteLoading
   },
   computed: {
-    ...mapGetters(["getLoginInfo"])
+    ...mapGetters(["getLoginInfo", 'getUserLoc',]),
+    ...mapGetters('storeCat',["catList"]),
+    nearCatList: function(catList) {
+            let array = [];
+
+            function deg2rad(deg) {
+                return deg * Math.PI / 180.0;
+            }
+            function rad2deg(rad) {
+                return (rad * 180 / Math.PI);
+            }
+            function distance(lat1, lon1, lat2, lon2) {
+                let theta = lon1 - lon2;
+                let dist
+                dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+                
+                dist = Math.acos(dist);
+                dist = rad2deg(dist);
+                dist = dist * 60 * 1.1515;
+                
+                dist = dist * 1609.344;
+                return (dist);
+            };
+            if(this.catList != null){
+                this.catList.forEach(cat => {
+                  console.log('고양이 계산')
+                    if(distance(this.getUserLoc.lat, this.getUserLoc.lng, cat.cat_x, cat.cat_y) < 1000){
+                        array.push({
+                            age: cat.age,
+                            cat_desc: cat.cat_desc,
+                            cat_image: cat.cat_image,
+                            cat_location: cat.cat_location,
+                            cat_manager: cat.cat_manager,
+                            cat_name: cat.cat_name,
+                            no: cat.cat_no,
+                            pos_x: cat.cat_x,
+                            pos_y: cat.cat_y,
+                            count_followers: cat.count_followers,
+                            count_likes: cat.count_likes,
+                            count_posts: cat.count_posts,
+                            eye_color: cat.eye_color,
+                            hair_color: cat.hair_color,
+                            hurt: cat.hurt,
+                            meal_time: cat.meal_time,
+                            neuter: cat.neuter,
+                            reg_date: cat.reg_date,
+                            sex: cat.sex,
+                            skin_disease: cat.skin_disease,
+                        })
+                    }
+                });
+            }
+            return array;
+        },
   },
   data() {
     return {
@@ -196,7 +249,6 @@ export default {
       gpsX: "",
       gpsY: "",
 
-      nearCats: [],
       photoGps: [],
       userGps: [],
       gps: [],
@@ -355,26 +407,26 @@ export default {
           // 지도에서 위치 선택
 
           // gps 정보 이용해 근처 고양이 목록 불러오기
-          axios
-            .get(self.$store.getters.getServer + `/api/cat/searchAll`)
-            .then(res => {
-              if (res.data.state == "ok") {
-                // clear nearCats list
-                self.nearCats = [];
-                for (var i = 0; i < res.data.data.length; i++) {
-                  self.nearCats.push({
-                    no: res.data.data[i].cat_no,
-                    name: res.data.data[i].cat_name
-                  });
-                }
-              } else {
-                console.log("cat 정보 불러오기 실패");
-              }
-            })
-            .catch(err => {
-              console.log("서버 통신 실패");
-              console.log(err);
-            });
+          // axios
+          //   .get(self.$store.getters.getServer + `/api/cat/searchAll`)
+          //   .then(res => {
+          //     if (res.data.state == "ok") {
+          //       // clear nearCats list
+          //       self.nearCats = [];
+          //       for (var i = 0; i < res.data.data.length; i++) {
+          //         self.nearCats.push({
+          //           no: res.data.data[i].cat_no,
+          //           name: res.data.data[i].cat_name
+          //         });
+          //       }
+          //     } else {
+          //       console.log("cat 정보 불러오기 실패");
+          //     }
+          //   })
+          //   .catch(err => {
+          //     console.log("서버 통신 실패");
+          //     console.log(err);
+          //   });
         });
       } else {
         console.log(`it's not a image`);
@@ -451,10 +503,10 @@ export default {
 
 <style lang="scss" scoped>
 .addPost {
-  position: absolute;
-  width: 100vw;
-  // width: 600px;
-  margin: 0 auto;
+  // position: absolute;
+  width: 60vw;
+  margin-left: 20vw;
+  margin-right: 20vw;
   margin-top: 10px;
   margin-bottom: 60px;
   // padding-top: 100px;
@@ -677,6 +729,9 @@ export default {
   height: 42px;
   padding-right: 5%;
 }
+.writingText {
+  border: 1px solid #3396F4;
+}
 .btn-upload {
   float: right;
   width: 142px;
@@ -701,8 +756,9 @@ export default {
 
 @media (min-width: 600px) {
   .addPost {
-    width: 600px;
-    margin: 0 auto;
+    width: 60vw;
+    margin-left: 20vw;
+    margin-right: 20vw;
     margin-top: 10px;
     margin-bottom: 60px;
     // padding-top: 100px;
@@ -717,6 +773,7 @@ export default {
     width: auto;
   }
   .writingText {
+    border: 1px solid #3396F4;
     float: none;
     width: auto;
   }

@@ -23,6 +23,30 @@ export default {
             호출 위치 : storeCat/getCatList
         */
         changeCatList(state, payload, rootState) {
+            
+            for(var i=0; i<payload.length; i++){
+                if(payload[i].skin_disease==1){
+                    payload[i].skin_disease="O";
+                }else if(payload[i].skin_disease==2){
+                    payload[i].skin_disease="X";
+                }else{
+                    payload[i].skin_disease="모름";
+                }
+                if(payload[i].neuter==1){
+                    payload[i].neuter="O";
+                }else if(payload[i].neuter==2){
+                    payload[i].neuter="X";
+                }else{
+                    payload[i].neuter="모름";
+                }
+                if(payload[i].hurt==1){
+                    payload[i].hurt="O";
+                }else if(payload[i].hurt==2){
+                    payload[i].hurt="X";
+                }else{  
+                    payload[i].hurt="모름";
+                }
+            }
             state.catList = payload;
             // console.log('Finally End getCatList')
         },

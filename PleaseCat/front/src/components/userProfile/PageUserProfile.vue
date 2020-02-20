@@ -1,9 +1,9 @@
 <template>
-<div id="myProfile">
+<div id="myProfile" class="page">
     <div class="emptySpace">-Navigation Bar-</div>
     <div class="profileView" >
         <div class="leftPart" v-if="(selectedUser != null)">
-            <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile">
+            <img id="userPhoto" :src='require(`@/assets/images/user/${ selectedUser.user_no }.jpg`)' alt="catProfile">
             <!-- <img id="userPhoto" :src='`/static/images/user/${ selectedUser.user_no }.jpg`' alt="catProfile"> -->
         </div>
         <div id="fakeleftPart" class="leftPart" v-if="(selectedUser === null)">
@@ -11,8 +11,8 @@
             <!-- <img id="userPhoto" :src='`/static/images/icons/user.png`' alt="catProfile"> -->
         </div>
         <section id="rightPart">
-            <div class="name" v-if="(selectedUser != null)"><h1 id="userName" class="text">{{ selectedUser.user_id }}</h1></div>
-            <div id="fakename" class="name" v-if="(selectedUser === null)"><h1 id="userName" class="text">사용자</h1></div>
+            <div class="name" v-if="(selectedUser != null)"><h1 id="userName">{{ selectedUser.user_id }}</h1></div>
+            <div id="fakename" class="name" v-if="(selectedUser === null)"><h1 id="userName">사용자</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text" v-if="(selectedUser != null)">
                     <button v-if="!followed" @click="postAddFollow(selectedUser.user_no)">팔로우</button>
@@ -32,7 +32,7 @@
                     <div class="followerList" v-for="(f, idx) in selectedUserFollowedList" :key="idx">
                         <span @click="showModalFollower = false; no = f.user_no">
                         <router-link :to="`/userProfile/${ f.user_no }`">
-                            <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto">
                             <span id="followerName">{{ f.user_id }}</span>
                         </router-link>
                         </span>
@@ -51,7 +51,7 @@
                     <div class="followerList" v-for="(f, idx) in selectedUserFollowerList" :key="idx">
                         <span @click="showModalFollowingUser = false; no = f.user_no">
                             <router-link :to="`/userProfile/${ f.user_no }`">
-                                <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                                <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto">
                                 <span id="followerName">{{ f.user_id }}</span>
                             </router-link>
                         </span>
@@ -214,10 +214,11 @@ export default {
     width: 90vw;
     height: 36vw;
     vertical-align: middle;
-    text-align: center;
-    background-color: #F2E6E1;
+    text-align: left;
+    background-color: rgb(51, 170, 244);
     border-radius: 10px;
-    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
+    box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
+    color: white;
     // border: 2px solid red;
     img {
         width: 100%;
@@ -298,7 +299,7 @@ export default {
             box-sizing: border-box;
             margin: 0.5vw;
             border-radius: 1vw;
-            box-shadow: 1px 1px 5px 1px black;
+            box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;

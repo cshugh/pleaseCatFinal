@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-content>
+    <v-content id="content">
       <!-- <HelloWorld/> -->
       <NavigationBar/>
       <transition :name="transitionName">
@@ -20,11 +20,13 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   name: 'App',
   data: () => ({
-      transitionName: 'slide-left'
+      transitionName: 'slide-left',
+      title: '뉴스피드'
   }),
   watch: {
     '$route' (to, from) {
-      console.log(to.matched[0].props.default)
+      this.title = to.matched[0].name;
+      console.log(to.matched[0])
       console.log(from.matched[0].props.default)
       const toDepth = to.matched[0].props.default
       const fromDepth = from.matched[0].props.default
@@ -82,32 +84,39 @@ export default {
 
 * {
     font-family: "Noto Sans KR", sans-serif;
-    background: linear-gradient(to bottom,rgb(238, 255, 252),rgb(147, 205, 213), #61B1AE);
-    // background: #DCE3E7;
-    // background: #A2B0B2;
 };
+#content{
+  background: snow;
+}
+.page {
+  background: snow;
+  // background: linear-gradient(to bottom,rgb(238, 255, 252),rgb(147, 205, 213), #61B1AE);
+  // background-image: url('https://www.10wallpaper.com/wallpaper/1366x768/1701/Sky_space_milky_stars-Space_High_Quality_Wallpaper_1366x768.jpg');
+  // min-height: 100vh;
+  background-clip: border-box;
+}
 .child-view {
   position: absolute;
   transition: all .5s cubic-bezier(.3,0,.3,1);
 }
 .slide-left-enter, .slide-right-leave-active {
   opacity: 0;
-  -webkit-transform: translate(120vw, 0);
-  transform: translate(120vw, 0);
+  -webkit-transform: translate(100vw, 0);
+  transform: translate(100vw, 0);
 }
 .slide-left-leave-active, .slide-right-enter {
   opacity: 0;
-  -webkit-transform: translate(-120vw, 0);
-  transform: translate(-120vw, 0);
+  -webkit-transform: translate(-100vw, 0);
+  transform: translate(-100vw, 0);
 }
 .slide-down-leave-active, .slide-up-enter {
   opacity: 0;
-  -webkit-transform: translate(0, -120vw);
-  transform: translate(0, -120vw);
+  -webkit-transform: translate(0, -100vh);
+  transform: translate(0, -100vh);
 }
 .slide-up-leave-active, .slide-down-enter {
   opacity: 0;
-  -webkit-transform: translate(0, 120vw);
-  transform: translate(0, 120vw);
+  -webkit-transform: translate(0, 100vh);
+  transform: translate(0, 100vh);
 }
 </style>
