@@ -72,7 +72,7 @@
               <router-link :to="`/detailPost/${post.post_no}`" >
                 <button class="btnSize3">
                   <!-- <img :src="require('../../assets/images/icons/png.png')" class="HRSize" /> -->
-                  <img :src="'/static/images/icons/png.png'" class="HRSize" />
+                  <img :src="'/static/images/icon/png.png'" class="HRSize" />
                 </button>
               </router-link>
             </div>
