@@ -57,6 +57,7 @@ import 'vue-material/dist/theme/default.css'
 
 export default {
     created() {
+        this.getCatList();
     },
     data() {
         return {
