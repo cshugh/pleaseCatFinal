@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="btn-wrap">
-      <router-link :to="'/signUp'">
+      <router-link class="btn-pushSignUp" :to="'/signUp'">
         계정 만들기
       </router-link>
       <button
@@ -76,8 +76,6 @@ export default {
   width: 75vw;
   margin-left: 10vw;
   margin-right: 15vw;
-  // width: 350px;
-  // margin: 0 auto;
   margin-top: 10px;
   margin-bottom: 60px;
   padding-top: 10px;
@@ -89,54 +87,67 @@ export default {
   font-weight: 500;
   font-size: 28px;
 }
-.login label {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: 5px;
-  font-weight: 700;
-}
-.login input {
-  width: 100%;
-  background: 0 0; //? 이게 무슨 속성일까!
-  border: 1px solid rgb(250, 206, 231);
-  border-radius: 6px;
-  box-sizing: border-box;
-  color: rgb(248, 44, 163);
-  font-size: 14px;
-  padding: 7px 8px 7px;
-}
-.input-wrap .input-row {
-  margin-bottom: 25px;
-}
 
+.input-wrap {
+  padding-bottom: 16px;
+}
+.input-row {
+  width: 100%;
+  height: 56px;
+  border-bottom: solid 1px rgba(49, 137, 209, 0.308);
+
+  label {
+    display: inline-block;
+    line-height: 56px;
+    max-width: 100%;
+  }
+  input {
+    width: 78%;
+    height: 56px;
+    line-height: 56px;
+    float: right;
+    background: 0 0; //? 이게 무슨 속성일까!
+    box-sizing: border-box;
+    padding: 7px 8px 7px;
+  }
+  input::placeholder {
+    color: #2d57966e;
+  }
+}
 .btn-wrap {
+  height: 42px;
+  line-height: 42px;
   margin-bottom: 25px;
-  color: rgb(248, 51, 160);
+  color: rgb(51, 136, 248);
 }
 .btn-wrap a:link {
   //href 속성이 있고 아직 클릭하지 않은 a태그의 색
-  color: rgb(248, 51, 160);
+  color: rgb(51, 136, 248);
 }
 .btn-wrap a:visited {
   //href 속성이 있고 클릭한 a태그의 색
-  color: rgb(248, 51, 160);
+  color: rgb(51, 136, 248);
 }
-.btn-wrap .btn-login {
-  background: rgb(248, 51, 160);
-  border-color: rgb(248, 51, 160);
-  color: #fff;
-  border-radius: 6px;
-  border-style: solid;
-  border-width: 1px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 28px;
-  outline: none;
-  width: 40%;
-  padding: 0%;
+.btn-login {
   float: right;
-  // margin-left: 80%;
-  cursor: pointer;
+  width: 142px;
+  height: 42px;
+  border-radius: 8px;
+  background: #83d0fd;
+  color: #1d3e6e;
+  text-align: center;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  transition: all 0.3s;
+
+  &:hover {
+    color: #fff;
+    box-shadow: 148px 0 0 0 rgba(12, 132, 230, 0.493) inset;
+    // color: #1d2f3a;
+    // font-weight: 550;
+  }
 }
 
 @media (min-width: 600px) {
