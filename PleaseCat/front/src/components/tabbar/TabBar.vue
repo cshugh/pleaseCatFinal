@@ -38,7 +38,7 @@ export default {
       tabs: 5,
 
       tabs: [
-        { id: 1, name: "NewsFeed",  route: `/`,           icon: "home"      ,title: "뉴스피드"},
+        { id: 1, name: "NewsFeed",  route: `/newsfeed`,           icon: "home"      ,title: "뉴스피드"},
         { id: 2, name: "Location",  route: `/catList`,    icon: "near_me"   ,title: "내 근처"},
         { id: 3, name: "AddPost",   route: `/addpost`,    icon: "add_box"   ,title: "글 추가"},
         { id: 4, name: "DashBoard", route: `/dashboard`,  icon: "dashboard" ,title: "대시보드"},

@@ -20,8 +20,8 @@ export default new Vuex.Store({
         storeDetailPost: moduleDetailPost,
     },
     state: {
-        // server: 'http://localhost:8080',
-        server: 'http://70.12.246.120:8080/',
+        server: 'http://localhost:8080',
+        // server: 'http://70.12.246.120:8080/',
         // server: 'http://13.124.251.3:8080',
         token: '',
         loginInfo: null,    // 로그인 회원 정보
@@ -82,7 +82,7 @@ export default new Vuex.Store({
                     let token = res.data.data;
                     localStorage.setItem('savedToken', token);
                     dispatch('checkToken');
-                    router.push("/");
+                    router.push("/newsfeed");
                 })
                 .catch(err => {
                     // handle error
@@ -101,6 +101,9 @@ export default new Vuex.Store({
                   })
                 .then((res) => {
                     console.log(res);
+                    if(res.data.state === 'fail'){
+                        router.push('/signUp');
+                    }
                 })
                 .catch((err) => {
                     console.error(err);

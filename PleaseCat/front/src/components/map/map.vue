@@ -10,8 +10,6 @@ import router from '@/router/index';
 export default {
     props: ['pos', 'curLoca', 'range'],
     /* 
-        txt: 지도상 위치 클릭 시 이동할 url (ex, catProfile)
-            => this.url
         pos: 지도상에 표시 할 좌표 배열 [{pos_x,pos_y}, {pos_x,pos_y}, ...]
             => this.positions
         curLoca: 현재 User 위치
@@ -71,7 +69,8 @@ export default {
             // var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
             var markerImages = [];
             for (var i = 0; i < positions.length; i ++) {
-                var imageSrc = require(`@/assets/images/cats/_profile/${positions[i].no}.jpg`), // 마커이미지의 주소입니다    
+                // var imageSrc = require(`@/assets/images/cat/${positions[i].cat_image}`), // 마커이미지의 주소입니다    
+                var imageSrc = `/static/images/cat/${positions[i].cat_image}`, // 마커이미지의 주소입니다    
                 imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
                 imageOption = {offset: new kakao.maps.Point(30, 30)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
                 

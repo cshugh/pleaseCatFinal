@@ -17,7 +17,8 @@
             <div class="top" id="profileDiv">
               <router-link :to="`/catProfile/${post.cat_no}`">
                 <button id="profileButton">
-                  <img :src="require(`../../assets/images/cat/${post.cat_image}`)" id="profile" />
+                  <!-- <img :src="require(`../../assets/images/cat/${post.cat_image}`)" id="profile" /> -->
+                  <img :src="`/static/images/cat/${post.cat_image}`" id="profile" />
                 </button>
               </router-link>
             </div>
@@ -25,7 +26,8 @@
             <div id="time">{{post.post_time}}</div>
           </div>
           <div id="content">
-            <img :src="require(`../../assets/images/post/${post.post_image}`)" id="img" />
+            <!-- <img :src="require(`../../assets/images/post/${post.post_image}`)" id="img" /> -->
+            <img :src="`/static/images/post/${post.post_image}`" id="img" />
           </div>
           <div id="likeWrapper" class="opacityDiv">
             <div v-if="post.like === true" class="HR" id="likeDisabled">
@@ -33,7 +35,8 @@
                 v-on:click="likeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
                 class="btnSize2"
               >
-                <img :src="require('../../assets/images/icons/868700.png')" class="HRSize" />
+                <!-- <img :src="require('../../assets/images/icons/868700.png')" class="HRSize" /> -->
+                <img :src="'/static/images/icon/868700.png'" class="HRSize" />
               </button>
             </div>
             <div v-if="post.like === false" class="HR" id="likeActivation">
@@ -41,7 +44,8 @@
                 v-on:click="likeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
                 class="btnSize2"
               >
-                <img :src="require('../../assets/images/icons/868598.png')" class="HRSize" />
+                <!-- <img :src="require('../../assets/images/icons/868598.png')" class="HRSize" /> -->
+                <img :src="'/static/images/icon/868598.png'" class="HRSize" />
               </button>
             </div>
             <div class="likeClass">{{post.post_like}}개</div>
@@ -50,10 +54,8 @@
                 v-on:click="unLikeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
                 class="btnSize"
               >
-                <img
-                  :src="require('../../assets/images/icons/broken-heart (1).png')"
-                  class="HRSize"
-                />
+                <!-- <img :src="require('../../assets/images/icons/broken-heart_1.png')" class="HRSize" /> -->
+                <img :src="'/static/images/icon/broken-heart_1.png'" class="HRSize" />
               </button>
             </div>
             <div v-if="post.unlike === false" class="HR">
@@ -61,17 +63,16 @@
                 v-on:click="unLikeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
                 class="btnSize"
               >
-                <img
-                  :src="require('../../assets/images/icons/broken-heart (2).png')"
-                  class="HRSize"
-                />
+                <!-- <img :src="require('../../assets/images/icons/broken-heart_2.png')" class="HRSize" /> -->
+                <img :src="'/static/images/icon/broken-heart_2.png'" class="HRSize" />
               </button>
             </div>
             <div id="unlike">{{post.post_unlike}}개</div>
             <div class="HR" id="commentDiv">
               <router-link :to="`/detailPost/${post.post_no}`" >
                 <button class="btnSize3">
-                  <img :src="require('../../assets/images/icons/png.png')" class="HRSize" />
+                  <!-- <img :src="require('../../assets/images/icons/png.png')" class="HRSize" /> -->
+                  <img :src="'/static/images/icon/png.png'" class="HRSize" />
                 </button>
               </router-link>
             </div>
@@ -82,7 +83,8 @@
           <div id="contentDiv" class="opacityDiv">
             <router-link :to="`/userProfile/${post.user_no}`">
               <button id="userButton">
-                <img :src="require(`../../assets/images/user/${post.user_image}`)" id="user_image" />
+                <!-- <img :src="require(`../../assets/images/user/${post.user_image}`)" id="user_image" /> -->
+                <img :src="`/static/images/user/${post.user_image}`" id="user_image" />
               </button>
             </router-link>
             <div id="userId">{{post.user_id}} </div>

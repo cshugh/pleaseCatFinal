@@ -5,7 +5,7 @@
     <div id="line2nd">
       <span id="greeting" v-if="getIsLogin">{{ this.$store.getters.getLoginInfo.user_id }} 님 환영합니다.</span>
       <span>
-            <button v-if="!getIsLogin" v-on:click="refresh"><router-link to="/login">로그인</router-link></button>
+            <button v-if="!getIsLogin" v-on:click="refresh"><router-link to="/">로그인</router-link></button>
             <button v-if="getIsLogin" v-on:click="logout">로그아웃</button>
       </span>
     </div>

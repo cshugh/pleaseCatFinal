@@ -3,12 +3,12 @@
     <div class="emptySpace">-Navigation Bar-</div>
     <div class="profileView">
         <div class="leftPart" v-if="(selectedCat != null)">
-            <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile">
-            <!-- <img id="catPhoto" :src='`/static/images/cat/${ selectedCat.cat_no }.jpg`' alt="catProfile"> -->
+            <!-- <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile"> -->
+            <img id="catPhoto" :src='`/static/images/cat/${ selectedCat.cat_no }.jpg`' alt="catProfile">
         </div>
         <div id="fakeleftPart" class="leftPart" v-if="(selectedCat === null)">
-            <img id="catPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
-            <!-- <img id="catPhoto" src='/static/images/icon/user.png' alt="catProfile"> -->
+            <!-- <img id="catPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile"> -->
+            <img id="catPhoto" src='/static/images/icon/user.png' alt="catProfile">
         </div>
         <section id="rightPart">
             <div id="name" v-if="(selectedCat != null)"><h1 id="catName" class="text">{{ selectedCat.cat_name }}</h1></div>
@@ -34,7 +34,8 @@
                 <div slot="body">
                     <div class="followerList" v-for="(f, idx) in selectedCatFollowerList" :key="idx">
                         <router-link :to="`/userProfile/${ f.user_no }`">
-                            <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <!-- <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto"> -->
+                            <img id="followerPhoto" :src='`/static/images/user/${ f.user_image }`' alt="followerPhoto">
                             <span id="followerName">{{ f.user_id }}</span>
                         </router-link>
                     </div>
@@ -49,8 +50,8 @@
         <div id="photoList">
             <span v-for="(post, idx) in catPosts" :key="idx">
                 <router-link :to="`/detailPost/${post.post_no}`">
-                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
-                    <!-- <span class="photo" :style="{'background-image' : url(`/static/images/post/${ post.post_image }`)}"  :alt='`${ post.post_image }`'> -->
+                    <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> -->
+                    <span class="photo" :style="{'background-image' : `url('/static/images/post/${ post.post_image }')`}"  :alt='`${ post.post_image }`'>
                     </span>
                 </router-link>
             </span>
@@ -98,18 +99,21 @@ export default {
             var result = false;
             this.myFollowingCatList.forEach(el => {
                 if(el.cat_no == cno){
-                    return result = true;
+                    result = true;
                 }
             });
             return result;
         },
     },
     methods: {
+        ...mapMutations('storeCat',[
+            'clearSelectedCat',
+        ]),
         ...mapMutations('storePost',[
             'clearCatPosts',
         ]),
         ...mapActions('storeCat',[
-            'getSelectedCat',  'getCatFollowerList', 'postAddFollow', 'deleteFollow', 'clearSelectedCat', 'getCatList',
+            'getSelectedCat',  'getCatFollowerList', 'postAddFollow', 'deleteFollow',
         ]),
         ...mapActions('storePost',[
             'getCatPosts',
