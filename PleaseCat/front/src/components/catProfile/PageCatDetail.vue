@@ -1,18 +1,18 @@
 <template>
-  <div id="catProfile" class="page" v-if="selectedCat">
+  <div id="catProfile" class="page" v-if="catDetail">
     <div id="photoView">
       <div id="cat">
         고양이
-        <router-link :to="`/catProfile/${selectedCat.cat_no}`">
+        <router-link :to="`/catProfile/${catDetail.cat_no}`">
           <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
           <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
           <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
           <img
             id="catPhoto"
-            :src="require(`../../assets/images/cats/_profile/${selectedCat.cat_no}.jpg`)"
+            :src="require(`../../assets/images/cats/_profile/${catDetail.cat_no}.jpg`)"
             alt
           />
-          <h1 id="catName" class="text">{{selectedCat.cat_name}}</h1>
+          <h1 id="catName" class="text">{{catDetail.cat_name}}</h1>
         </router-link>
       </div>
       <div id="man" v-if="catManager">
@@ -29,21 +29,21 @@
       </div>
     </div>
     <div id="descView" class="text">
-      나이: {{selectedCat.age}}
+      나이: {{catDetail.age}}
       <br />
-      털색: {{selectedCat.hair_color}}
+      털색: {{catDetail.hair_color}}
       <br />
-      눈색: {{selectedCat.eye_color}}
+      눈색: {{catDetail.eye_color}}
       <br />
-      중성화: {{selectedCat.neuter}}
+      중성화: {{catDetail.neuter}}
       <br />
-      피부병: {{selectedCat.skin_disease}}
+      피부병: {{catDetail.skin_disease}}
       <br />
-      다친곳: {{selectedCat.hurt}}
+      다친곳: {{catDetail.hurt}}
       <br />
-      마지막 밥 먹은 시간: {{selectedCat.meal_time}}
+      마지막 밥 먹은 시간: {{catDetail.meal_time}}
       <span id="updateTime">
-        <button v-onclick="catBob()">
+        <button v-on:click="catBob()">
           <img id="catBobImg" :src="require(`../../assets/images/icons/catBob.png`)" />
         </button>
       </span>
@@ -84,6 +84,9 @@ export default {
   created() {
     this.no = this.$route.params.cat_no;
     this.getRankList({ cat_no: this.no });
+    this.getSelectedCat(this.no);
+    this.getCatList();
+    this.getCatDetail(this.no);
   },
   data() {
     return {
@@ -91,16 +94,19 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("storeCat", ["catList"]),
+    ...mapGetters("storeCat", [
+      "selectedCat",
+      "selectedCatFollowerList",
+      "catList",
+      "catDetail"
+    ]),
+    ...mapGetters("storePost", ["catPosts"]),
     ...mapGetters("storeUser", ["userList"]),
     ...mapGetters("storePost", ["postList"]),
     ...mapGetters("storeUser/storeRank", ["rankList"]),
-    selectedCat: function() {
-      return this.catList[this.no - 1];
-    },
     catManager: function() {
       if (this.selectedCat != null) {
-        return this.userList[this.selectedCat.cat_manager - 1];
+        return this.userList[this.catDetail.cat_manager - 1];
       } else {
         return null;
       }
@@ -127,9 +133,18 @@ export default {
   },
   methods: {
     catBob() {
-      console.log("누름");
+      if (confirm("밥 시간을 업데이트 하시겠습니까?😽")) {
+        this.getSetMealTime(this.catDetail.cat_no);
+      }
     },
-    ...mapActions("storeUser/storeRank", ["getRankList"])
+    ...mapActions("storeUser/storeRank", ["getRankList"]),
+    ...mapActions("storeCat", [
+      "getSetMealTime",
+      "getCatList",
+      "getSelectedCat",
+      "clearSelectedCat",
+      "getCatDetail",
+    ])
   }
 };
 </script>

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.model.dao.CatDao;
 import com.ssafy.model.dto.PleaseCatException;
 import com.ssafy.model.dto.cat;
+import com.ssafy.model.dto.post;
 
 
 @Service
@@ -86,6 +87,18 @@ public class CatServiceImp implements CatService {
 			throw new PleaseCatException();
 		}
 	}
+	
+	//밥 시간 수정
+	public void updateMealTime(cat Cat) {
+		try {
+			searchCat(Cat.getCat_no());
+			dao.updateMealTime(Cat);
+			System.out.println("밥 시간 수정 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException();
+		}
+	}
 
 
 	//고양이 정보 삭제
@@ -122,5 +135,7 @@ public class CatServiceImp implements CatService {
 			throw new PleaseCatException("새로 저장 할 고양이의 cat_no를 찾아오는데 실패했습니다.");
 		}
 	}
+
+
 
 }
