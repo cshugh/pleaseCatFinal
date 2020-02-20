@@ -107,7 +107,7 @@
                 <!-- <img
                   class="btn-circle"
                   :src='`/static/images/cat/${ nc.no }.jpg`'
-                />
+                /> !-->
               </div>
               <p style="margin-top:4px">{{ nc.cat_name }}</p>
             </button>
