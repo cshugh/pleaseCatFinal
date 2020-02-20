@@ -1,4 +1,4 @@
-# catvue
+# catfront
 
 > A Vue.js project
 

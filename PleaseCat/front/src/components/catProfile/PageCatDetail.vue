@@ -7,16 +7,17 @@
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
             <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
-            <img id="catPhoto" :src='require(`../../assets/images/cats/_profile/${selectedCat.cat_no}.jpg`)' alt="">
+            <!-- <img id="catPhoto" :src='require(`../../assets/images/cats/_profile/${selectedCat.cat_no}.jpg`)' alt=""> -->
+            <img id="catPhoto" :src='`/static/images/cat/${selectedCat.cat_no}.jpg`' alt="">
             <h1 id="catName" class="text">{{selectedCat.cat_name}}</h1>
             </router-link>
         </div>
         <div id="man" v-if="catManager">
             매니저
             <router-link :to="`/userProfile/${this.rankList[0].user_no}`">
-            <!-- <img id="manPhoto" src="../../assets/images/man/1.jpg" alt="" > -->
-            <img id="manPhoto" :src='require(`../../assets/images/man/${this.rankList[0].user_no}.jpg`)' alt="">
-            <h1 id="manName" class="text">{{this.rankList[0].user_id}}</h1>
+            <!-- <img id="manPhoto" :src='require(`../../assets/images/man/${catManager.user_no}.jpg`)' alt=""> -->
+                <img id="manPhoto" :src='`/static/images/user/${this.rankList[0].user_no}.jpg`' alt="">
+                <h1 id="manName" class="text">{{catManager.user_id}}</h1>
             </router-link>
         </div>
     </div>
@@ -33,7 +34,9 @@
         <mapComponent v-if="postList" :pos="positions" />
     </div>
     <div id="rankView" v-if="rankList">
-        <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div>
+        <!-- <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div> -->
+        <!-- <div id="rankIcon" class="circle" :style="{'background-image' : `url('@/assets/images/icons/rankIcon.jpg')`}" alt="rank"></div> -->
+        <div id="rankIcon" class="circle" :style="{'background-image' : `url('/static/images/icon/rankIcon.jpg')`}" alt="rank"></div>
         <RankComponent v-for="(rank, idx) in rankList" :key="idx" :ranking="idx+1" :user_no="rank.user_no" :score='rank.rank_point' :name="rank.user_id"/>
         <!-- <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
         <RankComponent :ranking='2' :name="'김집사'" :user_no='3' :score='97'/>
@@ -52,6 +55,7 @@ export default {
     name: 'catProfile',
     created() {
         this.no = this.$route.params.cat_no;
+        this.getSelectedCat(this.no);
         this.getRankList({cat_no: this.no});
     },
     data(){
@@ -61,7 +65,7 @@ export default {
     },
     computed:{
         ...mapGetters('storeCat',[
-            'catList',
+            'catList', 'selectedCat',
         ]),
         ...mapGetters('storeUser',[
             'userList',
@@ -72,9 +76,6 @@ export default {
         ...mapGetters('storeUser/storeRank',[
             'rankList',
         ]),
-        selectedCat: function() {
-            return this.catList[this.no - 1];
-        },
         catManager: function() {
             if(this.selectedCat != null){
                 return this.userList[this.selectedCat.cat_manager-1];
@@ -89,6 +90,7 @@ export default {
                     if(post.cat_no == this.no){
                         array.push({
                             no: post.post_no,
+                            image: post.post_image,
                             pos_x: post.post_x,
                             pos_y: post.post_y,
                         })

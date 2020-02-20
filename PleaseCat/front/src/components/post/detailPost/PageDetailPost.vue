@@ -8,12 +8,14 @@
     <div id="paddingTop"></div>
     <div id="wrapper" class="in">
       <div v-if="this.detailPostInfo.post_image" id="content">
-        <img :src="require(`../../../assets/images/posts/${this.detailPostInfo.post_image}`)" id="img" />
+        <!-- <img :src="require(`../../../assets/images/posts/${this.detailPostInfo.post_image}`)" id="img" /> -->
+        <img :src="`/static/images/post/${this.post_image}`" id="img" />
       </div>
       <div v-if="this.detailPostInfo.user_image" id="userDiv">
          <router-link :to="`/userProfile/${this.detailPostInfo.user_no}`">
               <button id="userButton">
-        <img :src="require(`../../../assets/images/user/${this.detailPostInfo.user_image}`)" id="user_image" />
+        <!-- <img :src="require(`../../../assets/images/user/${this.detailPostInfo.user_image}`)" id="user_image" /> -->
+        <img :src="`/static/images/user/${this.detailPostInfo.user_image}`" id="user_image" />
               </button>
          </router-link>
         <div id="user_id">{{this.detailPostInfo.user_id}}</div>
@@ -32,7 +34,8 @@
             <div class="comment left" id="profileDiv">
                 <router-link :to="`/userProfile/${list.user_no}`">
               <button id="profileButton" class="left">
-                <img :src="require(`../../../assets/images/user/${list.user_image}`)" id="profile" />
+                <!-- <img :src="require(`../../../assets/images/user/${list.user_image}`)" id="profile" /> -->
+                <img :src="`/static/images/post/${list.user_image}`" id="profile" />
               </button>
               </router-link>
             </div>
@@ -50,7 +53,8 @@
     </div>
     <div class="in" id="inputComment">
       <div id="commentleft1">
-        <img :src="require(`../../../assets/images/icons/icon.png`)" id="sendIcon" />
+        <!-- <img :src="require(`../../../assets/images/icons/icon.png`)" id="sendIcon" /> -->
+        <img :src="`/static/images/icon/icon.png`" id="sendIcon" />
       </div>
       <div>
         <input
@@ -61,7 +65,8 @@
         />
       </div>
       <button id="commentright" v-on:click="inputComment()">
-        <img :src="require(`../../../assets/images/icons/icon (1).png`)" id="checkIcon" />
+        <!-- <img :src="require(`../../../assets/images/icons/icon_1.png`)" id="checkIcon" /> -->
+        <img :src="`/static/images/icon/icon_1.png`" id="checkIcon" />
       </button>
     </div>
     <div id="bottomDiv"></div>

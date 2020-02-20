@@ -41,7 +41,7 @@
                 v-on:enter="enter"
                 v-on:leave="leave"
             >
-                <CatCardComponent v-for="cat in nearCatList" :key=cat.no :name=cat.cat_name :desc1="cat.sex==='남'?'♂':'♀'" :desc2=cat.cat_location :src=cat.no  />
+                <CatCardComponent v-for="cat in nearCatList" :key=cat.no :name=cat.cat_name :desc1="cat.sex==null?'?':(cat.sex==='남'?'♂':'♀')" :desc2=cat.cat_location :src=cat.no  />
             </transition-group>
         </div>
     </div>
