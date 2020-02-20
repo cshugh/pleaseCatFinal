@@ -32,4 +32,9 @@
     	AND post_no=#{post_no:INTEGER}
     </delete>
     
+    <update id ="readAlarm" parameterType="int">
+		UPDATE LIKES 
+		SET chk=1
+		WHERE post_no=#{post_no};
+	</update>
 </mapper>

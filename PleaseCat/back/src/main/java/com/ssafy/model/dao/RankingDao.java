@@ -16,4 +16,5 @@ public interface RankingDao {
 	public void insertRanking(HashMap<String, Object> map);
 	public void updateRanking(HashMap<String, Object> map);
 	public void deleteRanking(HashMap<String, Object> map);
+	public ranking searchMyRank(int cat_no, int user_no);
 }

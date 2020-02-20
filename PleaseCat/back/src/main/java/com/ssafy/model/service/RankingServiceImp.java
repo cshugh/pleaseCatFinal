@@ -56,6 +56,22 @@ public class RankingServiceImp implements RankingService {
 			throw new PleaseCatException("rank 탐색중 오류");
 		}
 	}
+	
+	//cat_no, user_no로 회원목록 출력
+	@Override
+	public ranking searchMyRank(int cat_no, int user_no) {
+		try {
+			ranking rank = rankDao.searchMyRank(cat_no, user_no);
+			if(rank==null) {
+				throw new PleaseCatException("고양이 점수를 가진 회원들이 없음");
+			}else {
+				return rank;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException("rank 탐색중 오류");
+		}
+	}
 
 	//new rank 추가
 	@Override
