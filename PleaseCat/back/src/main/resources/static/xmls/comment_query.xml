@@ -36,4 +36,10 @@
     	update COMMENT set comment_content=#{comment_content} 
     	where comment_no=#{comment_no}
     </update>
+    
+    <update id ="readAlarm" parameterType="int">
+		UPDATE COMMENT 
+		SET chk=1
+		WHERE post_no=#{post_no};
+	</update>
 </mapper>

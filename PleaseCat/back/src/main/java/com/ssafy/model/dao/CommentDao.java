@@ -17,4 +17,5 @@ public interface CommentDao {
 	public void insertComment(HashMap<String, Object> map);
 	public void updateComment(comment comment);
 	public void deleteComment(int no);
+	public void readAlarm(int post_no);
 }

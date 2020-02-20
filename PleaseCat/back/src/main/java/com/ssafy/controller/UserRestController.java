@@ -108,4 +108,16 @@ public class UserRestController {
 	public ResponseEntity<Map<String, Object>> findNextUserNo() throws Exception{
 		return handleSuccess(userService.findNextUserNo());
 	}
+	
+	@ApiOperation("새로운 알림 사항을 확인한다.")
+	@GetMapping("/searchAlarm")
+	public ResponseEntity<Map<String, Object>> searchAlarm(@RequestParam int user_no) throws Exception{
+		return handleSuccess(userService.searchAlarm(user_no));
+	}
+	
+	@ApiOperation("새로운 알림 사항을 확인한다.")
+	@GetMapping("/readAlarm")
+	public ResponseEntity<Map<String, Object>> readAlarm(@RequestParam int post_no) throws Exception{
+		return handleSuccess(userService.readAlarm(post_no));
+	}	
 }

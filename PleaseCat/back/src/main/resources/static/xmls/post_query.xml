@@ -60,4 +60,9 @@
     	select max(post_no)+1 from post
     </select>
     
+	<update id ="readAlarm" parameterType="int">
+		UPDATE POST 
+		SET post_unlike=#{post_unlike}
+		WHERE post_no=#{post_no};
+	</update>
 </mapper>
