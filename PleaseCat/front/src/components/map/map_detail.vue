@@ -1,6 +1,6 @@
 <template>
 <div id="mapSection">
-    <div>{{ dist }}</div>
+    <div v-show="false">{{ dist }}</div>
     <div id="map"></div>
 </div>
 </template>

@@ -223,5 +223,44 @@ export default {
         myFollowingCatList: state => {
             return state.myFollowingCatList;
         },
+
+        userSexArray:state => {
+            let maleCnt = 0,
+                femaleCnt = 0;
+
+            state.userList.forEach(userData => {
+                if( userData.sex ==="남") {
+                    maleCnt += 1;
+                } else if (userData.sex ==="여") {
+                    femaleCnt += 1;
+                }
+            });
+            return [maleCnt,femaleCnt]
+        },
+        userAgeArray:state => {
+            let age0 = 0,
+                age10 = 0,
+                age20 = 0,
+                age30 = 0,
+                age40 = 0,
+                age50up = 0;
+
+            state.userList.forEach(userData => {
+                if( userData.age < 10 ){
+                    age0 += 1;
+                }else if ( userData.age < 20 ){
+                    age10 += 1;
+                }else if ( userData.age < 30 ){
+                    age20 += 1;
+                }else if ( userData.age < 40 ){
+                    age30 += 1;
+                }else if ( userData.age < 50 ){
+                    age40 += 1;
+                }else {
+                    age50up += 1;
+                }
+            })
+            return [age0, age10, age20, age30, age40, age50up]
+        },
     }
 };

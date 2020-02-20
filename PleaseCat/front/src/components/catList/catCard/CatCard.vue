@@ -47,10 +47,8 @@ export default {
 .card-box {
     display: inline-block;
     position: relative;
-    margin: 10px;
-    // width: 43vw;
     @media screen and (max-width: 500px) {
-        width: 90%;
+        width: 90vw;
         height: 43vw;
     }
     width: 43vw;
@@ -78,8 +76,8 @@ export default {
         left: 20PX;
     }
     .desc1{
-        top: 20PX;
-        right: 20PX;
+        bottom: 20PX;
+        left: 20PX;
     }
     .desc2{
         bottom: 20PX;
@@ -87,13 +85,18 @@ export default {
     }
     .card {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        width: 41vw;
+        height: 41vw;
+        @media screen and (max-width: 500px) {
+            width: 90vw;
+            height: 43vw;
+        }
         overflow: hidden;
         background-color: #000;
-        box-shadow: 0px 0px 10px 3px #728D95;
-        border-radius: 30px;
-        height: 100%;
+        box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
+        border-radius: 20px;
+        margin: 1vw;
+        filter: brightness(90%);        
         .bg {
             // top: -30px;
             // left: -100px;
@@ -105,18 +108,26 @@ export default {
                 background-position-y: -20vw;
             }
             background-size: cover;
-            opacity: 1.0;
             transition:opacity 0.3s;
         }
     }
 }
-// .card-box:after{
-//     content: "";
-//     display: block;
-//     padding-bottom: 100%;
-// }
+.card.hover{
+    margin: 0;
+    width: 43vw;
+    height: 43vw;
+    @media screen and (max-width: 500px) {
+        margin: 1vw;
+        width: 90vw;
+        height: 43vw;
+    }
+    filter: brightness(120%);   
+    // scale: 1.7;
+    transition:width 1.0;
+    transition:height 1.0;
+}
 .card.hover .bg {
-    opacity: 0.5;
-    transition:opacity 0.3;
+    // opacity: 0.5;
+    // transition:opacity 1.0;
 }
 </style>
