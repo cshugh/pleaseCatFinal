@@ -136,8 +136,7 @@ export default {
         console.log(`${key}`);
       }
       this.postSignUp(fd);
-      // this.$router.push('/login')            
-
+      // this.$router.push('/login')
     }
   }
 };
@@ -186,11 +185,18 @@ export default {
   height: 56px;
   position: absolute;
   top: 0px;
-  color: #1d2f3a;
+  color: #1d3e6e;
   // border-radius: 8px;
 
-  background: linear-gradient(165deg, #c2c8ff, #6bccb4, #6eaecc, #c2ffc5);
-  background-size: 600% 600%;
+  background: linear-gradient(
+    135deg,
+    #b1f6ff,
+    #7aafeb,
+    #48bdeb,
+    #f4ff5c,
+    #fde34d
+  );
+  background-size: 500% 500%;
   -webkit-animation: inputBtn-Animation 10s ease infinite;
   -moz-animation: inputBtn-Animation 10s ease infinite;
   -o-animation: inputBtn-Animation 10s ease infinite;
@@ -260,7 +266,7 @@ export default {
 .input-row {
   width: 100%;
   height: 56px;
-  border-bottom: solid 1px #3da0a9;
+  border-bottom: solid 1px rgba(49, 137, 209, 0.308);
 
   label {
     display: inline-block;
@@ -277,17 +283,16 @@ export default {
     padding: 7px 8px 7px;
   }
   input::placeholder {
-    color: rgb(81, 138, 163);
+    color: #2d57966e;
   }
 }
-
 .btn-signup {
   float: right;
   width: 142px;
   height: 42px;
   border-radius: 8px;
-  background: #68bdee;
-  color: #113538;
+  background: #83d0fd;
+  color: #1d3e6e;
   text-align: center;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
@@ -297,7 +302,7 @@ export default {
 
   &:hover {
     color: #fff;
-    box-shadow: 148px 0 0 0 rgba(243, 245, 216, 0.1) inset;
+    box-shadow: 148px 0 0 0 rgba(12, 132, 230, 0.493) inset;
     // color: #1d2f3a;
     // font-weight: 550;
   }
