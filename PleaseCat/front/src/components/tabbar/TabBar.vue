@@ -12,7 +12,6 @@
       show-arrows
       grow
     >
-
       <v-tab v-for="t in tabs" :key=t.id :to=t.route exact active-class="default-class your-class">
         <v-icon>{{ t.icon }}</v-icon>
         <div v-if="tab === t.route">{{ t.title }}</div>
@@ -42,7 +41,7 @@ export default {
         { id: 1, name: "NewsFeed",  route: `/`,           icon: "home"      ,title: "뉴스피드"},
         { id: 2, name: "Location",  route: `/catList`,    icon: "near_me"   ,title: "내 근처"},
         { id: 3, name: "AddPost",   route: `/addpost`,    icon: "add_box"   ,title: "글 추가"},
-        { id: 4, name: "DashBoard", route: `/nearMap`,    icon: "dashboard" ,title: "대시보드"},
+        { id: 4, name: "DashBoard", route: `/dashboard`,  icon: "dashboard" ,title: "대시보드"},
         { id: 5, name: "MyProfile", route: `/myProfile`,  icon: "person"    ,title: "내 정보"},
         // { id: 5, name: "TimeLine", route: `/user/${this.id}` }
       ]

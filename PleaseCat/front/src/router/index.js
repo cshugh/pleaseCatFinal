@@ -99,6 +99,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'PageDashboard',
+    props: 4,
     component: PageDashboard
   },
   // {
