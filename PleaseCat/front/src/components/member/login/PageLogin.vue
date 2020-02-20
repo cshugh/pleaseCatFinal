@@ -93,12 +93,8 @@ export default {
   width: 60vw;
   margin-left: 20vw;
   margin-right: 20vw;
-  // width: 350px;
   margin-top: 60px;
   margin-bottom: 60px;
-  // padding-top: 100px;
-  // padding-top: 10px;
-  // padding-bottom: 125px;
 }
 .login .title-login{
   margin-top: 60px;

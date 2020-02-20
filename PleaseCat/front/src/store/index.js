@@ -27,6 +27,7 @@ export default new Vuex.Store({
         isLogin: false,     // 로그인 여부
         userLoc: {lat: 1, lng:1 },      // 유저 현재 위치
         dist: 1000,        // '근처' 의 기준이 될 meter 단위 반경
+        Alarm: [],
     },
     getters: {
         getServer: state => { return state.server },
@@ -133,7 +134,7 @@ export default new Vuex.Store({
                         commit('changeUserLoc', { lat: lat, lng: lon });
                 });
             }
-        }
+        },
     },
 })
 
