@@ -1,5 +1,5 @@
 <template>
-<div id="catProfile">
+<div id="catProfile" class="page">
     <div class="emptySpace">-Navigation Bar-</div>
     <div class="profileView">
         <div class="leftPart" v-if="(selectedCat != null)">
@@ -29,12 +29,12 @@
         <span class="summary" @click="showModalFollower = true">팔로우<br>{{ selectedCatFollowerList.length }}</span>
             <modal v-if="showModalFollower" @close="showModalFollower = false">
                 <div slot="header">
-                    <h3>Follower List</h3>
+                    <h5>Follower List</h5>
                 </div>
                 <div slot="body">
                     <div class="followerList" v-for="(f, idx) in selectedCatFollowerList" :key="idx">
                         <router-link :to="`/userProfile/${ f.user_no }`">
-                            <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto">
                             <span id="followerName">{{ f.user_id }}</span>
                         </router-link>
                     </div>
@@ -154,14 +154,13 @@ export default {
     height: 36vw;
     vertical-align: middle;
     text-align: left;
-    background-color: #94A6AD;
+    background-color: #ffe923;
     border-radius: 10px;
-    box-shadow: 0px 0px 5px 3px #728D95;
+    box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
     .text {
         transition:all 0.4s ease-out;
-        text-shadow: 1px 1px 2px black;
         font-weight: bold;
-        color: #fff;
+        color: #000000;
         h3 {
             font-size: 7vw;
         }
@@ -196,11 +195,6 @@ export default {
         // box-sizing: border-box;
         // border: 1px solid red;
     }
-}
-.profileView::after{
-    content: "";
-    display: block;
-    padding-bottom: 40%;
 }
 #summaryView{
     display: inline-block;
@@ -250,7 +244,7 @@ export default {
             box-sizing: border-box;
             margin: 0.5vw;
             border-radius: 1vw;
-            box-shadow: 0px 0px 5px 3px #728D95;
+            box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;

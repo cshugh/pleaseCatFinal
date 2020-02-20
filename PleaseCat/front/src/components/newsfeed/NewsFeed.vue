@@ -4,7 +4,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <template>
-  <div id="out">
+  <div id="out" class="page">
     <div id="in">
       <div class="emptySpace"></div>
       <div

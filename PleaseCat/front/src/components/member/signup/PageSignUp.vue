@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="signup text">
+  <div class="signup text page">
     <div class="title-signup">Sign Up</div>
     <div class="input-wrap">
       <!-- 입력받을 정보: name, email, id, pw, image, desc -->

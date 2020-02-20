@@ -1,6 +1,5 @@
 <template>
-<div id="myProfile">
-    <div class="emptySpace">-Navigation Bar-</div>
+<div id="myProfile" class="page">
     <div id="profileView" v-if="(getLoginInfo != null)">
         <div id="leftPart">
             <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile">
@@ -26,7 +25,7 @@
                     <div class="followerList" v-for="(f, idx) in myFollowerList" :key="idx">
                         <span @click="showModalFollower = false; no = f.user_no">
                         <router-link :to="`/userProfile/${ f.user_no }`">
-                            <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto">
                             <span id="followerName">{{ f.user_id }}</span>
                         </router-link>
                         </span>
@@ -45,7 +44,7 @@
                     <div class="followerList" v-for="(f, idx) in myFollowingUserList" :key="idx">
                         <span @click="showModalFollowingUser = false; no = f.user_no">
                         <router-link :to="`/userProfile/${ f.user_no }`">
-                            <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_no }.jpg`)' alt="followerPhoto">
+                            <img id="followerPhoto" :src='require(`@/assets/images/user/${ f.user_no }.jpg`)' alt="followerPhoto">
                             <span id="followerName">{{ f.user_id }}</span>
                         </router-link>
                         </span>
@@ -86,7 +85,6 @@
             </span>
         </div>
     </div>
-    <div class="emptySpace"></div>
 </div>
 </template>
 
@@ -130,6 +128,8 @@ export default {
     position: absolute;
     width: 100vw;
     text-align: center;
+    margin-top: 65px;
+    margin-bottom: 65px;
     .btn{
         margin: 8px;
     }
@@ -161,10 +161,10 @@ export default {
     display: inline-block;
     width: 90%;
     vertical-align: middle;
-    text-align: center;
-    background-color: #F2E6E1;
+    text-align: left;
+    background-color: #C1C6CC;
     border-radius: 10px;
-    box-shadow: 2px 2px 10px 2px black;
+    box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
     
     img {
         width: 100%;
@@ -245,7 +245,7 @@ export default {
             box-sizing: border-box;
             margin: 0.5vw;
             border-radius: 1vw;
-            box-shadow: 1px 1px 5px 1px black;
+            box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;
