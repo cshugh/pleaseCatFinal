@@ -883,10 +883,7 @@ export default {
   }
 }
 
-
-
-
-// 대쉬보드 페이지 기본 SCS
+// 대쉬보드 페이지 기본 SCSS
 #dashboard{
     text-align: center;
     .btn{
@@ -913,7 +910,7 @@ export default {
 
     // 모달 이외의 버튼 부분
 .btn-convert-dashboard {
-  float: left;
+  float: center;
   width: 242px;
   height: 42px;
   border-radius: 8px;
