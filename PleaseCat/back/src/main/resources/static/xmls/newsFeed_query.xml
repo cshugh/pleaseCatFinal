@@ -5,12 +5,17 @@
 <mapper namespace="com.ssafy.model.dao.NewsFeedDao">
 	<select id="searchAllNewsFeed" resultType="newsFeed">
 		SELECT c.cat_name, c.cat_image, u.user_id, p.post_like, p.post_unlike,
-		p.post_image, p.post_content, TIMESTAMPDIFF(minute, p.post_time, NOW()) AS post_time, p.post_no
+		p.post_image, p.post_content, TIMESTAMPDIFF(minute, p.post_time, NOW()) AS post_time, p.post_no, u.user_image, c.cat_no, u.user_no
 		FROM CAT c, POST p, USER u
-		WHERE c.cat_no=p.cat_no AND p.user_no=u.user_no AND c.cat_no in (
+		WHERE (c.cat_no=p.cat_no AND p.user_no=u.user_no AND (c.cat_no in (
 		SELECT cat_no
 		FROM FOLLOWING_CAT
-		WHERE follower_no=#{follower_no})
+		WHERE follower_no=#{follower_no}) OR u.user_no in (
+		SELECT followed_no
+		FROM FOLLOWING_USER
+		WHERE follower_no=#{follower_no})))
+		OR (select EXISTS (SELECT * FROM FOLLOWING_CAT fc, FOLLOWING_USER fu 
+		WHERE fc.follower_no=#{follower_no} or fu.follower_no=#{follower_no}) =0) AND c.cat_no=p.cat_no AND p.user_no=u.user_no
 		ORDER BY p.post_time DESC;
 	</select>
 </mapper>

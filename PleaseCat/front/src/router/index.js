@@ -3,16 +3,19 @@ import VueRouter from 'vue-router'
 import Test from '../components/Test.vue'
 import Login from '../components/member/login/PageLogin'
 import SignUp from '../components/member/signup/PageSignUp'
-import Home from '../components/newsfeed/Home.vue'
 import NewsFeed from '../components/newsfeed/NewsFeed.vue'
 import PageCatList from '../components/catList/PageCatList.vue'
 import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
 import AddPost from '../components/post/addPost/PageAddPost'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
-import PageAddCat from '../components/post/addCat/PageAddCat'
-import PageNearMap from '@/components/map/PageNearMap'
+import AddCat from '../components/post/addCat/PageAddCat'
+import Comment from '../components/comment/Comment'
+import PageDetailPost from '@/components/post/detailPost/PageDetailPost'
+// import PageNearMap from '@/components/catMap/PageNearMap'
+// import ModalParent from '../components/post/addPost/ModalParent'
 import PageMyProfile from '@/components/userProfile/PageMyProfile'
 import PageUserProfile from '@/components/userProfile/PageUserProfile'
+import PageDashboard from '@/components/dashboard/PageDashboard'
 
 Vue.use(VueRouter)
 
@@ -20,67 +23,84 @@ const routes = [
   {
     path: '/test',
     name: 'Test',
+    props: 6,
     component: Test
   },
   {
     path: '/',
-    name: 'NewsFeed',
-    component: NewsFeed
-  },
-  {
-    path: '/Home',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/login',
     name: 'Login',
+    props: 100,
     component: Login
   },
   {
     path: '/signUp',
     name: 'SignUp',
+    props: 101,
     component: SignUp
   },
   {
-    path: '/nearMap',
-    name: 'PageNearMap',
-    component: PageNearMap
+    path: '/newsfeed',
+    name: 'NewsFeed',
+    props: 1,
+    component: NewsFeed
+  },
+  {
+    path: '/comment/:post_no',
+    name: 'Comment',
+    component: Comment
+  },
+  {
+    path: '/detailPost/:post_no',
+    name: 'DetailPost',
+    props: 10,
+    component: PageDetailPost
   },
   {
     path: '/catList',
     name: 'PageCatList',
+    props: 2,
     component: PageCatList
   },
   {
     path: '/catProfile/:cat_no',
     name: 'PageCatProfile',
+    props: 7,
     component: PageCatProfile
   },
   {
     path: '/addPost',
     name: 'AddPost',
+    props: 3,
     component: AddPost
   },
   {
     path: '/catDetail/:cat_no',
     name: 'PageCatDetail',
+    props: 9,
     component: PageCatDetail
   },
   {
-    path: '/addCat',
-    name: 'PageAddCat',
-    component: PageAddCat
+    path: '/addcat',
+    name: 'AddCat',
+    component: AddCat
   },
   {
     path: '/myProfile',
     name: 'PageMyProfile',
+    props: 5,
     component: PageMyProfile
   },
   {
     path: '/userProfile/:user_no',
     name: 'PageUserProfile',
+    props: 8,
     component: PageUserProfile
+  },
+  {
+    path: '/dashboard',
+    name: 'PageDashboard',
+    props: 4,
+    component: PageDashboard
   },
   // {
   //   path: '/about',
@@ -95,7 +115,7 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 export default router

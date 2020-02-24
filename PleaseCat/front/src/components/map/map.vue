@@ -8,10 +8,8 @@
 <script>
 import router from '@/router/index';
 export default {
-    props: ['txt', 'pos', 'curLoca', 'range'],
+    props: ['pos', 'curLoca', 'range'],
     /* 
-        txt: 지도상 위치 클릭 시 이동할 url (ex, catProfile)
-            => this.url
         pos: 지도상에 표시 할 좌표 배열 [{pos_x,pos_y}, {pos_x,pos_y}, ...]
             => this.positions
         curLoca: 현재 User 위치
@@ -21,7 +19,7 @@ export default {
     */
     data() {
         return {
-            url: this.txt,
+            url: 'catProfile',
             user: this.curLoca,
             // dist: this.range,
         }
@@ -71,7 +69,8 @@ export default {
             // var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
             var markerImages = [];
             for (var i = 0; i < positions.length; i ++) {
-                var imageSrc = require(`@/assets/images/cats/_profile/${positions[i].no}.jpg`), // 마커이미지의 주소입니다    
+                // var imageSrc = require(`@/assets/images/cat/${positions[i].cat_image}`), // 마커이미지의 주소입니다    
+                var imageSrc = `/static/images/cat/${positions[i].cat_image}`, // 마커이미지의 주소입니다    
                 imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
                 imageOption = {offset: new kakao.maps.Point(30, 30)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
                 
@@ -104,18 +103,11 @@ export default {
 
             for (var i = 0; i < positions.length; i ++) {
                 // 마커를 생성합니다
-                if(vm.url === 'catProfile'){
-                    var marker = new kakao.maps.Marker({
-                        map: map, // 마커를 표시할 지도
-                        position: new kakao.maps.LatLng(positions[i].pos_x, positions[i].pos_y), // 마커의 위치
-                        image: markerImages[i],
-                    });
-                } else {
-                    var marker = new kakao.maps.Marker({
-                        map: map, // 마커를 표시할 지도
-                        position: new kakao.maps.LatLng(positions[i].pos_x, positions[i].pos_y), // 마커의 위치
-                    });
-                }
+                var marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: new kakao.maps.LatLng(positions[i].pos_x, positions[i].pos_y), // 마커의 위치
+                    image: markerImages[i],
+                });
 
                 // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
                 // 이벤트 리스너로는 클로저를 만들어 등록합니다 
@@ -124,7 +116,7 @@ export default {
             }
             function makeOverListener(i) {
                 return function() {
-                    router.push(`/${vm.url}/${i}`);
+                    router.push(`/catProfile/${i}`);
                 };
             }
             // 마커가 지도 위에 표시되도록 설정합니다

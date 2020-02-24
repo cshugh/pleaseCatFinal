@@ -1,17 +1,17 @@
 <template>
 <div id="selectMap">
     <p style="margin-top:-12px">
-        <b>Chrome 브라우저는 https 환경에서만 geolocation을 지원합니다.</b> 참고해주세요.
+        <!-- <b>Chrome 브라우저는 https 환경에서만 geolocation을 지원합니다.</b> 참고해주세요. -->
     </p>
-    <div id="map" style="width:100%;height:350px;"></div>
-    <div>
+    <div id="map" style="width:100%;height:240px; margin-top: 30px"></div>
+    <!-- <div>
         위도: <span id="lat">{{ mark_x }}</span>
     </div>
     <div>
         경도: <span id="lng">{{ mark_y }}</span>
-    </div>
+    </div> -->
     <div>
-        주소: <span id="address">{{ address }}</span>
+        <span id="address"><p></p>{{ address }}</span>
     </div>
 </div>
 </template>
@@ -59,10 +59,11 @@ export default {
         var coord = new kakao.maps.LatLng(locPosition.getLat(), locPosition.getLng());
         var callback = function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                vm.address = result[0].address.address_name;
+                vm.address = result[0].region_1depth_name + " " + result[0].region_2depth_name
+                vm.$emit('selectLoc-event', { X: vm.mark_x, Y: vm.mark_y, Addr:vm.address})
             }
         };
-        geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+        geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), callback);
         
         displayMarker(locPosition);
 
@@ -89,10 +90,11 @@ export default {
                 var coord = new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng());
                 var callback = function(result, status) {
                     if (status === kakao.maps.services.Status.OK) {
-                        vm.address = result[0].address.address_name;
+                        vm.address = result[0].region_1depth_name + " " + result[0].region_2depth_name;
+                        vm.$emit('selectLoc-event', { X: vm.mark_x, Y: vm.mark_y, Addr:vm.address})
                     }
                 };
-                geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+                geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), callback);
             });
         }    
     },
@@ -100,5 +102,7 @@ export default {
 </script>
 
 <style>
-
+#address {
+    color: #1d2f3a; 
+}
 </style>

@@ -1,36 +1,95 @@
 <template>
-<div id="myProfile">
+<div id="myProfile" class="page">
     <div class="emptySpace">-Navigation Bar-</div>
     <div class="profileView" >
         <div class="leftPart" v-if="(selectedUser != null)">
-            <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile">
+            <!-- <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile"> -->
+            <img id="userPhoto" :src='`/static/images/user/${ selectedUser.user_image }`' alt="catProfile">
         </div>
         <div id="fakeleftPart" class="leftPart" v-if="(selectedUser === null)">
-            <img id="userPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
+            <!-- <img id="userPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile"> -->
+            <img id="userPhoto" :src='`/static/images/icon/user.png`' alt="catProfile">
         </div>
         <section id="rightPart">
-            <div class="name" v-if="(selectedUser != null)"><h1 id="userName" class="text">{{ selectedUser.user_id }}</h1></div>
-            <div id="fakename" class="name" v-if="(selectedUser === null)"><h1 id="userName" class="text">사용자</h1></div>
+            <div class="name" v-if="(selectedUser != null)"><h1 id="userName">{{ selectedUser.user_id }}</h1></div>
+            <div id="fakename" class="name" v-if="(selectedUser === null)"><h1 id="userName">사용자</h1></div>
             <div id="buttons">
-                <span id="followButton" class="btn text">
-                    <button>팔로우</button>
-                </span>
-                <span id="detailButton" class="btn text">
-                    <router-link :to="`/catDetail/${no}`"><button>상세 정보</button></router-link>
+                <span id="followButton" class="btn text" v-if="(selectedUser != null)">
+                    <button v-if="!followed" @click="postAddFollow(selectedUser.user_no)">팔로우</button>
+                    <button v-if="followed" @click="deleteFollow(selectedUser.user_no)">언팔로우</button>
                 </span>
             </div>
         </section>
     </div>
     <div id="summaryView" class="text" v-if="(selectedUser != null)">
         <span class="summary">게시물<br>{{ selectedUser.count_posts }}</span>
-        <span class="summary">팔로우<br>{{ selectedUser.count_followers }}</span>
-        <span class="summary">좋아요<br>{{ selectedUser.count_likes }}</span>
+        <span class="summary" @click="showModalFollower = true">팔로워<br>{{ selectedUserFollowedList.length }}</span>
+            <modal v-if="showModalFollower" @close="showModalFollower = false">
+                <div slot="header">
+                    <h3>Follower List</h3>
+                </div>
+                <div slot="body">
+                    <div class="followerList" v-for="(f, idx) in selectedUserFollowedList" :key="idx">
+                        <span @click="showModalFollower = false; no = f.user_no">
+                        <router-link :to="`/userProfile/${ f.user_no }`">
+                            <!-- <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_name }`)' alt="followerPhoto"> -->
+                            <img id="followerPhoto" :src='`/static/images/user/${ f.user_name }`' alt="followerPhoto">
+                            <span id="followerName">{{ f.user_id }}</span>
+                        </router-link>
+                        </span>
+                    </div>
+                </div>
+                <div slot="footer" >
+                    <button @click="showModalFollower = false"> 확인</button>
+                </div>
+            </modal>
+        <span class="summary" @click="showModalFollowingUser = true">유저 팔로잉<br>{{ selectedUserFollowerList.length }}</span>
+            <modal v-if="showModalFollowingUser" @close="showModalFollowingUser = false">
+                <div slot="header">
+                    <h3>User Following List</h3>
+                </div>
+                <div slot="body">
+                    <div class="followerList" v-for="(f, idx) in selectedUserFollowerList" :key="idx">
+                        <span @click="showModalFollowingUser = false; no = f.user_no">
+                            <router-link :to="`/userProfile/${ f.user_no }`">
+                                <!-- <img id="followerPhoto" :src='require(`@/assets/images/man/${ f.user_name }`)' alt="followerPhoto"> -->
+                                <img id="followerPhoto" :src='`/static/images/user/${ f.user_name }`' alt="followerPhoto">
+                                <span id="followerName">{{ f.user_id }}</span>
+                            </router-link>
+                        </span>
+                    </div>
+                </div>
+                <div slot="footer" >
+                    <button @click="showModalFollowingUser = false"> 확인</button>
+                </div>
+            </modal>
+        <span class="summary" @click="showModalFollowingCat = true">캣 팔로잉<br>{{ userFollowingCatList.length }}</span>
+            <modal v-if="showModalFollowingCat" @close="showModalFollowingCat = false">
+                <div slot="header">
+                    <h3>Cat Following List</h3>
+                </div>
+                <div slot="body">
+                    <div class="followerList" v-for="(f, idx) in userFollowingCatList" :key="idx">
+                        <span @click="showModalFollowingCat = false; no = f.cat_no">
+                            <router-link :to="`/catProfile/${ f.cat_no }`">
+                                <!-- <img id="followerPhoto" :src='require(`@/assets/images/cat/${ f.cat_image }`)' alt="followerPhoto"> -->
+                                <img id="followerPhoto" :src='`/static/images/cat/${ f.cat_image }`' alt="followerPhoto">
+                                <span id="followerName">{{ f.cat_name }}</span>
+                            </router-link>
+                        </span>
+                    </div>
+                </div>
+                <div slot="footer" >
+                    <button @click="showModalFollowingCat = false"> 확인</button>
+                </div>
+            </modal>
     </div>
     <div id="photoView" v-if="(userPosts != null)">
         <div id="photoList">
             <span v-for="(post, idx) in userPosts" :key="idx">
-                <router-link :to="{name:''}">
-                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'> 
+                <router-link :to="`/detailPost/${post.post_no}`">
+                    <!-- <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>  -->
+                    <span class="photo" :style="{'background-image' : `url(/static/images/post/${ post.post_image })`}"  :alt='`${ post.post_image }`'> 
                     </span>
                 </router-link>
             </span>
@@ -43,13 +102,20 @@
 <script>
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
+import Modal from "@/components/post/modal/Modal.vue";
 
 export default {
     name: 'userProfile',
+    components:{
+        modal: Modal,
+    },
     created() {
         this.no = this.$route.params.user_no;
         this.getSelectedUser(this.no);
         this.getUserPosts(this.no);
+        this.getUserFollowerList(this.no);
+        this.getUserFollowedList(this.no);
+        this.getUserFollowingCatList(this.no);
     },
     destroyed() {
         this.clearSelectedUser();
@@ -58,18 +124,43 @@ export default {
     data(){
         return{
             no: '',
+            showModalFollower: false,
+            showModalFollowingUser: false,
+            showModalFollowingCat: false,
         }
+    },
+    watch: {
+        no: function(newNo){
+            this.getSelectedUser(newNo);
+            this.getUserPosts(newNo);
+            this.getUserFollowerList(newNo);
+            this.getUserFollowedList(newNo);
+            this.getUserFollowingCatList(newNo);
+        }        
     },
     computed:{
         ...mapGetters([
             'getLoginInfo',
         ]),
         ...mapGetters('storeUser',[
-            'selectedUser',
+            'selectedUser', 'selectedUserFollowerList', 'selectedUserFollowedList', 'myFollowingUserList',
         ]),
         ...mapGetters('storePost',[
             'userPosts',
         ]),
+        ...mapGetters('storeCat',[
+            'userFollowingCatList',
+        ]),
+        followed: function(myFollowingUserList){
+            const uno = this.selectedUser.user_no;
+            var result = false;
+            this.myFollowingUserList.forEach(el => {
+                if(el.user_no === uno){
+                    return result = true;
+                }
+            });
+            return result;
+        }
     },
     methods: {
         ...mapMutations('storeUser',[
@@ -79,11 +170,14 @@ export default {
             'clearUserPosts',
         ]),
         ...mapActions('storeUser',[
-            'getSelectedUser',
+            'getSelectedUser', 'getUserFollowerList', 'getUserFollowedList', 'postAddFollow', 'deleteFollow',
         ]),
         ...mapActions('storePost',[
             'getUserPosts',
-        ])
+        ]),
+        ...mapActions('storeCat',[
+            'getUserFollowingCatList',
+        ]),
     }
 }
 </script>
@@ -98,8 +192,10 @@ export default {
         border: 1px solid #dbdbdb;
         border-radius: 3px;
         color: #262626;
+        background-color: white;
         font-size: 2.7vw;
         padding: 3px 12px 3px 12px;
+        box-shadow: 0px 0px 4px 0px black;
     }
     h1{
         font-size: 7vw;
@@ -121,10 +217,11 @@ export default {
     width: 90vw;
     height: 36vw;
     vertical-align: middle;
-    text-align: center;
-    background-color: #F2E6E1;
+    text-align: left;
+    background-color: rgb(51, 170, 244);
     border-radius: 10px;
-    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
+    box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
+    color: white;
     // border: 2px solid red;
     img {
         width: 100%;
@@ -170,11 +267,23 @@ export default {
     // border-bottom: 1px solid black;
     .summary{
         display: inline-block;
-        width: 33.3%;
+        width: 25%;
         text-align: center;
 
         // box-sizing: border-box;
         // border: 1px solid red;
+    }
+    .followerList{
+        text-align: left;
+        img {
+            width: 10vw;    
+            border-radius: 100%;
+        }
+        img::after{
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+        }
     }
 }
 #photoView {
@@ -187,12 +296,13 @@ export default {
             background-color: black;
             display: inline-block;
             overflow: hidden;
-            width: calc((100% - 12px) / 3);
+            width: calc((100% - 3vw) / 3);
             text-align: center;
             vertical-align: middle;
             box-sizing: border-box;
-            margin: 1px;
-            box-shadow: 1px 1px 5px 1px black;
+            margin: 0.5vw;
+            border-radius: 1vw;
+            box-shadow: 0px 5px 15px 0px rgba(48, 54, 62, 0.7);
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;

@@ -9,13 +9,12 @@ public class comment {
 	private int comment_like;
 	private int comment_unlike;
 	private int comment_report;
+	private int chk;
 	
 	
 	public comment() {}
-	
-	
 	public comment(int comment_no, int post_no, int user_no, String comment_time, String comment_content,
-			int comment_like, int comment_unlike, int comment_report) {
+			int comment_like, int comment_unlike, int comment_report, int check) {
 		super();
 		this.comment_no = comment_no;
 		this.post_no = post_no;
@@ -25,6 +24,7 @@ public class comment {
 		this.comment_like = comment_like;
 		this.comment_unlike = comment_unlike;
 		this.comment_report = comment_report;
+		this.chk = check;
 	}
 	public int getComment_no() {
 		return comment_no;
@@ -74,12 +74,17 @@ public class comment {
 	public void setComment_report(int comment_report) {
 		this.comment_report = comment_report;
 	}
+	public int getCheck() {
+		return chk;
+	}
+	public void setCheck(int check) {
+		this.chk = check;
+	}
 	@Override
 	public String toString() {
 		return "comment [comment_no=" + comment_no + ", post_no=" + post_no + ", user_no=" + user_no + ", comment_time="
 				+ comment_time + ", comment_content=" + comment_content + ", comment_like=" + comment_like
-				+ ", comment_unlike=" + comment_unlike + ", comment_report=" + comment_report + "]";
+				+ ", comment_unlike=" + comment_unlike + ", comment_report=" + comment_report + ", check=" + chk
+				+ "]";
 	}
-	
-	
 }
