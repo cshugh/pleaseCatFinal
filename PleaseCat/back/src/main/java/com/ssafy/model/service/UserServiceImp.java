@@ -1,6 +1,7 @@
 package com.ssafy.model.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,33 +54,28 @@ public class UserServiceImp implements UserService {
 	SHA256 sha = SHA256.getInsatnce();
 
 	// 회원번호로 회원검색
-	public user searchUser(int no) {
-		try {
-			user User = userDao.searchUser(no);
-			if (User == null) {
-				throw new PleaseCatException("찾으려는 정보가 없습니다");
+	public user searchUser(int no) throws Exception {
+		user User = userDao.searchUser(no);
+		if (User == null) {
+			throw new PleaseCatException("찾으려는 정보가 없습니다");
 
-			} else {
-				User.setCount_followers(followUserDao.searchFollowedUser(User.getUser_no()).size());
+		} else {
+			User.setCount_followers(followUserDao.searchFollowedUser(User.getUser_no()).size());
 
-				List<post> postList = postDao.searchPostUser(User.getUser_no());
-				User.setCount_posts(postList.size());
+			List<post> postList = postDao.searchPostUser(User.getUser_no());
+			User.setCount_posts(postList.size());
 
-				int sumLikeAboutPost = 0;
-				for (post post : postList) {
-					sumLikeAboutPost += likesDao.searchAllLikesOfPost(post.getPost_no()).size();
-				}
-				User.setCount_likes(sumLikeAboutPost);
-
-				User.setCount_followings_user(followUserDao.searchFollowerUser(User.getUser_no()).size());
-
-				User.setCount_followings_cat(followCatDao.searchFollowedCat(User.getUser_no()).size());
-				System.out.println(User);
-				return User;
+			int sumLikeAboutPost = 0;
+			for (post post : postList) {
+				sumLikeAboutPost += likesDao.searchAllLikesOfPost(post.getPost_no()).size();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new PleaseCatException();
+			User.setCount_likes(sumLikeAboutPost);
+
+			User.setCount_followings_user(followUserDao.searchFollowerUser(User.getUser_no()).size());
+
+			User.setCount_followings_cat(followCatDao.searchFollowedCat(User.getUser_no()).size());
+			System.out.println(User);
+			return User;
 		}
 	}
 
@@ -114,8 +110,7 @@ public class UserServiceImp implements UserService {
 	}
 
 	// 회원가입을 통한 회원추가
-	public void insertUser(MultipartFile userImg, user User) {
-		try {
+	public void insertUser(MultipartFile userImg, user User) throws Exception {
 			String orgPass = User.getUser_pw();
 			String shaPass = sha.getSha256(orgPass.getBytes());
 			String bcPass = BCrypt.hashpw(shaPass, BCrypt.gensalt());
@@ -137,12 +132,14 @@ public class UserServiceImp implements UserService {
 					User.setUser_image(userDao.findNextUserNo()+"."+ext);
 	
 					//저장루트 설정 (드라이브 위치부터 하나하나 잡아줘야함)
-					//String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
+//					String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
+
 					
 					
 					
 					//저정루트뒤에 불러오는 루트를 붙여줘서 저장함
 					File dest = new File(dir+"\\user\\"+User.getUser_image());
+//					File dest = new File(dir);
 					
 					//이미지를 우리가 만든 dest이미지로 transfer
 					userImg.transferTo(dest);
@@ -151,10 +148,6 @@ public class UserServiceImp implements UserService {
 				userDao.insertUser(User);
 				System.out.println("user 입력 성공");
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new PleaseCatException();
-		}
 	}
 
 	// 회원정보 수정

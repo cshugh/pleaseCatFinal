@@ -135,6 +135,7 @@ export default {
       for (let key of fd.entries()) {
         console.log(`${key}`);
       }
+      // const fd = {"userImg" : this.userImg, "user_email" : this.user_email, }
       this.postSignUp(fd);
       // this.$router.push('/login')
     }

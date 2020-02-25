@@ -8,8 +8,8 @@ import com.ssafy.model.dto.alarm;
 import com.ssafy.model.dto.user;
 
 public interface UserService  {
-	public user searchUser(int no) ;
-	public void insertUser(MultipartFile userImg, user User) ;
+	public user searchUser(int no) throws Exception ;
+	public void insertUser(MultipartFile userImg, user User) throws Exception ;
 	public void updateUser(user User);
 	public void deleteUser(int no);
 	public List<user> searchAllUser();

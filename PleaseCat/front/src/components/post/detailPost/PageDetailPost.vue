@@ -9,19 +9,19 @@
     <div id="wrapper" class="in">
       <div v-if="this.detailPostInfo.post_image" id="content">
         <!-- <img :src="require(`../../../assets/images/posts/${this.detailPostInfo.post_image}`)" id="img" /> -->
-        <img :src="`/static/images/post/${this.post_image}`" id="img" />
+        <img :src="`/static/images/post/${detailPostInfo.post_image}`" id="img" />
       </div>
-      <div v-if="this.detailPostInfo.user_image" id="userDiv">
-         <router-link :to="`/userProfile/${this.detailPostInfo.user_no}`">
+      <div v-if="detailPostInfo.user_image" id="userDiv">
+         <router-link :to="`/userProfile/${detailPostInfo.user_no}`">
               <button id="userButton">
         <!-- <img :src="require(`../../../assets/images/user/${this.detailPostInfo.user_image}`)" id="user_image" /> -->
-        <img :src="`/static/images/user/${this.detailPostInfo.user_image}`" id="user_image" />
+        <img :src="`/static/images/user/${detailPostInfo.user_image}`" id="user_image" />
               </button>
          </router-link>
-        <div id="user_id">{{this.detailPostInfo.user_id}}</div>
+        <div id="user_id">{{detailPostInfo.user_id}}</div>
       </div>
       <div id="contentDiv">
-        <div class="content" id="post_content">{{this.detailPostInfo.post_content}}</div>
+        <div class="content" id="post_content">{{detailPostInfo.post_content}}</div>
       </div>
 
       <div id="infinite"

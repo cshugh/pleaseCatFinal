@@ -54,9 +54,13 @@ public class UserRestController {
 	
 	@ApiOperation("새로운 유저 정보를 입력한다.")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insertUser(@RequestBody MultipartFile userImg,  user User) throws Exception{
-		userService.insertUser(userImg,User);
-		return handleSuccess("유저 등록 완료");
+	public ResponseEntity<Map<String, Object>> insertUser(@RequestHeader MultipartFile userImg,  user User){
+		try {
+			userService.insertUser(userImg,User);
+			return handleSuccess("유저 등록 완료");
+		} catch (Exception e) {
+			return handleFail(e.getMessage(), HttpStatus.METHOD_FAILURE);
+		}
 	}
 	
 	@ApiOperation("회원 관리번호로 회원 정보를 찾는다.")

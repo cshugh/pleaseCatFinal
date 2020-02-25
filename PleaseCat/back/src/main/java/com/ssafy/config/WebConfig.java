@@ -43,7 +43,7 @@ public class WebConfig implements WebMvcConfigurer {
 	    }
 
 
-	
+	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		
 		// addResourceLocations에 url경로를 설정하고, 
