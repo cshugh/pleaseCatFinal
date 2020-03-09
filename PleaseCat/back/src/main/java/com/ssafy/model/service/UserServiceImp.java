@@ -136,9 +136,12 @@ public class UserServiceImp implements UserService {
 
 					
 					
+					// linux는 /
+					// windows는 \
 					
 					//저정루트뒤에 불러오는 루트를 붙여줘서 저장함
-					File dest = new File(dir+"\\user\\"+User.getUser_image());
+					File dest = new File(dir+"/user/"+User.getUser_image());
+//					File dest = new File(dir+"\\user\\"+User.getUser_image());
 //					File dest = new File(dir);
 					
 					//이미지를 우리가 만든 dest이미지로 transfer

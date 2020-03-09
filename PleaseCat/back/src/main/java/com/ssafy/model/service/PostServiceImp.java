@@ -107,7 +107,8 @@ public class PostServiceImp implements PostService {
 			//String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
 
 			//저정루트뒤에 불러오는 루트를 붙여줘서 저장함
-			File dest = new File(dir+"\\post\\"+Post.getPost_image());
+			File dest = new File(dir+"/post/"+Post.getPost_image());
+//			File dest = new File(dir+"\\post\\"+Post.getPost_image());
 			
 			//이미지를 우리가 만든 dest이미지로 transfer
 			postImg.transferTo(dest);
